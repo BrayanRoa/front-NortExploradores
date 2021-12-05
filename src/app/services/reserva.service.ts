@@ -9,7 +9,7 @@ import * as global from 'global'
 export class ReservaService {
 
   uri = `${global.url}/reserva/`;
-
+  
   constructor(private http:HttpClient) { }
 
   public paqueteDeReserva(idReserva:number):Observable<any>{

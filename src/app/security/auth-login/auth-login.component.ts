@@ -32,7 +32,7 @@ export class AuthLoginComponent implements OnInit {
       email:['',Validators.compose([
         Validators.required,
         Validators.minLength(5),
-        Validators.maxLength(25),
+        Validators.maxLength(50),
         Validators.email
       ])],
       password:['',Validators.compose([
