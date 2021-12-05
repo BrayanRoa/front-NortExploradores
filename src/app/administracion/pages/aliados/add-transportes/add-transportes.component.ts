@@ -57,12 +57,7 @@ export class AddTransportesComponent implements OnInit {
           Validators.maxLength(25)
         ])],
 
-     color:  ['',
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(25)
-        ])],
+     color:  [''],
 
      precio: ['',
         Validators.compose([
