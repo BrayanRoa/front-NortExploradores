@@ -86,7 +86,6 @@ export class AuthRegisterComponent implements OnInit {
 
   validarFecha(){
     let anios = this.calcularFecha()
-    console.log(anios);
     if(anios >= 18){
       return true
     }
@@ -103,7 +102,6 @@ export class AuthRegisterComponent implements OnInit {
       otherDate.getMonth() == fechaNaci.getMonth() && otherDate.getDate() < fechaNaci.getDate()) {
       years--;
     }
-    console.log(years);
     return years;
   }
 
@@ -143,7 +141,6 @@ export class AuthRegisterComponent implements OnInit {
       this.toastr.warning('Cargando...', '', {
         timeOut: 3000, positionClass: 'toast-top-center'
       });
-      console.log(data,"usuario");
       this.pser.post(persona).subscribe(persona=>{
       this.paser.post(pasajero,data.id_Usuario).subscribe(pasajero=>{
         this.toastr.success("Cuentra creada", 'OK', {
@@ -154,7 +151,6 @@ export class AuthRegisterComponent implements OnInit {
       })
       })
     },msg=>{
-      console.log(msg);
         this.toastr.error(msg.error, 'ERROR', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });

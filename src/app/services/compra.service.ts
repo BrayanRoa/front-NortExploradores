@@ -23,5 +23,9 @@ export class CompraService {
   public compras():Observable<any>{
     return this.http.get<any>(this.url)
   }
+  public comprasPagadas(idUsuario:any):Observable<any>{
+    return this.http.get<any>(this.url+idUsuario+"/comprasPagadas")
+  }
+
 
 }
