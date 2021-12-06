@@ -495,7 +495,8 @@ export class FormPagosComponent implements OnInit {
 
 
   cargarPayu() {
-
+    this.totalCompra= (this.totalCompra)/2;
+    console.log(this.totalCompra);
     this.infoPagina = 2
     window.scroll(0, 0);
     const factura = document.getElementById("facturastep");
@@ -509,7 +510,7 @@ export class FormPagosComponent implements OnInit {
       pago?.classList.add("pendiente")
       pago?.classList.remove("complete")
     }
-    this.totalCompra= this.totalCompra/2
+
     this.idUsuario = this.usuario.id_Usuario
     this.email = this.persona.correo
     this.nombrePersona = this.persona.nombre + " " + this.persona.apellido
@@ -532,7 +533,7 @@ export class FormPagosComponent implements OnInit {
     var compra = {
       idCompra: this.idCompra,
       cantidadPasajeros: this.total,
-      totalCompra: this.totalCompra*2,
+      totalCompra: this.totalCompra,
       estado: "PENDIENTE",
       usuario: this.usuario.id_Usuario,
       tour: this.tourSeleccionado.idTour
@@ -547,7 +548,7 @@ export class FormPagosComponent implements OnInit {
       this.toastr.success("Pasajeros ingresados", 'Ok', {
         timeOut: 3000, positionClass: 'toast-top-center'
       });
-
+      console.log(this.tourSeleccionado.idTour);
       this.compraService.post(compra, this.tourSeleccionado.idTour).subscribe(compra => {
         let pasajeros = this.pasajerosTotal;
         let detalleCompras = [];
