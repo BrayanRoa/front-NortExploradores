@@ -30,7 +30,7 @@ export class SolicitudpaqueteService {
   }
   
   public aceptarSolicitud(id:any):Observable<any>{
-    return this.http.get(this.uri+id+"/aceptar");
+    return this.http.post(this.uri+"aceptar",id);
   }
   public rechazarSolicitud(id:any):Observable<any>{
     return this.http.get(this.uri+id+"/rechazar");

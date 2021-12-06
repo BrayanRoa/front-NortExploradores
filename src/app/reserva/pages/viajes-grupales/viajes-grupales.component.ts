@@ -17,7 +17,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ViajesGrupalesComponent implements OnInit {
   public formTour !: FormGroup;
-  public formPaq !: FormGroup;
   public formSol !: FormGroup;
   public municipios: any = [];
   public nombreUser!: string;
@@ -49,35 +48,26 @@ export class ViajesGrupalesComponent implements OnInit {
       descripcion: ['', Validators.required],
       tour: ['', Validators.required],
       usuario: ['', Validators.required],
+      municipio: ['', Validators.required],
     })
     this.formTour = this.formBuilder.group({
       minCupos: ['', Validators.required],
       maxCupos: ['', Validators.required],
+      cantCupos:[0, Validators.compose([
+        Validators.required,
+        Validators.min(1),
+        Validators.max(50),
+      ])],
       fechaLlegada: ['', Validators.compose([
         Validators.required,
       ])],
       fechaSalida: ['', Validators.compose([
         Validators.required,
       ])],
-      pasajeros: ['',
-        Validators.compose([
-          Validators.required,
-          Validators.min(1),
-          Validators.max(50)
-        ])],
-      /* cantCupos: ['', Validators.required], */
       empleado: [1, Validators.required],
       seguro: [1, Validators.required]
     })
-    this.formPaq = this.formBuilder.group({
-      precio: ['', Validators.required],
-      urlImagen: ['', Validators.required],
-      descripcion: ['', Validators.required],
-      recomendacion: ['', Validators.required],
-      nombre: ['', Validators.required],
-      alojamiento: [null, Validators.required],
-      municipio: ['', Validators.required]      
-    })
+
   }
   cargarUsuario() {
     this.usuarioSer.usuarioPorUsername(this.nombreUser).subscribe(usuario => {
@@ -101,11 +91,7 @@ export class ViajesGrupalesComponent implements OnInit {
     }
   }
   public enviarData() {
-    this.formPaq.controls.precio.setValue(0);
-    this.formPaq.controls.urlImagen.setValue("Pendiente");
-    this.formPaq.controls.descripcion.setValue("Pendiente");
-    this.formPaq.controls.recomendacion.setValue("Pendiente");
-    this.formPaq.controls.nombre.setValue("Pendiente");
+
     this.formTour.controls.minCupos.setValue(0);
     this.formTour.controls.maxCupos.setValue(0);
     let date: Date = new Date();
@@ -113,12 +99,10 @@ export class ViajesGrupalesComponent implements OnInit {
       "fecha": date,
       "usuario": this.usuario,  
       "tour": this.formTour.value,
-      "municipio":this.formPaq.controls.municipio.value,
+      "municipio":this.formSol.controls.municipio.value,
       "descripcion": this.formSol.controls.descripcion.value
     }
     console.log(solicitudTour);
-
-
         this.viajesGrupales.post(solicitudTour).subscribe((data) => {
           this.toastr.success("Solicitud Enviada Con Exito!", "Enviado", {
             positionClass: 'toast-bottom-right'

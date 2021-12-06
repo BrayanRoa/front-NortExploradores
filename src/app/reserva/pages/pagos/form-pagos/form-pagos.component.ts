@@ -98,11 +98,9 @@ export class FormPagosComponent implements OnInit {
   ) {
 
     this.idPaquete = this.aRoutes.snapshot.paramMap.get("idPaq");
-    console.log(this.aRoutes.snapshot.paramMap.get("idPaq"));
     if(this.idPaquete){
       this.tourSeleccionado = this.tourService.encontrarTour(this.idPaquete).subscribe(tour => {
         this.tourSeleccionado = tour;
-        console.log(tour);
         this.cuposDisponibles = tour.cantCupos;
         const output = document.getElementById('cantidadCupos');
         if (output) output.innerHTML = tour.cantCupos;
@@ -127,7 +125,6 @@ export class FormPagosComponent implements OnInit {
     });
     this.tipoIdService.getTipoId().subscribe(ids => {
       this.tipoId = ids
-      console.log(this.tipoId);
     });
   }
 
@@ -179,7 +176,6 @@ export class FormPagosComponent implements OnInit {
 
   verificarFecha(event: any, element: HTMLElement) {
     let edadPasajero = this.calcularfecha(event.target.value);
-    console.log(edadPasajero);
     if (edadPasajero >= 0 && edadPasajero <= 200) {
       element.classList.add("is-valid");
       element.classList.remove("is-invalid");
@@ -257,7 +253,6 @@ export class FormPagosComponent implements OnInit {
       let pasajero = personas[i];
       let idPerson = pasajero.idPersona;
       this.cedulas.push(idPerson); //agrego las cedulas de los pasajeros para buscar si hay alguna repetida
-      console.log(personas[i]);
 
       let fechaNacPasajero = pasajero.fechaNac;
       let edadPasajero = this.calcularfecha(fechaNacPasajero);
@@ -332,7 +327,6 @@ export class FormPagosComponent implements OnInit {
       compra?.classList.remove("pendiente")
     }
     this.totalCompra = this.pasajeros.length*this.tourSeleccionado.paquete.precio
-    console.log(this.totalCompra);
     this.infoPagina = 2;
 
     window.scroll(0, 0);
@@ -374,7 +368,6 @@ export class FormPagosComponent implements OnInit {
 
   public agregarPasajerosFrec() {
     this.usuarioService.pasajerosPorCliente(this.usuario.id_Usuario).subscribe(pasajeros => {
-      console.log(pasajeros);
       this.cargarPasajeros(pasajeros);
     })
   }
@@ -389,7 +382,6 @@ export class FormPagosComponent implements OnInit {
         this.persona = pasajeros[i].persona;
         this.total++;
         let pasajeroX = this.pagosInfo.get('pasajeros') as FormArray;
-        console.log(this.persona);
         pasajeroX.push(
           this.formBuilder.group({
             idTipo: [this.persona.idTipo.idTipo, [Validators.required]],
@@ -466,7 +458,6 @@ export class FormPagosComponent implements OnInit {
     let idTourSeleccionado = event.target.value;
     this.tourSeleccionado = this.tourService.encontrarTour(idTourSeleccionado).subscribe(tour => {
       this.tourSeleccionado = tour;
-      console.log(tour);
       this.cuposDisponibles = tour.cantCupos;
       const output = document.getElementById('cantidadCupos');
       if (output) output.innerHTML = tour.cantCupos;
@@ -557,7 +548,6 @@ export class FormPagosComponent implements OnInit {
         timeOut: 3000, positionClass: 'toast-top-center'
       });
 
-      console.log(pasajeros);
       this.compraService.post(compra, this.tourSeleccionado.idTour).subscribe(compra => {
         let pasajeros = this.pasajerosTotal;
         let detalleCompras = [];
@@ -573,7 +563,6 @@ export class FormPagosComponent implements OnInit {
           detalleCompras.push(detalleCompra);
         }
         this.detalleCompra.post(detalleCompras).subscribe(det => {
-          console.log(det);
           form.submit();
         });
       },error=>{

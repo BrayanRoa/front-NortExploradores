@@ -20,6 +20,7 @@ import { TokenService } from 'src/app/services/token.service';
 })
 export class SolicitudComponent implements OnInit {
   public paquetes: any = [];
+  public solicitudTour:any;
   public usuario:any;
   public seguros: any = [];
   public empleados: any = [];
@@ -74,12 +75,14 @@ export class SolicitudComponent implements OnInit {
       estado: ['', Validators.required],
       alojamiento: ['', Validators.required],
       municipio: ['', Validators.required],
-      descripcionUsuario:['', Validators.required],
+      descripcion:['', Validators.required],
+
       tour: this.formBuilder.group({
         idTour: ['', Validators.required],
         minCupos: ['', Validators.required],
         maxCupos: ['', Validators.required],
         fechaLlegada: ['', Validators.required],
+        cantCupos: ['', Validators.required],
         fechaSalida: ['', Validators.required],
         empleado: ['', Validators.required],
         paquete: ['', Validators.required],
@@ -88,6 +91,7 @@ export class SolicitudComponent implements OnInit {
       })
     });
     this.solicitudPaqueteService.obtenerSolicitud(this.id).subscribe(solicitud => {
+      this.solicitudTour = solicitud;
       const out = document.getElementById("cliente");
       if (out) out.innerHTML = solicitud.usuario.username
 
@@ -102,16 +106,17 @@ export class SolicitudComponent implements OnInit {
       this.flag=2;
       this.form.setValue({
         idSolicitud:this.id,
-        usuario:this.usuario,
+        usuario:solicitud.usuario,
         estado: "ACEPTADO",
         alojamiento:"",
         precio:0,
-        descripcionUsuario:solicitud.descripcion,
+        descripcion:solicitud.descripcion,
         municipio: solicitud.municipio.idMuni,
         tour: {
           idTour: solicitud.tour.idTour,
           minCupos: solicitud.tour.minCupos,
           maxCupos: solicitud.tour.maxCupos,
+          cantCupos: solicitud.tour.cantCupos,
           fechaLlegada: solicitud.tour.fechaLlegada,
           fechaSalida: solicitud.tour.fechaSalida,
           empleado: solicitud.tour.empleado,
@@ -143,16 +148,12 @@ export class SolicitudComponent implements OnInit {
   }
 
   public enviarData() {
-
-        this.tourService.post(this.form.value.tour).subscribe(tour => {
-          this.solicitudPaqueteService.post(this.form.value).subscribe(solicitud=>{
-            this.toastr.success("La solicitud ha sido aceptada", 'OK', {
-              timeOut: 3000, positionClass: 'toast-top-center'
-            });
-          })
-         
-        })
-
+    console.log(this.form.value);
+            this.solicitudPaqueteService.aceptarSolicitud(this.form.value).subscribe(respuesta=>{
+              this.toastr.success("La solicitud ha sido aceptada", 'OK', {
+                timeOut: 3000, positionClass: 'toast-top-center'
+              });
+            })
 }
 
   public agregarPaquetes() {

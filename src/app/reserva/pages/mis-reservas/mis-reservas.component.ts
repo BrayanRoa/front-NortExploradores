@@ -75,7 +75,6 @@ export class MisReservasComponent implements OnInit {
           positionClass: 'toast-top-center',
           timeOut: 3000
          })
-         this.eliminarReserva(id);
       })
   }
   public eliminarReserva(id:any){

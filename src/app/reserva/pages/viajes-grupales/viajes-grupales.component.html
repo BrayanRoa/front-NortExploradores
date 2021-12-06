@@ -20,8 +20,8 @@
                                     <div class="col-md-6">
                                         <h5>Datos del tour</h5>
                                         <!--  -->
-                                        <div [formGroup]="formPaq" class="form-group" >
-                                            <select formControlName="municipio" [class.is-invalid]="formPaq.controls.municipio.status=='INVALID'" [class.is-valid]="formPaq.controls.municipio.status=='VALID'"  class=" form-control" type="text" id="inputMunicipio">
+                                        <div [formGroup]="formSol" class="form-group" >
+                                            <select formControlName="municipio" [class.is-invalid]="formSol.controls.municipio.status=='INVALID'" [class.is-valid]="formSol.controls.municipio.status=='VALID'"  class=" form-control" type="text" id="inputMunicipio">
                                                 <option value="">Seleecione un Municipio</option>
                                                 <option *ngFor="let municipio of municipios" name="municipio" id="muni{{municipio.idMuni}}"
                                                     value={{municipio.idMuni}}>
@@ -33,7 +33,7 @@
                                             <input type="text" class="form-control" placeholder="Destino" value="" />
                                         </div> -->
                                         <div [formGroup]="formTour" class="form-group">
-                                            <input formControlName="pasajeros" [class.is-invalid]="formTour.controls.pasajeros.status=='INVALID'" [class.is-valid]="formTour.controls.pasajeros.status=='VALID'"  type="text" class="form-control" placeholder="N° de pasajeros" />
+                                            <input formControlName="cantCupos" [class.is-invalid]="formTour.controls.cantCupos.status=='INVALID'" [class.is-valid]="formTour.controls.cantCupos.status=='VALID'"  type="number" class="form-control" placeholder="N° de pasajeros" />
                                         </div>
                                         <div [formGroup]="formTour" class="wrap-input100">
                                             <span class="contact100-form-combo">Fecha Salida</span>
