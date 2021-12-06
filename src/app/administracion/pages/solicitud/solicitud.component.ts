@@ -71,9 +71,11 @@ export class SolicitudComponent implements OnInit {
     this.form = this.formBuilder.group({
       idSolicitud:[''],
       usuario:[''],
-      precio: ['', Validators.required],
+      precio: ['', Validators.compose([
+        Validators.required, Validators.min(0),
+      ]) ],
       estado: ['', Validators.required],
-      alojamiento: ['', Validators.required],
+      alojamiento: [''],
       municipio: ['', Validators.required],
       descripcion:['', Validators.required],
 
@@ -82,7 +84,10 @@ export class SolicitudComponent implements OnInit {
         minCupos: ['', Validators.required],
         maxCupos: ['', Validators.required],
         fechaLlegada: ['', Validators.required],
-        cantCupos: ['', Validators.required],
+        cantCupos: ['', Validators.compose([
+          Validators.required, Validators.min(1),
+          Validators.required, Validators.max(100)
+        ]) ],
         fechaSalida: ['', Validators.required],
         empleado: ['', Validators.required],
         paquete: ['', Validators.required],
@@ -126,8 +131,11 @@ export class SolicitudComponent implements OnInit {
         }
       })
     })
-    console.log(this.form.value);
 
+  }
+
+  getControls(control:any) {
+    return (this.form.get('tour') as FormArray).get(control)?.status;
   }
 
   public agregarAlojamiento() {
@@ -148,7 +156,12 @@ export class SolicitudComponent implements OnInit {
   }
 
   public enviarData() {
-    console.log(this.form.value);
+    if(this.form.status=='INVALID'){
+      this.toastr.error("Datos incorrectos", 'ERROR', {
+        timeOut: 3000, positionClass: 'toast-top-center'
+      });
+      return;
+    }
             this.solicitudPaqueteService.aceptarSolicitud(this.form.value).subscribe(respuesta=>{
               this.toastr.success("La solicitud ha sido aceptada", 'OK', {
                 timeOut: 3000, positionClass: 'toast-top-center'
