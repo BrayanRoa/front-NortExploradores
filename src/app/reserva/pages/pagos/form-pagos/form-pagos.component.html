@@ -505,24 +505,52 @@
         </button>
       </div>
       <div class="col-6">
-        <form #form method="post" action="https://gateway.payulatam.com/ppp-web-gateway/">
-          <input name="merchantId"    type="hidden"  value={{idMercado}}   >
-          <input name="accountId"     type="hidden"  value={{idCuenta}} >
-          <input name="description"   type="hidden"  value={{descripcion}}>
-          <input name="referenceCode" type="hidden"  value={{idCompra}} > 
+        <form
+          #form
+          method="post"
+          action="https://gateway.payulatam.com/ppp-web-gateway/"
+        >
+          <input name="merchantId" type="hidden" value="{{ idMercado }}" />
+          <input name="accountId" type="hidden" value="{{ idCuenta }}" />
+          <input name="description" type="hidden" value="{{ descripcion }}" />
+          <input name="referenceCode" type="hidden" value="{{ idCompra }}" />
           <input name="extra1" type="hidden" value="{{ idCompra }}" />
           <input name="extra2" type="hidden" value="{{ idCompra }}" />
           <input name="billing_address" type="hidden" value="{{ idCompra }}" />
           <input name="telephone" type="hidden" value="{{ idCompra }}" />
-          <input name="amount"        type="hidden"  value={{totalCompra}}   >
-          <input name="tax"           type="hidden"  value={{iva}}  >
-          <input name="currency"      type="hidden"  value={{moneda}} >
-          <input name="signature"     type="hidden"  value={{firmaElectronicaMD5}}  >
-          <input name="test"          type="hidden"  value="0" >
-          <input name="buyerEmail"    type="hidden"  value={{email}} >
-          <input name="buyerFullName"    type="hidden"  value={{nombrePersona}} >
-          <button type="submit" class="" target="_blank" (click)="guardarCompra(form)" style="width: 140px;height: 40px;border-radius: 200px;border: 0px; background-color: white;" value="Pagar con PayU">
-            <img  style="width: 140px;height: 40px;" src="https://universidadreformadademiami.org/wp-content/uploads/2020/10/boton.png" />
+          <input name="amount" type="hidden" value="{{ totalCompra }}" />
+          <input name="tax" type="hidden" value="{{ iva }}" />
+          <input name="currency" type="hidden" value="{{ moneda }}" />
+          <input
+            name="signature"
+            type="hidden"
+            value="{{ firmaElectronicaMD5 }}"
+          />
+          <input name="test" type="hidden" value="0" />
+          <input name="buyerEmail" type="hidden" value="{{ email }}" />
+          <input
+            name="buyerFullName"
+            type="hidden"
+            value="{{ nombrePersona }}"
+          />
+          <button
+            type="submit"
+            class=""
+            target="_blank"
+            (click)="guardarCompra(form)"
+            style="
+              width: 140px;
+              height: 40px;
+              border-radius: 200px;
+              border: 0px;
+              background-color: white;
+            "
+            value="Pagar con PayU"
+          >
+            <img
+              style="width: 140px; height: 40px"
+              src="https://universidadreformadademiami.org/wp-content/uploads/2020/10/boton.png"
+            />
           </button>
         </form>
 
