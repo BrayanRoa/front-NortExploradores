@@ -11,7 +11,7 @@
         
         
         <div class="wrap-input100 validate-input" data-validate="Por favor ingrese el nombre completo">
-          <span class="contact100-form-combo"> Id Transporte</span>
+          <span class="contact100-form-combo"> Placa del Transporte</span>
           <input *ngIf="id==null" formControlName="idTransporte" class="input100 form-control" type="text" placeholder="Id" id="inputTransporte"[class.is-invalid]="form.controls.idTransporte.status!='VALID'"
           [class.is-valid]="form.controls.idTransporte.status=='VALID'">
           <input class="input100" *ngIf="id!=null" id="idTrans" readonly>
@@ -55,14 +55,11 @@
         </div>
 
 
-        <div class="wrap-input100 validate-input" data-validate="Por favor ingrese el color">
+        <div class="wrap-input100 " >
           <span class="contact100-form-combo"> Color</span>
-          <input formControlName="color" class="input100 form-control" type="text" placeholder="Color" id="inputColor"[class.is-invalid]="form.controls.color.status!='VALID'"
-          [class.is-valid]="form.controls.color.status=='VALID'">
+          <input formControlName="color" class="input100 " type="text" placeholder="Color" id="inputColor">
           <span class="focus-input100"></span>
-          <div class="invalid-feedback" style="text-align: center;">
-            Ingresa el color del transporte con min 4 y maximo 25 caracteres
-          </div>
+
         </div>
 
 
