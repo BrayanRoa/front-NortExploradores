@@ -2,7 +2,7 @@
   <div class="cajon">
     <div class="titulo">
       <h4 class="gestiones">
-        Administración De Actividades
+        Administración de Descuentos
       </h4>
     </div>
 
@@ -18,7 +18,8 @@
       <tr> 
         <th>ID</th>
         <th>DESCRIPCIÓN</th>
-        <th>PORCENTAJE</th>           
+        <th>PORCENTAJE</th>       
+        <th>OPCIÓN</th>     
       </tr>
     </thead>
     <tbody>
@@ -29,7 +30,7 @@
           <td>{{ desc.porcentaje }}</td>
           <td nzAlign="center">
            
-          <a [routerLink]="['/administracion/editarActividad',desc.idDescuento]">
+          <a [routerLink]="['/administracion/editDescuentos',desc.idDescuento]">
             <i
               nz-icon
               nzType="edit"

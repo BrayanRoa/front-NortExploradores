@@ -19,6 +19,7 @@ import { AddTourComponent } from './pages/tours/add-tour/add-tour.component';
 import { AddPaqueteComponent } from './pages/paquetes/add-paquete/add-paquete.component';
 import { AddAliadoComponent } from './pages/aliados/add-aliado/add-aliado.component';
 import { AddAlojamientoComponent } from './pages/alojamientos/add-alojamiento/add-alojamiento.component';
+import { DescuentosComponent } from './pages/descuentos/descuentos.component';
 import { CalendarioComponent } from './pages/calendario/calendario.component';
 import { AddSegurosComponent } from './pages/aliados/add-seguros/add-seguros.component';
 import { AddTransportesComponent } from './pages/aliados/add-transportes/add-transportes.component';
@@ -32,6 +33,7 @@ import { EditPaqueteComponent } from './pages/paquetes/edit-paquete/edit-paquete
 import { SolicitudesComponent } from './pages/solicitud/solicitudes/solicitudes.component';
 import { NotificacionesComponent } from './pages/notificaciones/notificaciones.component';
 import { EditarInfoComponent } from './pages/editar-info/editar-info.component';
+import { EditDescuentosComponent } from './pages/descuentos/edit-descuentos/edit-descuentos.component';
 
 const routes : Routes = [
   {path:"", 
@@ -89,6 +91,9 @@ const routes : Routes = [
       {path:"tours", component:ToursComponent},
       {path:"nuevoTour", component:AddTourComponent},
       {path:"editarTour/:idTour", component:AddTourComponent},
+
+      {path:"descuentos", component:DescuentosComponent},
+      {path:"editDescuentos/:idDescuento", component:EditDescuentosComponent},
 
       {path:"dashboard", component:DashboardComponent},
 

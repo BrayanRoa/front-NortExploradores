@@ -65,12 +65,14 @@ export class EditDescuentosComponent implements OnInit {
   }
 
   esEditarDesc() {
-    if (this.id !== null) {;
+    if (this.id !== null) {
       this.descuentoService.obtenerDescuentos(this.id).subscribe((data) => {
+      
         this.form.setValue({
           idDescuento: data.idDescuento,
           descripcion: data.descripcion,
           porcentaje: data.porcentaje
+
         });
       });
     }

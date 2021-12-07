@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DescuentosService {
-  url = `${global.url}/descuentos/`;
+  url = `${global.url}/descuento/`;
 
   constructor(private http: HttpClient) { }
 
