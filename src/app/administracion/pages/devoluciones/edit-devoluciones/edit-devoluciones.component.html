@@ -1,1 +1,47 @@
-<p>edit-devoluciones works!</p>
+<div class="container-contact100">
+  <div class="wrap-contact100 ">
+
+    <form [formGroup]="form" (submit)="enviarData()" class="contact100-form validate-form">
+      <span class="contact100-form-title">
+        <h4 class="col-sm-10">Devolucion</h4>
+      </span>
+      <hr style="color: rgb(5, 168, 5);">
+
+      <input formControlName="idDevolucion" hidden type="text" class="form-control" id="inputidDev">
+
+      <div class="wrap-input100 validate-input">
+        <span class="contact100-form-combo">ID Compra</span>
+        <input readonly="readonly" formControlName="compra" class="input100 form-control" type="number" placeholder="Compra"
+          id="inputPorcentaje">
+      </div>
+    
+      <div class="wrap-input100">
+        <span class="contact100-form-combo">Correo del usuario</span>
+        <input readonly="readonly" formControlName="email" class="form-control input100" type="email" placeholder="Correo" id="inputEmail">
+        <span class="focus-input100"></span>
+    </div>
+
+
+        <div class="wrap-input100 validate-input">
+        <span class="contact100-form-combo">Cantidad de Devolucion</span>
+        <input formControlName="cantidad" class="input100 form-control" type="number" placeholder="Cantidad"
+          id="inputCantidad">
+        <span class="focus-input100"></span>
+        <div class="invalid-feedback" style="text-align: center;">
+          Ingresa la cantidad de devolucion
+        </div>
+        
+      </div>
+
+      <div class="wrap-input100">
+        <span class="contact100-form-combo">Fecha - </span>
+        <input  readonly="readonly" formControlName="fecha" type="date" class="form-control input100" id="inputFechaSalida" placeholder="Fecha s" >
+    </div>
+
+      <hr style="color: rgb(5, 168, 5);">
+      <div class="container-contact100-form-btn">
+        <button class="contact100-form-btn" type="submit">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>

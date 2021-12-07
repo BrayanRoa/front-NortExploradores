@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DevolucionesService {
-  url = `${global.url}/devolucion/`;
+  url = `${global.url}/devolucion`;
  
   constructor(private http: HttpClient) { }
 
@@ -19,7 +19,7 @@ export class DevolucionesService {
   }
 
   obtenerDevoluciones(id:string): Observable<any>{
-    return this.http.get<any>(this.url+id)
+    return this.http.get<any>(this.url+`/`+id)
   }
 
   editarDevoluciones(id:string,devoluciones:any):Observable<any>{
