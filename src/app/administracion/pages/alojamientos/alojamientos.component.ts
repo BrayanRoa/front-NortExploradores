@@ -23,8 +23,7 @@ export class AlojamientosComponent implements OnInit {
     private tokenS:TokenService,
     
     ){
-
-  }
+}
 
   ngOnInit(): void {
     this.cargarToken();
@@ -41,10 +40,7 @@ export class AlojamientosComponent implements OnInit {
     })
   }
 
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
-  }
+
   
   deshabilitar(id:any){
     this.httpClient.desabilitar(id).subscribe((data) => {  
