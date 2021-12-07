@@ -55,6 +55,7 @@ import { SolicitudesComponent } from './pages/solicitud/solicitudes/solicitudes.
 import { NotificacionesComponent } from './pages/notificaciones/notificaciones.component';
 import { EditarInfoComponent } from './pages/editar-info/editar-info.component';
 import { DescuentosComponent } from './pages/descuentos/descuentos.component';
+import { EditDescuentosComponent } from './pages/descuentos/edit-descuentos/edit-descuentos.component';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -90,7 +91,8 @@ import { DescuentosComponent } from './pages/descuentos/descuentos.component';
     SolicitudesComponent,
     NotificacionesComponent,
     EditarInfoComponent,
-    DescuentosComponent
+    DescuentosComponent,
+    EditDescuentosComponent
   ],
   imports: [
     CommonModule,
