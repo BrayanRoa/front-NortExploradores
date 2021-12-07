@@ -40,7 +40,8 @@ registerLocaleData(es);
     AppComponent,
     ErrorPagesComponent,
     AuthLoginComponent,
-    AuthRegisterComponent,
+    AuthRegisterComponent
+    
 
   ],
   imports: [
