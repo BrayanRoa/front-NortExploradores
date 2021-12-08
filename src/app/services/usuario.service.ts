@@ -31,7 +31,7 @@ export class UsuarioService {
     return this.http.get<any>(`${this.url}/${idUsuario}/pasajeros`);
   }
   public viajesRealizados(username:any):Observable<any>{
-    return this.http.get<any>(`${this.url}/${username}/cantidadViajes`);
+    return this.http.get<any>(`${this.url}/${username}/cantidadViajes/`);
   }
   public comprasReservadasUsuario(idUsuario:number):Observable<any>{
     return this.http.get<any>(`${this.url}/${idUsuario}/comprasReservadas`)

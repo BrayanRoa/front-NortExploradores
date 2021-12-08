@@ -90,7 +90,7 @@ export class SolicitudComponent implements OnInit {
         ]) ],
         fechaSalida: ['', Validators.required],
         empleado: ['', Validators.required],
-        paquete: ['', Validators.required],
+        paquete: [''],
         idTransporte: ['', Validators.required],
         seguro: ['', Validators.required],
       })
@@ -156,6 +156,7 @@ export class SolicitudComponent implements OnInit {
   }
 
   public enviarData() {
+    console.log(this.form);
     if(this.form.status=='INVALID'){
       this.toastr.error("Datos incorrectos", 'ERROR', {
         timeOut: 3000, positionClass: 'toast-top-center'
