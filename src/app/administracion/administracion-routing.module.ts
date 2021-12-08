@@ -37,6 +37,7 @@ import { EditDescuentosComponent } from './pages/descuentos/edit-descuentos/edit
 import { DevolucionesComponent } from './pages/devoluciones/devoluciones.component';
 import { EditDevolucionesComponent } from './pages/devoluciones/edit-devoluciones/edit-devoluciones.component';
 import { ToursInactivosComponent } from './pages/tours/tours-inactivos/tours-inactivos.component';
+import { ReportesMesesComponent } from './pages/reportes/reportes-meses/reportes-meses.component';
 
 const routes : Routes = [
   {path:"", 
@@ -90,7 +91,7 @@ const routes : Routes = [
       {path:"editarPaquete/:idPaq", component:EditPaqueteComponent},
         
       {path:"reportes", component:DashboardComponent},
-      
+      {path:"reportesMes", component: ReportesMesesComponent},
       {path:"tours", component:ToursComponent},
       {path:"nuevoTour", component:AddTourComponent},
       {path:"toursInactivos", component:ToursInactivosComponent},

@@ -1,5 +1,5 @@
 
-<div class=" content" style="padding: 40px;">
+<div class=" content" id="htmlData" style="padding: 40px;">
   <div class=" row">
     <div class=" col-12 p-4">
       <div class=" card card-chart">
@@ -155,4 +155,12 @@
       </div>
     </div>
   </div> -->
+  
+</div>
+
+<div style="text-align: center;">
+  <button class="btn btn-danger" (click)="downloadPDF()" style="margin-right: 8px;">Download PDF</button>
+  <button class="btn btn-info" routerLink="/administracion/reportesMes"  style="margin-right: 8px;">Reportes Por Mes</button>
+  <button class="btn btn-primary" (click)="reportesVentas()" style="margin-right: 8px;">Reporte De Ventas</button>
+  <button class="btn btn-success" (click)="reportesRegistros()" style="margin-right: 8px;">Reportes De Registros</button>
 </div>

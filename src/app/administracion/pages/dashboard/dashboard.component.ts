@@ -5,6 +5,8 @@ import { Chart } from 'chart.js';
 import { CompraService } from 'src/app/services/compra.service';
 import { TokenService } from 'src/app/services/token.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-dashboard',
@@ -340,5 +342,59 @@ export class DashboardComponent implements OnInit {
     } else {
       this.router.navigateByUrl("/inicio");
     }
+  }
+
+
+
+
+
+  public downloadPDF() {
+    // Extraemos el
+    const date = new Date().getMonth();
+    // console.log({date});
+    const mes = this.obtenerMes(date.toString());
+    // console.log(mes);
+    const DATA : any = document.getElementById('htmlData'); // apartado donde tomara los datos
+    const doc = new jsPDF('p', 'pt', 'a4'); // configuracion del PDF
+    doc.text(`NorteXploradores Reporte Del Mes De ${mes}`, 120,30) // texto agregado manualmente
+    
+    const options = { // UN POCO DE ESTILOS DEL PDF
+      background: 'black',
+      scale: 5,
+    };
+    
+    html2canvas(DATA, options).then((canvas) => {
+
+      const img = canvas.toDataURL('image/PNG'); // CREAMOS LA IMG EN PNG
+      console.log({img})
+      // Add image Canvas to PDF
+      const bufferX = 15; 
+      const bufferY = 40;
+      const imgProps = (doc as any).getImageProperties(img);
+      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+      return doc;
+    }).then((docResult) => {
+      doc.output();
+      docResult.save(`${new Date().getMonth()+1}_tutorial.pdf`);
+    });
+  }
+
+ 
+  
+  obtenerMes(mes:any){
+    const monthNames = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
+                       "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+    return monthNames[mes]
+  }
+
+  reportesVentas(){
+
+  }
+
+  reportesRegistros(){
+    
   }
 }
