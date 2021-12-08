@@ -36,6 +36,7 @@ import { EditarInfoComponent } from './pages/editar-info/editar-info.component';
 import { EditDescuentosComponent } from './pages/descuentos/edit-descuentos/edit-descuentos.component';
 import { DevolucionesComponent } from './pages/devoluciones/devoluciones.component';
 import { EditDevolucionesComponent } from './pages/devoluciones/edit-devoluciones/edit-devoluciones.component';
+import { ToursInactivosComponent } from './pages/tours/tours-inactivos/tours-inactivos.component';
 
 const routes : Routes = [
   {path:"", 
@@ -92,6 +93,7 @@ const routes : Routes = [
       
       {path:"tours", component:ToursComponent},
       {path:"nuevoTour", component:AddTourComponent},
+      {path:"toursInactivos", component:ToursInactivosComponent},
       {path:"editarTour/:idTour", component:AddTourComponent},
 
       {path:"descuentos", component:DescuentosComponent},

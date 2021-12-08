@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { ToursService } from 'src/app/administracion/services/tours.service';
 import { TokenService } from 'src/app/services/token.service';
-import { ToursService } from '../../services/tours.service';
 
 @Component({
-  selector: 'app-tours',
-  templateUrl: './tours.component.html',
-  styleUrls: ['./tours.component.css']
+  selector: 'app-tours-inactivos',
+  templateUrl: './tours-inactivos.component.html',
+  styleUrls: ['./tours-inactivos.component.css']
 })
-export class ToursComponent implements OnInit {
+export class ToursInactivosComponent implements OnInit {
 
   dtOptions: DataTables.Settings = {};
   
@@ -19,12 +19,12 @@ export class ToursComponent implements OnInit {
 
   estado =''; 
   form! : FormGroup;
-
+  
   constructor(
     private tourService: ToursService,
     private router: Router,
     private token: TokenService,
-    private fb  : FormBuilder
+    private fb : FormBuilder
     ){
 
   }
@@ -44,7 +44,7 @@ export class ToursComponent implements OnInit {
     this.tourService.listarTour().subscribe((data:any)=>{
       // this.data = data;
       for (const iterator of data) {
-        if(iterator.estado=="ACTIVO"){
+        if(iterator.estado=="INACTIVO"){
           this.data.push(iterator);
         }
       }
@@ -54,7 +54,7 @@ export class ToursComponent implements OnInit {
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
-    // this.dtTrigger.unsubscribe();
+    this.dtTrigger.unsubscribe();
   }
   deshabilitar(id:any){
     this.tourService.deshabilitar(id).subscribe((data) => {  
