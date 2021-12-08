@@ -19,7 +19,21 @@ export class CompraService {
   public encontrar(idCompra:any):Observable<any>{
     return this.http.get<any>(this.url+idCompra)
   }
+  public comprasMes():Observable<any>{
+    return this.http.get<any>(this.url+"mensuales")
+  }
 
+  public comprasPorMes():Observable<any>{
+    return this.http.get<any>(this.url+"totalMeses")
+  }
+
+  public totalPaquetes():Observable<any>{
+    return this.http.get<any>(this.url+"totalPaquetes")
+  }
+  
+  public comprasCantidadPaq():Observable<any>{
+    return this.http.get<any>(this.url+"cantidadpaq")
+  }
   public compras():Observable<any>{
     return this.http.get<any>(this.url)
   }
