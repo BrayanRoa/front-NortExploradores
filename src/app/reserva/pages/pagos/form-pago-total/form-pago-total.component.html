@@ -1,0 +1,528 @@
+<!-- Pagina 1  -->
+<app-header></app-header>
+
+
+<div class="md-stepper-horizontal orange" *ngIf="isLogged" style="margin-bottom: 20px;">
+  <div class="md-step active">
+    <div class="md-step-circle" id="comprastep"><span><i class="fas fa-cash-register"></i></span></div>
+    <div class="md-step-title">Información de compra</div>
+    <div class="md-step-bar-left"></div>
+    <div class="md-step-bar-right"></div>
+  </div>
+  <div class="md-step">
+    <div class="md-step-circle" id="facturastep"><span><i class="fas fa-receipt"></i></span></div>
+    <div class="md-step-title">Verificar factura</div>
+    <div class="md-step-bar-left"></div>
+    <div class="md-step-bar-right"></div>
+  </div>
+  <div class="md-step">
+    <div class="md-step-circle" id="pagostep"><span><i class="fas fa-shopping-cart"></i></span></div>
+    <div class="md-step-title">Realizar pago</div>
+    <div class="md-step-bar-left"></div>
+    <div class="md-step-bar-right"></div>
+  </div>
+</div>
+ 
+
+<div class="glass form-pagos" style="margin:20px;margin-left: 90px;margin-right: 90px;" *ngIf="infoPagina==1 && isLogged">
+  <h1>Formulario de pago</h1>
+  <br><br>
+  <div class="row">
+    <div class="mb-2 row" *ngIf="pasajerosFrecElegidos.length!=0">
+      <table class="table table-striped">
+        <div class="col-sm-2"></div>
+        <thead>
+          <th style="text-align: center;">Pasajeros seleccionados</th>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Identificacion</th>
+            <th scope="col">Accion</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-12 col-lg-12">
+        <form [formGroup]="pagosInfo" #form>
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label for="firstName" class="form-label">Paquete</label>
+              <select class="form-select" formControlName="paquete" (change)="cargarTour($event)" aria-label="Default select example">
+                <option name="paquete" id="paq{{tour.paquete.idPaq}}" *ngFor="let tour of tours"
+                  value={{tour.idTour}}>
+                  {{tour.paquete.nombre}} [{{tour.fechaSalida}}] --> [{{tour.fechaLlegada}}] </option>
+              </select>
+            </div>
+
+            <div class="col-sm-2">
+              <label for="lastName" class="form-label">Total pasajeros: </label>
+              <code>{{total}}</code>
+            </div>
+            <div class="col-sm-2" *ngIf="tourSeleccionado!=undefined">
+              <label for="lastName" class="form-label">Cupos disponibles: </label>
+              <code id="cantidadCupos">{{tourSeleccionado.cantCupos}}</code>
+            </div>
+
+            <div class="col-sm-1 col-md-1" *ngIf="tourSeleccionado!=undefined;">
+             <img id="imagenTour" class="imgTour" src="{{tourSeleccionado.paquete.municipio.urlImagen}}" alt="">
+            </div>
+          </div>
+
+          <hr>
+
+        <!-- datos cotizante -->
+        <ul>
+          
+        </ul>
+    
+        <!-- datos cotizante -->       
+
+        <div class="col-sm-6">
+          <label for="firstName" class="form-label">Pasajeros que has llevado antes</label>
+          <select class="form-select" (change)="actualizarPasajeros($event)" formControlName="paquete"
+            aria-label="Default select example">
+            <option name="paquete" id="paq{{pasajero.idPasajero}}" *ngFor="let pasajero of pasajerosFrec; let i=index"
+              value={{pasajero.idPasajero}}> {{pasajero.persona.nombre}} {{pasajero.persona.apellido}} -
+              {{pasajero.persona.idPersona}}
+            </option>
+            
+          </select>
+        </div>
+
+          <div class=" mt-2r pasajero-usuario" style="margin-top: 20px;margin-bottom: 20px;">
+            <div class="card-header">
+              <div class="header-container">
+                <span class="product-header">
+                 
+                </span>
+                <button (click)="agregarPasajero()" id="btnagregar" class="button-34 gray">
+                  Agregar <i class="fas fa-plus"></i>
+                </button>
+              </div>
+
+
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  <ul class="list-group">
+                    <div class="row">
+                        <li class="list-group-item pasajeroX" formArrayName="pasajeros"
+                        *ngFor="let product of pasajerosDeGrupos.controls; let i = index;" 
+                        style="margin: 20px; border: 1px solid #fff;
+                        border-radius: 15px;
+                        box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);padding:20px" 
+                        class="col-5 col-md-6 col-lg-5 col-sm-10 col-xs-12">
+                        <div [formGroupName]="i" class="row">
+                          <div class="mb-2 row">
+                            <h2 class="col-sm-10 col-form-label" *ngIf="!product.value.esCotizante">Pasajero {{i}}</h2>
+                            <h2 class="col-sm-10 col-form-label" *ngIf="product.value.esCotizante">Cliente cotizante</h2>
+                            <h2 class="col-sm-1"><button [hidden]="product.value.esCotizante" (click)="eliminarPasajero(i,product)"
+                                class="button-34 red"><i class="fas fa-trash"></i> </button></h2>
+                          </div>
+                          <div class="mb-2 row">
+                            <label class="col-sm-4 col-form-label">Identificación</label>
+                            <div class="col-sm-8">
+                              <input type="number" 
+                              [class.is-invalid]="
+                                  pasajeroI(i).controls.idPersona.status !=
+                                  'VALID'
+                                "
+                                [class.is-valid]="
+                                  pasajeroI(i).controls.idPersona.status ==
+                                  'VALID'
+                                "
+                                [readonly]="
+                                  product.value.esCotizante ||
+                                  product.value.idPasajero != null
+                                "
+                              [readonly]="product.value.esCotizante || product.value.idPasajero!=null" formControlName="idPersona" name="" class="form-control"
+                                placeholder="Ingresa tu identificacion" required>
+                            </div>
+                          </div>
+  
+                          <div class="mb-2 row">
+                            <label class="col-sm-4 col-form-label">Tipo de id</label>
+                            <div class="col-sm-8" >
+                              <select *ngIf="!product.value.esCotizante && product.value.idPasajero==null" 
+                              class="form-select"
+                                [class.is-invalid]="
+                                  pasajeroI(i).controls.idTipo.status != 'VALID'
+                                "
+                                [class.is-valid]="
+                                  pasajeroI(i).controls.idTipo.status == 'VALID'
+                                "
+                              value=""  class="form-select" formControlName="idTipo" required>
+                                <option name=""  id="" *ngFor="let id of tipoId" value="{{id.idTipo}}">{{id.tipo}}</option>
+                              </select>
+                              
+                              <input type="text" *ngIf="product.value.esCotizante || product.value.idPasajero!=null" 
+                              readonly   value="{{tiposC[product.value.idTipo-1]}}" name="" class="form-control"
+                                 required>
+  
+                            </div>
+                          </div>
+  
+                          <div class="mb-2 row">
+                            <label class="col-sm-4 col-form-label">Nombre</label>
+                            <div class="col-sm-8">
+                              <input type="text"
+                              class="form-select"
+                                [class.is-invalid]="
+                                  pasajeroI(i).controls.nombre.status != 'VALID'
+                                "
+                                [class.is-valid]="
+                                  pasajeroI(i).controls.nombre.status == 'VALID'
+                                "
+                              [readonly]="product.value.esCotizante || product.value.idPasajero!=null" name="" formControlName="nombre" required class="form-control"
+                                placeholder="Ingresa tu nombre">
+                            </div>
+                          </div>
+  
+                          <div class="mb-2 row">
+                            <label class="col-sm-4 col-form-label">Apellidos</label>
+                            <div class="col-sm-8">
+                              <input type="text" [readonly]="product.value.esCotizante || product.value.idPasajero!=null"
+                              [class.is-invalid]="
+                                  pasajeroI(i).controls.apellido.status != 'VALID'
+                                "
+                                [class.is-valid]="
+                                  pasajeroI(i).controls.apellido.status == 'VALID'
+                                "
+                              formControlName="apellido" required class="form-control"
+                                placeholder="Ingresa tus apellidos">
+                            </div>
+                          </div>
+  
+                          <div class="mb-2 row">
+                            <label class="col-sm-4 col-form-label">Sexo</label>
+                            <div class="col-sm-8">
+                              <select
+                                formControlName="sexo"
+                                *ngIf="
+                                  !product.value.esCotizante &&
+                                  product.value.idPasajero == null
+                                "
+                                value=""
+                                class="form-select"
+                                [class.is-invalid]="
+                                  pasajeroI(i).controls.sexo.status != 'VALID'
+                                "
+                                [class.is-valid]="
+                                  pasajeroI(i).controls.sexo.status == 'VALID'
+                                "
+                              >
+                                <option
+                                  *ngFor="let genero of generos; let i = index"
+                                  value="{{ i }}"
+                                >
+                                  {{ genero }}
+                                </option>
+                              </select>
+
+                              <input
+                                *ngIf="
+                                  product.value.esCotizante ||
+                                  product.value.idPasajero != null
+                                "
+                                type="text"
+                                readonly
+                                value="{{ generos[product.value.sexo] }}"
+                                class="form-control is-valid"
+                              />
+
+                              <input
+                                *ngIf="
+                                  product.value.esCotizante ||
+                                  product.value.idPasajero != null
+                                "
+                                type="hidden"
+                                formControlName="sexo"
+                                class="form-control"
+                              />
+                            </div>
+                          </div>
+  
+                          <div class="mb-2 row">
+                            <label class="col-sm-4 col-form-label">Fecha nacimiento</label>
+                            <div class="col-sm-8">
+                              <input 
+                              [class.is-invalid]="
+                                  pasajeroI(i).controls.fechaNac.status != 'VALID'
+                                "
+                                [class.is-valid]="
+                                  pasajeroI(i).controls.fechaNac.status == 'VALID'
+                                "
+                              type="date" [readonly]="product.value.esCotizante || product.value.idPasajero!=null" formControlName="fechaNac" required class="form-control">
+                            </div>
+                          </div>
+  
+                          <div class="mb-2 row">
+                            <label class="col-sm-4 col-form-label">Celular</label>
+                            <div class="col-sm-8">
+                              <input
+                              [class.is-invalid]="
+                                  pasajeroI(i).controls.cel.status != 'VALID'
+                                "
+                                [class.is-valid]="
+                                  pasajeroI(i).controls.cel.status == 'VALID'
+                                "
+                              type="number" [readonly]="product.value.esCotizante || product.value.idPasajero!=null" formControlName="cel" class="form-control">
+                            </div>
+                          </div>
+  
+                          <div class="mb-2 row">
+                            <label class="col-sm-4 col-form-label">Correo</label>
+                            <div class="col-sm-8">
+                              <input 
+                              [class.is-invalid]="
+                                  pasajeroI(i).controls.correo.status != 'VALID'
+                                "
+                                [class.is-valid]="
+                                  pasajeroI(i).controls.correo.status == 'VALID'
+                                "
+                              type="email" [readonly]="product.value.esCotizante || product.value.idPasajero!=null" formControlName="correo" class="form-control"
+                                style="margin-bottom: 10px;">
+                            </div>
+                            <div class="mb-2 row">
+
+                            </div>
+                          </div>
+                        </div>
+                        </li>
+
+                    </div>
+                   
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" (click)="createpagosInfo()" class="mt-20 w-100 btn-lg button-34" type="button">Guardar
+            datos</button>
+            <div class="mt-20 w-100" id="errorPresentado"></div>  
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <div>
+  </div>
+</div>
+<!-- Pagina 2 -->
+
+<div class="container">
+ 
+
+<div class="glass form-pagos" style="margin:20px;margin-left: 90px;margin-right: 90px;" *ngIf="infoPagina==2&& isLogged" >
+
+  <div class="invoice-content">
+    <!-- begin table-responsive -->
+    <div class="table-responsive">
+       <table class="table table-invoice">
+          <thead>
+             <tr>
+                <th style="font-size: x-large">Costo total</th>
+                <th class="text-center" width="10%">Total</th>
+                <th class="text-center" width="10%">Cantidad</th>
+             </tr>
+          </thead>
+          <tbody>
+             <tr>
+                <td>
+                   <span class="text-inverse">0 a 4 años Infantes</span><br>
+                </td>
+                <td class="text-center">${{pasajerosClasificados[0].precio}}</td>
+                <td class="text-center">{{pasajerosClasificados[0].cantidad}}</td>
+
+             </tr>
+             <tr>
+                <td>
+                   <span class="text-inverse">5 a 13 años Niño(s)</span><br>
+                </td>
+                <td class="text-center">${{pasajerosClasificados[1].precio}}</td>
+                <td class="text-center">{{pasajerosClasificados[1].cantidad}}</td>
+             </tr>
+             <tr>
+                <td>
+                   <span class="text-inverse">Adulto(s)</span><br>
+                </td>
+                <td class="text-center">${{pasajerosClasificados[2].precio}}</td>
+                <td class="text-center">{{pasajerosClasificados[2].cantidad}}</td>
+             </tr>
+
+             <tr *ngIf="descuentoElegido!=undefined" >
+                <td>
+                  <span class="text-inverse" >{{descuentos[descuentoElegido].descripcion}}
+                  </span>
+                </td>
+                <td colspan="2">
+                  <span class="text-inverse" style="font-size: large">-{{descuentos[descuentoElegido].porcentaje}}%
+                    <i *ngIf="descuentoElegido==0" class="fas fa-birthday-cake"></i>
+                    <i *ngIf="descuentoElegido==1" class="fas fa-route"></i>
+                    <i *ngIf="descuentoElegido==2" class="fas fa-users"></i>
+                  </span>
+                </td>
+             </tr>
+
+             <tr>
+              <td>
+                <span class="text-inverse">Costo {{tourSeleccionado.paquete.precio}} $ X Paquete
+                </span>
+             </td>
+             </tr>
+          </tbody>
+       </table>
+    </div>
+    <!-- end table-responsive -->
+    <!-- begin invoice-price -->
+    <div class="invoice-price">
+       <div class="invoice-price-left">
+          <div class="invoice-price-row">
+             <div class="sub-price">
+                <small>SUBTOTAL</small>
+                <span class="text-inverse">${{totalCompra}}</span>
+             </div>
+
+             <div *ngIf="descuentoElegido!=undefined" class="sub-price">
+              <i class="fas fa-minus"></i>
+             </div>
+
+             <div *ngIf="descuentoElegido!=undefined" class="sub-price">
+              <small id="mensajeDescuento">DESCUENTO (-{{descuentos[descuentoElegido].porcentaje}}%)</small>
+              <span class="text-inverse" id="totalDescuento">${{totalDescontado}}</span>
+             </div>
+
+          </div>
+       </div>
+       <div class="invoice-price-right">
+          <small>TOTAL PAGO</small> <span class="f-w-400">${{totalDescuento}}</span>
+       </div>
+    </div>
+    <div class="row" style="margin-top: 20px;">
+      <div class="col-4" style="width: auto;">
+        <button (click)="volverPag()" class="btn-lg button-34" type="button"> <i class="fas fa-chevron-circle-left"></i> Volver</button>
+      </div>
+      <div class="col-4"></div>
+
+      <div class="col-4">
+        <button (click)="cargarPayu()" class="btn-lg button-34" type="button">Siguiente <i class="fas fa-chevron-circle-right"></i></button>
+      </div>
+    </div>
+    <!-- end invoice-price -->
+ </div>
+
+</div>
+
+<!-- Pagina 3  -->
+<div class="glass form-pagos" style="margin:20px;margin-left: 90px;margin-right: 90px;" *ngIf="infoPagina==3&& isLogged">
+  <div class="row">
+
+    <div class="invoice-content">
+      <!-- begin table-responsive -->
+      <div class="table-responsive">
+         <table class="table table-invoice">
+            <thead>
+               <tr>
+                  <th style="font-size: x-large;">Resumen de la compra</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td>
+                     <span class="text-inverse">Referencia de pago</span><br>
+                     <small>Identificativo unico de la compra</small>
+                  </td>
+                  <td class="text-center">{{idCompra}}</td>
+               </tr>
+               <tr>
+                  <td>
+                     <span class="text-inverse">Descripcion</span><br>
+                     <small>Descripción detallada de la compra</small>
+                  </td>
+                  <td class="text-center">{{descripcion}}</td>
+               </tr>
+               <tr>
+                  <td>
+                     <span class="text-inverse">Cantidad de pasajeros</span><br>
+                     <small>Cantidad total de pasajeros que llevaras en el viaje.</small>
+                  </td>
+                  <td class="text-center">{{total}}</td>
+               </tr>
+               <tr>
+                <td>
+                   <span class="text-inverse"> <strong>Total</strong> </span><br>
+                </td>
+                <td class="text-center">${{totalDescuento}}</td>
+             </tr>
+            </tbody>
+         </table>
+      </div>
+      <!-- end table-responsive -->
+      <!-- end invoice-price -->
+   </div>
+
+    
+
+    <!-- PAYU -->
+    <div class="row">
+      <div class="col-6" style="width: auto;">
+        <button (click)="volverPag2(); 
+        " class="btn-lg button-34" type="button">Volver</button>
+      </div>
+      <div class="col-6">
+        <!-- <form #form method="post" action="https://gateway.payulatam.com/ppp-web-gateway/">
+          <input name="merchantId"    type="hidden"  value={{idMercado}}   >
+          <input name="accountId"     type="hidden"  value={{idCuenta}} >
+          <input name="description"   type="hidden"  value={{descripcion}}>
+          <input name="referenceCode" type="hidden"  value={{idCompra}} > 
+          <input name="amount"        type="hidden"  value={{totalCompra}}   >
+          <input name="tax"           type="hidden"  value={{iva}}  >
+          <input name="taxReturnBase" type="hidden"  value={{iva*totalCompra}} >
+          <input name="currency"      type="hidden"  value={{moneda}} >
+          <input name="extra1"          type="hidden"  value="{{idCompra}}" >
+          <input name="signature"     type="hidden"  value={{firmaElectronicaMD5}}  >
+          <input name="test"          type="hidden"  value="0" >
+          <input name="buyerEmail"    type="hidden"  value={{email}} >
+          <input name="buyerFullName"    type="hidden"  value={{nombrePersona}} >
+          <input name="responseUrl"   type="hidden"  value="">
+          <input name="confirmationUrl" type="hidden"  value="" >
+          <button type="submit" class="" target="_blank" (click)="guardarCompra(form)" style="width: 140px;height: 40px;border-radius: 200px;border: 0px; background-color: white;" value="Pagar con PayU">
+            <img  style="width: 140px;height: 40px;" src="https://universidadreformadademiami.org/wp-content/uploads/2020/10/boton.png" />
+          </button>
+        </form> -->
+
+        <form #formPrueb method="post" action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/">
+          <input name="merchantId"    type="hidden"  value="508029"   >
+          <input name="accountId"     type="hidden"  value={{idCuentaTest}} >
+          <input name="description"   type="hidden"  value="[TEST] {{descripcion}}"  >
+          <input name="referenceCode" type="hidden"  value={{idCompra}} >
+          <input name="extra1"          type="hidden"  value="{{idCompra}}" >
+          <input name="amount"        type="hidden"  value={{totalDescuento}}  >
+          <input name="currency"      type="hidden"  value={{moneda}} >
+          <input name="signature"     type="hidden"  value={{firmaElectronicaMD5Test}}   >
+          <input name="test"          type="hidden"  value="1" >
+          <input name="buyerEmail"    type="hidden"  value="test@test.com" >
+          <input name="responseUrl"    type="hidden"  value="http://localhost:4200/infopago">
+          <input name="confirmationUrl" type="hidden"  value="https://nortexploradores.herokuapp.com/pagos/confirmacion" >
+    
+          <button type="submit" class="button-35" formtarget="_blank" (click)="guardarCompra(formPrueb)"  value="">Pagar con PayU
+          </button>
+        </form>
+      </div>
+    </div>
+    <!-- FIN PAYU -->
+  
+
+    
+
+
+  </div>
+</div>
+<app-footer></app-footer>

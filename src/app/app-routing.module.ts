@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FormPagoTotalComponent } from './reserva/pages/pagos/form-pago-total/form-pago-total.component';
 import { FormPagosComponent } from './reserva/pages/pagos/form-pagos/form-pagos.component';
 import { ErrorPagesComponent } from './shared/error-pages/error-pages.component';
 
@@ -9,6 +10,11 @@ const routes: Routes = [
   },
   {
     path:"pago/:idPaq",component:FormPagosComponent
+
+  },
+  {
+    path:"pagoTotal/:idPaq",component:FormPagoTotalComponent
+
   },
   {
     path:"administracion",

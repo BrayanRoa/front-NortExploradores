@@ -38,9 +38,16 @@
           <h4 align='center'><i class="far fa-calendar-alt"></i> <b> Fecha de Llegada: </b>{{data.fechaLlegada}}</h4>
 
 
-          <a routerLink="/pago/{{id}}">
+          <a routerLink="/pagoTotal/{{id}}">
             <div class="mt-4 d-grid gap-2 col-6 mx-auto text-center" style="margin: 0 auto;">
               <button class="btn contact100-form-btn" type="submit">Comprar</button>
+              <div class="col-sm-3"></div>
+            </div>
+          </a>
+
+          <a routerLink="/pago/{{id}}">
+            <div class="mt-4 d-grid gap-2 col-6 mx-auto text-center" style="margin: 0 auto;">
+              <button class="btn contact100-form-btn" type="submit">Reservar</button>
               <div class="col-sm-3"></div>
             </div>
           </a>
