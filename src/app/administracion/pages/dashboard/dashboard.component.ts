@@ -15,7 +15,7 @@ type TableRow = [string, number];
 // paquetes (ventas)
 type TableRow2 = [string, number];
 // usuarios (registros)
-type TableRow3 = [];
+type TableRow3 = [number, string];
 
 type TableRow4 = [];
 
@@ -535,35 +535,50 @@ export class DashboardComponent implements OnInit {
   // TODO: REPORTES REGISTROS
 
   async reportesRegistros() {
-
+    
     const pdf = new PdfMakeWrapper();
-    // const data = await this.datosHistorial();
-    // const data2 = await this.datosPaquete();
-
-    const date = new Date().getMonth();
-    const mes = this.obtenerMes(date.toString());
+    const data = await this.datos();
 
     pdf.pageSize("A4"); // TAMAÑO DE LA PÁGINA
     pdf.pageMargins([40, 60]); // MARGENES DE LA PÁGINA
     pdf.pageOrientation('portrait'); // 'portrait' --> POSICIÓN DE LA 
 
-    pdf.header(new Txt(`Reporte De Ventas Del Mes De ${mes} - NORTXPLORADORES`).alignment("center").margin(10).color("green").bold().end) // ENCABEZADO DE LA PÁGINA
+    pdf.header(new Txt(`REPORTE DE CLIENTES - NORTXPLORADORES`).alignment("center").margin(10).color("green").end) // ENCABEZADO DE LA PÁGINA
 
-    // TODO: CAMBIAR ESTA RUTA, ESYA HORRIBLE
+
+   
     pdf.add(
       new Columns([await (await new Img("https://raw.githubusercontent.com/SantiagoAndresSerrano/img-soka/master/LOGO-01.png").width(80).height(80).noWrap().alignment('left').margin(14).build()),
 
       new Txt('NorteXploradores brinda una asistencia profesional a todos aquellos que necesitan un servicio de viaje. Centrándose en brindar respuestas rápidas, precisas y eficientes con el fin de ofrecer un servicio personalizado de calidad y confiabilidad.').margin([22, 15, 2, 2]).alignment("justify").end]).end)
+
+
+      pdf.add(new Txt(`BALANCE DE CLIENTES`).alignment("center").color("blue").bold().margin([0,30,0,0]).end);
+    pdf.add(this.createTable(data));
     
-
-    // TABLA HISTORIAL DE VENTAS
-    pdf.add(new Txt(`TOTAL PAQUETES VENDIDOS EN EL AÑO`).alignment("center").color("blue").bold().margin([0, 25]).end);
-    // pdf.add(this.createTableHistorial(data));
-
-    // TABLA DE VENTAS DEL MES
-    pdf.add(new Txt(`Paquetes Vendidos En El Mes De ${mes}`).alignment("center").color("blue").bold().end);
-    // pdf.add(this.createTablePaquete(data2));
-
     pdf.create().open();
+  }
+
+  createTable(data: totalMeses[]): ITable {
+    return new Table([
+      ["CANTIDAD","MES"],
+      ...this.extraer(data)
+    ])
+    .widths('*')
+    .layout({
+      fillColor : (rowIndex: number|undefined, node: any|undefined, columnIndex:number|undefined)=>{
+        return rowIndex===0? '#D3E4CD' : '#FAEDF0'
+      }
+    }).bold().margin([2,12]).alignment('center').decorationColor("blue")
+    .end
+  }
+
+  extraer(data: totalMeses[]): TableRow2[] {
+    return data.map(row => [row.mes, row.cantidad])
+  }
+
+  async datos(): Promise<totalMeses[]> {
+    return fetch(`https://nortexploradores.herokuapp.com/usuario/usuariosMensualesTabla`)
+      .then(resp => resp.json());
   }
 }
