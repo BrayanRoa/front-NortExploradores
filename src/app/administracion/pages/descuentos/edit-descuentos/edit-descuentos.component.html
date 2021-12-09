@@ -22,7 +22,7 @@
   
         <div class="wrap-input100 validate-input">
           <span class="contact100-form-combo">Descripcion</span>
-            <textarea style="resize: none" formControlName="descripcion" class="input100 form-control" id="inputDescripcion"
+            <textarea style="resize: none" readonly formControlName="descripcion" class="input100 form-control" id="inputDescripcion"
               [class.is-invalid]="form.controls.descripcion.status!='VALID'"
               [class.is-valid]="form.controls.descripcion.status=='VALID'" rows="3"></textarea>
         </div>

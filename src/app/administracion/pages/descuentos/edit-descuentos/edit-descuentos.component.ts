@@ -53,9 +53,10 @@ export class EditDescuentosComponent implements OnInit {
       });
       return;
     }
-
-    this.descuentos.editarDescuentos(this.id, this.form.value).subscribe((data: any) => {
-      console.log(data.value);
+    console.log("OLAAA");
+    if (this.id !== null) {
+    this.descuentoService.editarDescuentos(this.id, this.form.value).subscribe((data) => {
+      console.log(this.form.value);
       this.toastr.success('¡Descuento actualizado correctamente!', 'OK', {
         timeOut: 3000, positionClass: 'toast-top-center'
       });
@@ -63,6 +64,7 @@ export class EditDescuentosComponent implements OnInit {
     })
     console.log(this.form.value)
   }
+}
 
   esEditarDesc() {
     if (this.id !== null) {
