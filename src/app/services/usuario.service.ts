@@ -30,7 +30,9 @@ export class UsuarioService {
   public pasajerosPorCliente(idUsuario:number):Observable<any>{
     return this.http.get<any>(`${this.url}/${idUsuario}/pasajeros`);
   }
-
+  public viajesRealizados(username:any):Observable<any>{
+    return this.http.get<any>(`${this.url}/${username}/cantidadViajes/`);
+  }
   public comprasReservadasUsuario(idUsuario:number):Observable<any>{
     return this.http.get<any>(`${this.url}/${idUsuario}/comprasReservadas`)
   }
@@ -39,6 +41,10 @@ export class UsuarioService {
     return this.http.get<any>(`${this.url}/${idUsuario}/paquetesComprados`)
   } */
 
+  
+  public usuariosMensuales():Observable<any>{
+    return this.http.get<any>(this.url+"/usuariosMensuales")
+  }
 
   public pasajeroPersonaPorCliente(idUsuario:number):Observable<any>{
     return this.http.get<any>(`${this.url}/${idUsuario}/pasajerospersonas`);

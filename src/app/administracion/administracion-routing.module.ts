@@ -34,6 +34,10 @@ import { SolicitudesComponent } from './pages/solicitud/solicitudes/solicitudes.
 import { NotificacionesComponent } from './pages/notificaciones/notificaciones.component';
 import { EditarInfoComponent } from './pages/editar-info/editar-info.component';
 import { EditDescuentosComponent } from './pages/descuentos/edit-descuentos/edit-descuentos.component';
+import { DevolucionesComponent } from './pages/devoluciones/devoluciones.component';
+import { EditDevolucionesComponent } from './pages/devoluciones/edit-devoluciones/edit-devoluciones.component';
+import { ToursInactivosComponent } from './pages/tours/tours-inactivos/tours-inactivos.component';
+import { ReportesMesesComponent } from './pages/reportes/reportes-meses/reportes-meses.component';
 
 const routes : Routes = [
   {path:"", 
@@ -87,13 +91,19 @@ const routes : Routes = [
       {path:"editarPaquete/:idPaq", component:EditPaqueteComponent},
         
       {path:"reportes", component:DashboardComponent},
-      
+      {path:"reportesMes", component: ReportesMesesComponent},
       {path:"tours", component:ToursComponent},
       {path:"nuevoTour", component:AddTourComponent},
+      {path:"toursInactivos", component:ToursInactivosComponent},
       {path:"editarTour/:idTour", component:AddTourComponent},
 
       {path:"descuentos", component:DescuentosComponent},
       {path:"editDescuentos/:idDescuento", component:EditDescuentosComponent},
+
+      {path:"devoluciones", component:DevolucionesComponent},
+      {path:"editDevoluciones/:idDevolucion", component:EditDevolucionesComponent},
+
+
 
       {path:"dashboard", component:DashboardComponent},
 

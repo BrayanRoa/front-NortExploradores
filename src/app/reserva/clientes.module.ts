@@ -37,6 +37,8 @@ import { EditarPerfilComponent } from './pages/editar-perfil/editar-perfil.compo
 
 import { DataTablesModule } from "angular-datatables";
 import { AddCalificacionComponent } from './pages/mis-viajes/add-calificacion/add-calificacion.component';
+import { FormReservaComponent } from './pages/pagos/form-reserva/form-reserva.component';
+import { InformacionPagoComponent } from './pages/pagos/informacion-pago/informacion-pago.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +66,8 @@ import { AddCalificacionComponent } from './pages/mis-viajes/add-calificacion/ad
     MisViajesComponent,
     EditarPerfilComponent,
     AddCalificacionComponent,
+    FormReservaComponent,
+    InformacionPagoComponent,
   ],
   imports: [
     CommonModule,

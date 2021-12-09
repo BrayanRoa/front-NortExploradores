@@ -74,9 +74,14 @@
                 <td>{{reserva.tour.paquete.precio}}</td>
                 <td>{{reserva.estado}}</td>
                 <td nzAlign="center">
-                    <a (click)="cancelar(reserva.reserva.idReserva)">
+                    <a *ngIf="reserva.estado!='CANCELADO'" (click)="cancelar(reserva.reserva.idReserva)">
                         <i class="far fa-window-close" style="font-size: 25px;"></i>
                     </a>
+
+                    <p *ngIf="reserva.estado=='PAGADO' || reserva.estado=='CANCELADO'">----</p>
+                    <a *ngIf="reserva.estado!='PAGADO' && reserva.estado!='CANCELADO'" [routerLink]="['/pagoreserva',reserva.idCompra]">
+                      <i class="fas fa-hand-holding-usd" style="font-size: 25px; color:#4da8cf; "></i>
+                  </a>
                 </td>
             </tr>
           </tbody>

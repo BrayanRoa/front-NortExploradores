@@ -1,0 +1,108 @@
+
+<div class="glass form-pagos" style="margin:80px" *ngIf="isPagadoTotal!=undefined &&isPagadoTotal==false && isLogged">
+    <h1 style="text-align: center;">Segundo pago del 50%</h1>
+    <div class="row">
+  
+      <div class="invoice-content">
+        <!-- begin table-responsive -->
+        <div class="table-responsive">
+           <table class="table table-invoice">
+              <thead>
+                 <tr>
+                    <th>Resumen de la compra</th>
+                 </tr>
+              </thead>
+              <tbody>
+                 <tr>
+                    <td>
+                       <span class="text-inverse">Referencia de pago</span><br>
+                       <small>Identificativo unico de la compra</small>
+                    </td>
+                    <td class="text-center">{{id}}</td>
+                 </tr>
+                 <tr>
+                    <td>
+                       <span class="text-inverse">Descripcion</span><br>
+                       <small>Descripción detallada de la compra</small>
+                    </td>
+                    <td class="text-center">{{descripcion}}</td>
+                 </tr>
+                 <tr>
+                    <td>
+                       <span class="text-inverse">Cantidad de pasajeros</span><br>
+                       <small>Cantidad total de pasajeros que llevaras en el viaje.</small>
+                    </td>
+                    <td class="text-center">{{totalPasajeros}}</td>
+                 </tr>
+                 <tr>
+                  <td>
+                     <span class="text-inverse"> <strong>Total</strong> </span><br>
+                  </td>
+                  <td class="text-center">${{totalCompra/2}}</td>
+               </tr>
+              </tbody>
+           </table>
+        </div>
+        <!-- end table-responsive -->
+        <!-- end invoice-price -->
+     </div>
+  
+      <!-- PAYU -->
+      <div class="row">
+        <div class="col-6">
+          <form #form method="post" action="https://gateway.payulatam.com/ppp-web-gateway/">
+            <input name="merchantId"    type="hidden"  value={{idMercado}}   >
+            <input name="accountId"     type="hidden"  value={{idCuenta}} >
+            <input name="description"   type="hidden"  value={{descripcion}}>
+            <input name="referenceCode" type="hidden"  value={{referenciaUnic}} > 
+            <input name="amount"        type="hidden"  value="{{totalCompra/2}}"   >
+            <input name="tax"           type="hidden"  value={{iva}}  >
+            <input name="taxReturnBase" type="hidden"  value={{iva*totalCompra}} >
+            <input name="currency"      type="hidden"  value={{moneda}} >
+            <input name="signature"     type="hidden"  value={{firmaElectronicaMD5}}  >
+            <input name="test"          type="hidden"  value="0" >
+            <input name="extra1"          type="hidden"  value="{{id}}" >
+            <input name="buyerEmail"    type="hidden"  value={{email}} >
+            <input name="buyerFullName"    type="hidden"  value={{nombrePersona}} >
+            <input name="responseUrl"   type="hidden"  value="">
+            <input name="confirmationUrl" type="hidden"  value="" >
+            <button id="pagoprod" type="submit" class="" target="_blank" (click)="form.submit()" style="width: 140px;height: 40px;border-radius: 200px;border: 0px; background-color: white;" value="Pagar con PayU">
+              <img  style="width: 140px;height: 40px;" src="https://universidadreformadademiami.org/wp-content/uploads/2020/10/boton.png" />
+            </button>
+          </form>
+  
+          <form #formPrueb method="post" action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/">
+            <input name="merchantId"    type="hidden"  value="508029"   >
+            <input name="accountId"     type="hidden"  value={{idCuentaTest}} >
+            <input name="description"   type="hidden"  value="[TEST] {{descripcion}}"  >
+            <input name="referenceCode" type="hidden"  value={{referenciaUnic}} >
+            <input name="amount"        type="hidden"  value="{{totalCompra/2}}"  >
+            <input name="currency"      type="hidden"  value={{moneda}} >
+            <input name="signature"     type="hidden"  value={{firmaElectronicaMD5Test}}   >
+            <input name="test"          type="hidden"  value="1" >
+            <input name="extra1"          type="hidden"  value="{{id}}" >
+            <input name="buyerEmail"    type="hidden"  value="test@test.com" >
+            <input name="responseUrl"    type="hidden"  value="http://localhost:4200/inftransaccion">
+            <input name="confirmationUrl" type="hidden"  value="https://nortexploradores.herokuapp.com/pagos/confirmacion" >
+      
+            <button id="btnpru" type="submit" class="" formtarget="_blank" (click)="formPrueb.submit()" style="width: 140px;height: 40px;border-radius: 200px;border: 0px; background-color: white;" value="Pagar con PayU">
+              <img  style="width: 140px;height: 40px;" src="https://universidadreformadademiami.org/wp-content/uploads/2020/10/boton.png" />
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- FIN PAYU -->
+  <button class="btn button-34" style="margin: 10px;" routerLink="/misReservas">Volver</button>
+    </div>
+  </div>
+
+
+<div class="glass form-pagos" style="margin:80px" *ngIf="isPagadoTotal">
+    <h1 style="text-align: center;">La compra de este tour se encuentra pagada al 100%, !disfruta tu viaje!</h1>
+    <div id="content" class="notify successbox">
+        <span ><img class="alerticon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Check_green_icon.svg/2048px-Check_green_icon.svg.png" alt="checkmark" /></span><br />
+        <br>
+    <button class="btn button-34" routerLink="/misReservas">Volver</button>
+
+    </div>
+</div>

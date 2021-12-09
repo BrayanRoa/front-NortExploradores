@@ -58,6 +58,8 @@ import { DescuentosComponent } from './pages/descuentos/descuentos.component';
 import { EditDescuentosComponent } from './pages/descuentos/edit-descuentos/edit-descuentos.component';
 import { DevolucionesComponent } from './pages/devoluciones/devoluciones.component';
 import { EditDevolucionesComponent } from './pages/devoluciones/edit-devoluciones/edit-devoluciones.component';
+import { ToursInactivosComponent } from './pages/tours/tours-inactivos/tours-inactivos.component';
+import { ReportesMesesComponent } from './pages/reportes/reportes-meses/reportes-meses.component';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -96,7 +98,9 @@ import { EditDevolucionesComponent } from './pages/devoluciones/edit-devolucione
     DescuentosComponent,
     EditDescuentosComponent,
     DevolucionesComponent,
-    EditDevolucionesComponent
+    EditDevolucionesComponent,
+    ToursInactivosComponent,
+    ReportesMesesComponent
   ],
   imports: [
     CommonModule,
