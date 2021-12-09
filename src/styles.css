@@ -4422,7 +4422,7 @@ Created using IcoMoon - icomoon.io
   font-size: 20px
   }
   .container{
-  box-shadow: rgba(255, 255, 255, 0.2) 0px 7px 29px 0px;
+  /* box-shadow: rgba(255, 255, 255, 0.2) 0px 7px 29px 0px; */
   }
   .invoice-header {
   margin: 0 -20px;
