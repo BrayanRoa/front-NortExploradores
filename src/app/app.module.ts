@@ -31,6 +31,14 @@ import { TransaccionService } from './services/transaccion.service';
 import { interceptorProvider } from './security/interceptors/paq-interceptor.service';
 import { FooterComponent } from './shared/footer/footer.component';
 
+import { PdfMakeWrapper } from 'pdfmake-wrapper';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+// If any issue using previous fonts import. you can try this:
+// import pdfFonts from "pdfmake/build/vfs_fonts";
+
+// Set the fonts to use
+PdfMakeWrapper.setFonts(pdfFonts);
+
 // import { InformacionPagoComponent } from './home/informacion-pago/informacion-pago/informacion-pago.component';
 
 registerLocaleData(es);

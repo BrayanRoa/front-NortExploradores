@@ -7,6 +7,27 @@ import { TokenService } from 'src/app/services/token.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { Columns, Img, ITable, PdfMakeWrapper, Table, Txt } from 'pdfmake-wrapper';
+
+
+// total meses (ventas)
+type TableRow = [string, number];
+// paquetes (ventas)
+type TableRow2 = [string, number];
+// usuarios (registros)
+type TableRow3 = [];
+
+type TableRow4 = [];
+
+export interface totalMeses {
+  cantidad: number;
+  mes:      string;
+}
+
+export interface totalPaquete {
+  nombre: string;
+  total:  number;
+}
 
 @Component({
   selector: 'app-dashboard',
@@ -24,11 +45,13 @@ export class DashboardComponent implements OnInit {
   public clicked2: boolean = false;
 
 
+
+
   constructor(
     private tokenS: TokenService,
     private router: Router,
     private compraService: CompraService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
   ) { }
 
   ngOnInit(): void {
@@ -206,7 +229,7 @@ export class DashboardComponent implements OnInit {
       gradientStroke.addColorStop(0, 'rgba(233,32,16,0)'); //red colors
 
       var data = {
-        labels: [chart_labels[mes[0]-1], chart_labels[mes[1]-1]],
+        labels: [chart_labels[mes[0] - 1], chart_labels[mes[1] - 1]],
         datasets: [{
           label: "Data",
           fill: true,
@@ -349,26 +372,26 @@ export class DashboardComponent implements OnInit {
 
 
   public downloadPDF() {
-    // Extraemos el
+    // Extraemos el mes
     const date = new Date().getMonth();
     // console.log({date});
     const mes = this.obtenerMes(date.toString());
     // console.log(mes);
-    const DATA : any = document.getElementById('htmlData'); // apartado donde tomara los datos
+    const DATA: any = document.getElementById('htmlData'); // apartado donde tomara los datos
     const doc = new jsPDF('p', 'pt', 'a4'); // configuracion del PDF
-    doc.text(`NorteXploradores Reporte Del Mes De ${mes}`, 120,30) // texto agregado manualmente
-    
+    doc.text(`NorteXploradores Reporte Del Mes De ${mes}`, 120, 30) // texto agregado manualmente
+
     const options = { // UN POCO DE ESTILOS DEL PDF
       background: 'black',
       scale: 5,
     };
-    
+
     html2canvas(DATA, options).then((canvas) => {
 
       const img = canvas.toDataURL('image/PNG'); // CREAMOS LA IMG EN PNG
-      console.log({img})
+      console.log({ img })
       // Add image Canvas to PDF
-      const bufferX = 15; 
+      const bufferX = 15;
       const bufferY = 40;
       const imgProps = (doc as any).getImageProperties(img);
       const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
@@ -377,24 +400,170 @@ export class DashboardComponent implements OnInit {
       return doc;
     }).then((docResult) => {
       doc.output();
-      docResult.save(`${new Date().getMonth()+1}_tutorial.pdf`);
+      docResult.save(`NorteXploradores-Mes-${new Date().getMonth() + 1}.pdf`);
     });
   }
 
- 
-  
-  obtenerMes(mes:any){
-    const monthNames = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
-                       "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+
+  obtenerMes(mes: any) {
+    const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
     return monthNames[mes]
   }
 
-  reportesVentas(){
 
+  async reportesVentas() {
+
+    const pdf = new PdfMakeWrapper();
+    const data = await this.datosHistorial();
+    const data2 = await this.datosPaquete();
+    const data3 = await this.datosCantidadPaquetesTabla();
+
+    const date = new Date().getMonth();
+    const mes = this.obtenerMes(date.toString());
+
+    pdf.pageSize("A4"); // TAMAÑO DE LA PÁGINA
+    pdf.pageMargins([40, 60]); // MARGENES DE LA PÁGINA
+    pdf.pageOrientation('portrait'); // 'portrait' --> POSICIÓN DE LA 
+
+    pdf.header(new Txt(`Reporte De Ventas Del Mes De ${mes} - NORTXPLORADORES`).alignment("center").margin(10).color("green").bold().end) // ENCABEZADO DE LA PÁGINA
+
+    pdf.add(
+      new Columns([await (await new Img("https://raw.githubusercontent.com/SantiagoAndresSerrano/img-soka/master/LOGO-01.png").width(80).height(80).noWrap().alignment('left').margin(14).build()),
+
+      new Txt('NorteXploradores brinda una asistencia profesional a todos aquellos que necesitan un servicio de viaje. Centrándose en brindar respuestas rápidas, precisas y eficientes con el fin de ofrecer un servicio personalizado de calidad y confiabilidad.').margin([22, 15, 2, 2]).alignment("justify").end]).end)
+    
+
+    // TABLA HISTORIAL DE VENTAS
+    pdf.add(new Txt(`TOTAL PAQUETES VENDIDOS EN EL AÑO`).alignment("center").color("blue").bold().margin([0,30,0,0]).end);
+    pdf.add(this.createTableHistorial(data));
+
+    // TABLA DE VENTAS DEL MES
+    pdf.add(new Txt(`Paquetes Vendidos En El Mes De ${mes}`).alignment("center").color("blue").bold().margin([0,30,0,0]).end);
+    pdf.add(this.createTablePaquete(data2));
+
+    // TABLA DE PAQUETE POR MES
+    pdf.add(new Txt(`Paquetes Vendidos Por Cada Mes Del Año`).alignment("center").color("blue").bold().margin([0,110,0,0]).end);
+    pdf.add(this.createTableCantidadPaquetesTabla(data3));
+
+    pdf.create().open();
   }
 
-  reportesRegistros(){
+
+  // TABLA HISTORIAL
+  createTableHistorial(data: totalMeses[]): ITable {
+    return new Table([
+      ["MES", "INGRESO"],
+      ...this.extraerDataHistorial(data)
+    ])
+      .widths('*')
+      .layout({
+        fillColor: (rowIndex: number | undefined, node: any | undefined, columnIndex: number | undefined) => {
+          return rowIndex === 0 ? '#D3E4CD' : '#FAEDF0'
+        }
+      }).bold().margin([2, 12]).alignment('center').decorationColor("blue")
+      .end
+  }
+
+  extraerDataHistorial(data: totalMeses[]): TableRow[] {
+    return data.map(row => [row.mes, row.cantidad])
+  }
+
+  async datosHistorial(): Promise<totalMeses[]> {
+    return fetch('https://nortexploradores.herokuapp.com/compra/totalMesTabla')
+      .then(resp => resp.json());
+  }
+
+
+  // TABLA PAQUETE
+  createTablePaquete(data: totalPaquete[]): ITable {
+    return new Table([
+      ["PAQUETE", "INGRESO"],
+      ...this.extraerDataPaquete(data)
+    ])
+      .widths('*')
+      .layout({
+        fillColor: (rowIndex: number | undefined, node: any | undefined, columnIndex: number | undefined) => {
+          return rowIndex === 0 ? '#D3E4CD' : '#FAEDF0'
+        }
+      }).bold().margin([2, 12]).alignment('center').decorationColor("blue")
+      .end
+  }
+
+  extraerDataPaquete(data: totalPaquete[]): TableRow[] {
+    return data.map(row => [row.nombre, row.total])
+  }
+
+
+  async datosPaquete(): Promise<totalPaquete[]> {
+    return fetch('https://nortexploradores.herokuapp.com/compra/totalPaquetesTabla')
+      .then(resp => resp.json());
+  }
+
+
+  // TABLA cantidadPaquetesTabla
+  createTableCantidadPaquetesTabla(data: totalMeses[]): ITable {
+    return new Table([
+      ["MES", "CANTIDAD"],
+      ...this.extraerDataHistorial(data)
+    ])
+      .widths('*')
+      .layout({
+        fillColor: (rowIndex: number | undefined, node: any | undefined, columnIndex: number | undefined) => {
+          return rowIndex === 0 ? '#D3E4CD' : '#FAEDF0'
+        }
+      }).bold().margin([2, 12]).alignment('center').decorationColor("blue")
+      .end
+  }
+
+  extraerCantidadPaquetesTabla(data: totalMeses[]): TableRow[] {
+    return data.map(row => [row.mes, row.cantidad])
+  }
+
+  async datosCantidadPaquetesTabla(): Promise<totalMeses[]> {
+    return fetch('https://nortexploradores.herokuapp.com/compra/cantidadPaquetesTabla')
+      .then(resp => resp.json());
+  }
+
+
+
+
+
+
+  // TODO: REPORTES REGISTROS
+
+  async reportesRegistros() {
+
+    const pdf = new PdfMakeWrapper();
+    // const data = await this.datosHistorial();
+    // const data2 = await this.datosPaquete();
+
+    const date = new Date().getMonth();
+    const mes = this.obtenerMes(date.toString());
+
+    pdf.pageSize("A4"); // TAMAÑO DE LA PÁGINA
+    pdf.pageMargins([40, 60]); // MARGENES DE LA PÁGINA
+    pdf.pageOrientation('portrait'); // 'portrait' --> POSICIÓN DE LA 
+
+    pdf.header(new Txt(`Reporte De Ventas Del Mes De ${mes} - NORTXPLORADORES`).alignment("center").margin(10).color("green").bold().end) // ENCABEZADO DE LA PÁGINA
+
+    // TODO: CAMBIAR ESTA RUTA, ESYA HORRIBLE
+    pdf.add(
+      new Columns([await (await new Img("https://raw.githubusercontent.com/SantiagoAndresSerrano/img-soka/master/LOGO-01.png").width(80).height(80).noWrap().alignment('left').margin(14).build()),
+
+      new Txt('NorteXploradores brinda una asistencia profesional a todos aquellos que necesitan un servicio de viaje. Centrándose en brindar respuestas rápidas, precisas y eficientes con el fin de ofrecer un servicio personalizado de calidad y confiabilidad.').margin([22, 15, 2, 2]).alignment("justify").end]).end)
     
+
+    // TABLA HISTORIAL DE VENTAS
+    pdf.add(new Txt(`TOTAL PAQUETES VENDIDOS EN EL AÑO`).alignment("center").color("blue").bold().margin([0, 25]).end);
+    // pdf.add(this.createTableHistorial(data));
+
+    // TABLA DE VENTAS DEL MES
+    pdf.add(new Txt(`Paquetes Vendidos En El Mes De ${mes}`).alignment("center").color("blue").bold().end);
+    // pdf.add(this.createTablePaquete(data2));
+
+    pdf.create().open();
   }
 }
