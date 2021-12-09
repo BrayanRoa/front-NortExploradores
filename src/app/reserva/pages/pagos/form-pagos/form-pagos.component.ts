@@ -109,6 +109,7 @@ export class FormPagosComponent implements OnInit {
 
   ngOnInit(): void {
     this.nombreUser = this.tokenS.getUserName();
+    
     this.cargarUsuario();
     this.cargarToken();
     this.listarTour();
@@ -118,9 +119,8 @@ export class FormPagosComponent implements OnInit {
     this.referenciaUnic = this.generarReferencia()
     if (this.idPaquete == null) this.idPaquete = "paq-1";
     this.idPaquete = this.route.snapshot.paramMap.get("idPaq");
-  
     this.pagosInfo = this.formBuilder.group({
-      paquete: [],
+      paquete: this.idPaquete,
       total: [],
       pasajeros: this.formBuilder.array([])
     })
@@ -492,6 +492,12 @@ export class FormPagosComponent implements OnInit {
   public listarTour() {
     this.tourService.listarTourActivo().subscribe(tour => {
       this.tours = tour
+      for (let i = 0; i < tour.length; i++) {
+        if(tour[i].idTour == parseInt(this.idPaquete)){
+          this.tourSeleccionado = tour[i]
+        }
+      }
+     
     })
   }
 
@@ -681,8 +687,6 @@ export class FormPagosComponent implements OnInit {
     this.email = this.persona.correo
     this.nombrePersona = this.persona.nombre + " " + this.persona.apellido
 
-
-
     let pasajeros = this.pagosInfo.get('pasajeros') as FormArray;
     this.descripcion = "Pago de (" + pasajeros.length + ") paquete(s) turistico(s) destino: " + this.tourSeleccionado.paquete.municipio.nombre
 
@@ -701,7 +705,7 @@ export class FormPagosComponent implements OnInit {
     var compra = {
       idCompra: this.idCompra,
       cantidadPasajeros: this.total,
-      totalCompra: this.totalCompra+this.totalCompra,
+      totalCompra: (this.totalCompra/2)+this.totalDescuento,
       estado: "PENDIENTE",
       usuario: this.usuario.id_Usuario,
       tour: this.tourSeleccionado.idTour

@@ -65,11 +65,11 @@
             </div>
             <div class="col-sm-2" *ngIf="tourSeleccionado!=undefined">
               <label for="lastName" class="form-label">Cupos disponibles: </label>
-              <code id="cantidadCupos"></code>
+              <code id="cantidadCupos">{{tourSeleccionado.cantCupos}}</code>
             </div>
 
             <div class="col-sm-1 col-md-1" *ngIf="tourSeleccionado!=undefined;">
-             <img id="imagenTour" class="imgTour" src="https://turismonortedesantander.com/wp-content/uploads/Cacota_Plaza_norte-de-santander_2.jpg" alt="">
+             <img id="imagenTour" class="imgTour" src="{{tourSeleccionado.paquete.municipio.urlImagen}}" alt="">
             </div>
           </div>
 
@@ -516,7 +516,7 @@
           <input name="signature"     type="hidden"  value={{firmaElectronicaMD5Test}}   >
           <input name="test"          type="hidden"  value="1" >
           <input name="buyerEmail"    type="hidden"  value="test@test.com" >
-          <input name="responseUrl"    type="hidden"  value="http://localhost:4200/inftransaccion">
+          <input name="responseUrl"    type="hidden"  value="http://localhost:4200/infopago">
           <input name="confirmationUrl" type="hidden"  value="https://nortexploradores.herokuapp.com/pagos/confirmacion" >
     
           <button type="submit" class="button-35" formtarget="_blank" (click)="guardarCompra(formPrueb)"  value="">Pagar con PayU

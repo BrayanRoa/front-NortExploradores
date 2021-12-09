@@ -70,18 +70,18 @@ export class InformacionPagoComponent implements OnInit {
             console.log(compra);
             this.compra=compra;
 
-            if(compra.response_message_pol!="APPROVED"){
+            if(compra.responseMessagePol!="APPROVED"){
               this.respuesta="¡Transacción cancelada!"
               this.imgRespuesta="https://cdn-icons-png.flaticon.com/512/148/148766.png"
               return;
             }
 
-            if(compra.response_message_pol=="APPROVED" && compra.reference_sale.estado=="PAGADO"){
+            if(compra.responseMessagePol=="APPROVED" && compra.referenceSale.estado=="PAGADO"){
               this.respuesta="¡Transacción aprobada, disfruta tu viaje!"
               this.imgRespuesta="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Check_green_icon.svg/2048px-Check_green_icon.svg.png"
               return;
             }
-            if(compra.response_message_pol=="APPROVED" && compra.reference_sale.estado=="PAGO_PARCIAL"){
+            if(compra.responseMessagePol=="APPROVED" && compra.referenceSale.estado=="PAGO_PARCIAL"){
               this.respuesta="¡Transacción aprobada, recuerda pagar el 50% restante!"
               this.imgRespuesta="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Check_green_icon.svg/2048px-Check_green_icon.svg.png"
               return;
@@ -94,7 +94,7 @@ export class InformacionPagoComponent implements OnInit {
           if(id!=null){
             this.transaccionService.encontrar(id).subscribe(compra=>{
               this.compra=compra;
-              if(compra.response_message_pol=="APPROVED" && compra.reference_sale.estado=="PAGADO"){
+              if(compra.responseMessagePol=="APPROVED" && compra.referenceSale.estado=="PAGADO"){
                 this.respuesta="¡Transacción aprobada, disfruta tu viaje!"
                 this.imgRespuesta="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Check_green_icon.svg/2048px-Check_green_icon.svg.png"
                 return;
