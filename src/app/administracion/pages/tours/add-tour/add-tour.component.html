@@ -2,20 +2,36 @@
     <div class="wrap-contact100">
         <form [formGroup]="form" (submit)="enviarData()">
             <span class="contact100-form-title">
-        <h4 class="col-sm-10">{{titulo | uppercase}}</h4>
-      </span>
+                <h4 class="col-sm-10">{{titulo | uppercase}}</h4>
+            </span>
             <hr style="color: rgb(5, 168, 5);">
             <input formControlName="idTour" hidden type="text" class="form-control" id="inputRuta">
 
             <div class="wrap-input100">
+                <span class="contact100-form-combo">Paquete</span>
+                <select formControlName="paquete" class="form-select"
+                    [class.is-invalid]="form.controls.paquete.status=='INVALID'"
+                    [class.is-valid]="form.controls.paquete.status=='VALID'" aria-label="Default select example"
+                    class="form-control input100" placeholder="Paquete">
+                    <option *ngFor="let paquete of paquetes" name="paquete" id="paq{{paquete.idPaq}}"
+                        value={{paquete.idPaq}}>
+                        {{paquete.nombre}}</option>
+                </select>
+            </div>
+
+            <div class="wrap-input100">
                 <span class="contact100-form-combo">Min cupos</span>
-                <input [(ngModel)]="minC" formControlName="minCupos" type="number" class="form-control" id="inputMinCupo" [class.is-invalid]="form.controls.minCupos.status=='INVALID'|| !validarCupos()" [class.is-valid]="form.controls.minCupos.status=='VALID'" class="form-control input100"
+                <input [(ngModel)]="minC" formControlName="minCupos" type="number" class="form-control"
+                    id="inputMinCupo" [class.is-invalid]="form.controls.minCupos.status=='INVALID'|| !validarCupos()"
+                    [class.is-valid]="form.controls.minCupos.status=='VALID'" class="form-control input100"
                     placeholder="Minimo de cupos">
             </div>
 
             <div class="wrap-input100">
                 <span class="contact100-form-combo">Max cupos</span>
-                <input [(ngModel)]="maxC" formControlName="maxCupos" type="number" class="form-control" id="inputMaxCupo" [class.is-invalid]="form.controls.maxCupos.status=='INVALID' || !validarCupos()" [class.is-valid]="form.controls.maxCupos.status=='VALID'" class="form-control input100"
+                <input [(ngModel)]="maxC" formControlName="maxCupos" type="number" class="form-control"
+                    id="inputMaxCupo" [class.is-invalid]="form.controls.maxCupos.status=='INVALID' || !validarCupos()"
+                    [class.is-valid]="form.controls.maxCupos.status=='VALID'" class="form-control input100"
                     placeholder="Maximo de cupos">
             </div>
 
@@ -23,58 +39,63 @@
                 <span class="contact100-form-combo">Fecha Salida</span>
                 <input [(ngModel)]="fechaS" formControlName="fechaSalida" [class.is-invalid]="form.controls.fechaSalida.status=='INVALID' ||
                  !validarFecha()" [class.is-valid]="form.controls.fechaSalida.status=='VALID'
-                 && validarFecha()" type="date" class="form-control input100" id="inputFechaSalida" placeholder="Fecha salida" type="date" placeholder="Fecha salida">
+                 && validarFecha()" type="date" class="form-control input100" id="inputFechaSalida"
+                    placeholder="Fecha salida" type="date" placeholder="Fecha salida">
             </div>
 
             <div class="wrap-input100">
                 <span class="contact100-form-combo">Fecha Llegada</span>
-                <input [(ngModel)]="fechaL" formControlName="fechaLlegada" [class.is-invalid]="form.controls.fechaLlegada.status=='INVALID' || !validarFecha()" [class.is-valid]="form.controls.fechaLlegada.status=='VALID'
-                && validarFecha()" type="date" class="form-control" id="inputFechaLlegada" class="form-control input100" placeholder="Maximo de cupos">
+                <input [(ngModel)]="fechaL" formControlName="fechaLlegada"
+                    [class.is-invalid]="form.controls.fechaLlegada.status=='INVALID' || !validarFecha()"
+                    [class.is-valid]="form.controls.fechaLlegada.status=='VALID'
+                && validarFecha()" type="date" class="form-control" id="inputFechaLlegada"
+                    class="form-control input100" placeholder="Maximo de cupos">
             </div>
 
             <div class="wrap-input100">
                 <span class="contact100-form-combo">Empleado</span>
-                <select formControlName="empleado" aria-label="Default select example" [class.is-invalid]="form.controls.empleado.status=='INVALID'" [class.is-valid]="form.controls.empleado.status=='VALID'" class="form-control input100" placeholder="Empleado">
-            <option *ngFor="let empleado of empleados" name="empleado" id="emp{{empleado.idEmpleado}}" 
-            value={{empleado.idEmpleado}}>
-              {{empleado.persona.nombre}} {{empleado.persona.apellido}}</option>
-          </select>
-            </div>
-
-            <div class="wrap-input100">
-                <span class="contact100-form-combo">Paquete</span>
-                <select formControlName="paquete" class="form-select" [class.is-invalid]="form.controls.paquete.status=='INVALID'" [class.is-valid]="form.controls.paquete.status=='VALID'" aria-label="Default select example" class="form-control input100" placeholder="Paquete">
-            <option *ngFor="let paquete of paquetes" name="paquete" id="paq{{paquete.idPaq}}" 
-            value={{paquete.idPaq}}>
-              {{paquete.nombre}}</option>
-          </select>
-            </div>
+                <select formControlName="empleado" aria-label="Default select example"
+                    [class.is-invalid]="form.controls.empleado.status=='INVALID'"
+                    [class.is-valid]="form.controls.empleado.status=='VALID'" class="form-control input100"
+                    placeholder="Empleado">
+                    <option *ngFor="let empleado of empleados" name="empleado" id="emp{{empleado.idEmpleado}}"
+                        value={{empleado.idEmpleado}}>
+                        {{empleado.persona.nombre}} {{empleado.persona.apellido}}</option>
+                </select>
+            </div>            
 
             <div class="wrap-input100">
                 <span class="contact100-form-combo">Transporte</span>
-                <select formControlName="idTransporte" class="form-select" [class.is-invalid]="form.controls.idTransporte.status=='INVALID'" [class.is-valid]="form.controls.idTransporte.status=='VALID'" aria-label="Default select example" class="form-control input100"
-                    placeholder="Transporte">
-            <option *ngFor="let transporte of transportes" name="idTransporte" id="trans{{transporte.idTransporte}}" 
-            value={{transporte.idTransporte}}>
-           {{transporte.idTransporte}}</option>
-          </select>
+                <select formControlName="idTransporte" class="form-select"
+                    [class.is-invalid]="form.controls.idTransporte.status=='INVALID'"
+                    [class.is-valid]="form.controls.idTransporte.status=='VALID'" aria-label="Default select example"
+                    class="form-control input100" placeholder="Transporte">
+                    <option *ngFor="let transporte of transportes" name="idTransporte"
+                        id="trans{{transporte.idTransporte}}" value={{transporte.idTransporte}}>
+                        {{transporte.idTransporte}}</option>
+                </select>
             </div>
 
             <div class="wrap-input100">
                 <span class="contact100-form-combo">Seguro</span>
-                <select formControlName="seguro" class="form-select" [class.is-invalid]="form.controls.seguro.status=='INVALID'" [class.is-valid]="form.controls.seguro.status=='VALID'" aria-label="Default select example" class="form-control input100" placeholder="Transporte">
-            <option *ngFor="let seguro of seguros" name="seguro" id="seg{{seguro.idSeguro}}"
-              value={{seguro.idSeguro}}>
-              {{seguro.nombre}}</option>
-          </select>
+                <select formControlName="seguro" class="form-select"
+                    [class.is-invalid]="form.controls.seguro.status=='INVALID'"
+                    [class.is-valid]="form.controls.seguro.status=='VALID'" aria-label="Default select example"
+                    class="form-control input100" placeholder="Transporte">
+                    <option *ngFor="let seguro of seguros" name="seguro" id="seg{{seguro.idSeguro}}"
+                        value={{seguro.idSeguro}}>
+                        {{seguro.nombre}}</option>
+                </select>
             </div>
 
             <div class="wrap-input100">
                 <span class="contact100-form-combo">Estado del tour</span>
-                <select formControlName="estado" type="text" [class.is-invalid]="form.controls.estado.status=='INVALID'" [class.is-valid]="form.controls.estado.status=='VALID'" id="inputEstado" class="form-control input100" placeholder="Estado">
-            <option class="select-options"  value="INACTIVO">INACTVO</option>
-            <option class="select-options"  value="ACTIVO">ACTIVO</option>
-        </select>
+                <select formControlName="estado" type="text" [class.is-invalid]="form.controls.estado.status=='INVALID'"
+                    [class.is-valid]="form.controls.estado.status=='VALID'" id="inputEstado"
+                    class="form-control input100" placeholder="Estado">
+                    <option class="select-options" value="INACTIVO">INACTVO</option>
+                    <option class="select-options" value="ACTIVO">ACTIVO</option>
+                </select>
             </div>
 
             <hr style="color: rgb(5, 168, 5);">
