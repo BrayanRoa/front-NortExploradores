@@ -44,4 +44,8 @@ export class CompraService {
     return this.http.get<any>(`${this.url}/${id}/totalPaquetesMesTabla`)
   }
 
+  public totalMes(id:any):Observable<any>{
+    return this.http.get<any>(`${this.url}${id}/totalVendidoMes`)
+  }
+
 }

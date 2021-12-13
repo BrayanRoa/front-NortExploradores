@@ -574,7 +574,7 @@ export class DashboardComponent implements OnInit {
     //   new Txt('NorteXploradores brinda una asistencia profesional a todos aquellos que necesitan un servicio de viaje. Centrándose en brindar respuestas rápidas, precisas y eficientes con el fin de ofrecer un servicio personalizado de calidad y confiabilidad.').margin([22, 15, 2, 2]).alignment("justify").end]).end)
 
 
-      pdf.add(new Txt(`BALANCE DE CLIENTES AÑO ${this.agno}`).alignment("center").color("blue").bold().margin([0,30,0,0]).end);
+      pdf.add(new Txt(`REPORTE DEL FLUJO DE CLIENTES AÑO ${this.agno}`).alignment("center").color("blue").bold().margin([0,30,0,0]).end);
     pdf.add(this.createTable(data));
     
     pdf.create().open();
