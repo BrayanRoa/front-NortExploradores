@@ -15,9 +15,9 @@ type TableRow = [string, number];
 // paquetes (ventas)
 type TableRow2 = [string, number];
 // usuarios (registros)
-type TableRow3 = [number, string];
+// type TableRow3 = [number, string];
 
-type TableRow4 = [];
+// type TableRow4 = [];
 
 export interface totalMeses {
   cantidad: number;
@@ -44,7 +44,8 @@ export class DashboardComponent implements OnInit {
   public clicked1: boolean = false;
   public clicked2: boolean = false;
 
-
+  date = new Date().getMonth();
+  agno = new Date().getFullYear();
 
 
   constructor(
@@ -421,31 +422,41 @@ export class DashboardComponent implements OnInit {
     const data2 = await this.datosPaquete();
     const data3 = await this.datosCantidadPaquetesTabla();
 
-    const date = new Date().getMonth();
-    const mes = this.obtenerMes(date.toString());
+    // const date = new Date().getMonth();
+    // const agno = new Date().getFullYear();
+    const mes = this.obtenerMes(this.date.toString());
 
     pdf.pageSize("A4"); // TAMAÑO DE LA PÁGINA
-    pdf.pageMargins([40, 60]); // MARGENES DE LA PÁGINA
+    pdf.pageMargins([20, 20]); // MARGENES DE LA PÁGINA
     pdf.pageOrientation('portrait'); // 'portrait' --> POSICIÓN DE LA 
 
-    pdf.header(new Txt(`Reporte De Ventas Del Mes De ${mes} - NORTXPLORADORES`).alignment("center").margin(10).color("green").bold().end) // ENCABEZADO DE LA PÁGINA
+    // pdf.header(new Txt(`Reporte De Ventas Del Mes De ${mes} - NORTXPLORADORES`).alignment("center").margin(10).color("green").bold().end) // ENCABEZADO DE LA PÁGINA
 
-    pdf.add(
-      new Columns([await (await new Img("https://raw.githubusercontent.com/SantiagoAndresSerrano/img-soka/master/LOGO-01.png").width(80).height(80).noWrap().alignment('left').margin(14).build()),
+    // pdf.add(
+    //   new Columns([await (await new Img("https://raw.githubusercontent.com/SantiagoAndresSerrano/img-soka/master/LOGO-01.png").width(80).height(80).noWrap().alignment('left').margin(14).build()),
 
-      new Txt('NorteXploradores brinda una asistencia profesional a todos aquellos que necesitan un servicio de viaje. Centrándose en brindar respuestas rápidas, precisas y eficientes con el fin de ofrecer un servicio personalizado de calidad y confiabilidad.').margin([22, 15, 2, 2]).alignment("justify").end]).end)
+    //   new Txt('NorteXploradores brinda una asistencia profesional a todos aquellos que necesitan un servicio de viaje. Centrándose en brindar respuestas rápidas, precisas y eficientes con el fin de ofrecer un servicio personalizado de calidad y confiabilidad.').margin([22, 15, 2, 2]).alignment("justify").end]).end)
     
+    pdf.add(
+      
+      new Table([
+        [ await new Img("https://raw.githubusercontent.com/SantiagoAndresSerrano/img-soka/master/LOGO-01.png").width(80).height(80).noWrap().alignment('center').margin(0).build(), 
+        new Txt("NORTEXPLORADORES").alignment("center").fontSize(20).margin([0,25]).bold().end, 
+        new Txt("NorteXploradores@gmail.com\n NIT: 1090463941 - 0\n TEL: 3209177920\n RNT: 84950").alignment("center").margin([0,10]).bold().end],
+        
+    ]).widths([140,220,165 ]).alignment("center").end
+      )
 
     // TABLA HISTORIAL DE VENTAS
-    pdf.add(new Txt(`TOTAL PAQUETES VENDIDOS EN EL AÑO`).alignment("center").color("blue").bold().margin([0,30,0,0]).end);
+    pdf.add(new Txt(`TOTAL PAQUETES VENDIDOS EN EL AÑO ${this.agno}`).alignment("center").color("blue").bold().margin([0,30,0,0]).end);
     pdf.add(this.createTableHistorial(data));
 
     // TABLA DE VENTAS DEL MES
-    pdf.add(new Txt(`Paquetes Vendidos En El Mes De ${mes}`).alignment("center").color("blue").bold().margin([0,30,0,0]).end);
+    pdf.add(new Txt(`PAQUETES VENDIDOS EN EL MES DE ${mes.toUpperCase()} DEL AÑO ${this.agno}`).alignment("center").color("blue").bold().margin([0,30,0,0]).end);
     pdf.add(this.createTablePaquete(data2));
 
     // TABLA DE PAQUETE POR MES
-    pdf.add(new Txt(`Paquetes Vendidos Por Cada Mes Del Año`).alignment("center").color("blue").bold().margin([0,110,0,0]).end);
+    pdf.add(new Txt(`PAQUETES VENDIDOS POR CADA MES DEL AÑO ${this.agno}`).alignment("center").color("blue").bold().pageBreak('before').end);
     pdf.add(this.createTableCantidadPaquetesTabla(data3));
 
     pdf.create().open();
@@ -540,20 +551,30 @@ export class DashboardComponent implements OnInit {
     const data = await this.datos();
 
     pdf.pageSize("A4"); // TAMAÑO DE LA PÁGINA
-    pdf.pageMargins([40, 60]); // MARGENES DE LA PÁGINA
+    pdf.pageMargins([20, 20]); // MARGENES DE LA PÁGINA
     pdf.pageOrientation('portrait'); // 'portrait' --> POSICIÓN DE LA 
 
-    pdf.header(new Txt(`REPORTE DE CLIENTES - NORTXPLORADORES`).alignment("center").margin(10).color("green").end) // ENCABEZADO DE LA PÁGINA
+    // pdf.header(new Txt(`REPORTE DE CLIENTES - NORTXPLORADORES`).alignment("center").margin(10).color("green").end) // ENCABEZADO DE LA PÁGINA
 
-
-   
+       
     pdf.add(
-      new Columns([await (await new Img("https://raw.githubusercontent.com/SantiagoAndresSerrano/img-soka/master/LOGO-01.png").width(80).height(80).noWrap().alignment('left').margin(14).build()),
+      
+      new Table([
+        [ await new Img("https://raw.githubusercontent.com/SantiagoAndresSerrano/img-soka/master/LOGO-01.png").width(80).height(80).noWrap().alignment('center').margin(0).build(), 
+        new Txt("NORTEXPLORADORES").alignment("center").fontSize(20).margin([0,25]).bold().end, 
+        new Txt("NorteXploradores@gmail.com\n NIT: 1090463941 - 0\n TEL: 3209177920\n RNT: 84950").alignment("center").margin([0,10]).bold().end],
+        
+    ]).widths([140,220,165 ]).alignment("center").end
+      )
 
-      new Txt('NorteXploradores brinda una asistencia profesional a todos aquellos que necesitan un servicio de viaje. Centrándose en brindar respuestas rápidas, precisas y eficientes con el fin de ofrecer un servicio personalizado de calidad y confiabilidad.').margin([22, 15, 2, 2]).alignment("justify").end]).end)
+    //TODO: ESTO FUNCIONA BIEN
+    // pdf.add(
+    //   new Columns([await (await new Img("https://raw.githubusercontent.com/SantiagoAndresSerrano/img-soka/master/LOGO-01.png").width(80).height(80).noWrap().alignment('left').margin(14).build()),
+
+    //   new Txt('NorteXploradores brinda una asistencia profesional a todos aquellos que necesitan un servicio de viaje. Centrándose en brindar respuestas rápidas, precisas y eficientes con el fin de ofrecer un servicio personalizado de calidad y confiabilidad.').margin([22, 15, 2, 2]).alignment("justify").end]).end)
 
 
-      pdf.add(new Txt(`BALANCE DE CLIENTES`).alignment("center").color("blue").bold().margin([0,30,0,0]).end);
+      pdf.add(new Txt(`BALANCE DE CLIENTES AÑO ${this.agno}`).alignment("center").color("blue").bold().margin([0,30,0,0]).end);
     pdf.add(this.createTable(data));
     
     pdf.create().open();
@@ -561,7 +582,7 @@ export class DashboardComponent implements OnInit {
 
   createTable(data: totalMeses[]): ITable {
     return new Table([
-      ["CANTIDAD","MES"],
+      ["MES","CANTIDAD"],
       ...this.extraer(data)
     ])
     .widths('*')
