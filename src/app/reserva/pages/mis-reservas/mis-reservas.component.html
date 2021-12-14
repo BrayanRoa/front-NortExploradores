@@ -71,7 +71,7 @@
                 <td>{{reserva.tour.paquete.nombre}}</td>
                 <td>{{reserva.tour.fechaSalida}}</td>
                 <td>{{reserva.cantidadPasajeros}}</td>
-                <td>{{reserva.tour.paquete.precio}}</td>
+                <td>{{reserva.totalCompra}}</td>
                 <td>{{reserva.estado}}</td>
                 <td nzAlign="center">
                     <a *ngIf="reserva.estado!='CANCELADO'" (click)="cancelar(reserva.reserva.idReserva)">

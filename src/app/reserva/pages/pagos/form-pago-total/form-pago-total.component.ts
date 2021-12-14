@@ -702,7 +702,7 @@ export class FormPagoTotalComponent implements OnInit {
     var compra = {
       idCompra: this.idCompra,
       cantidadPasajeros: this.total,
-      totalCompra: this.totalDescuento,
+      totalCompra: this.totalDescuento*this.total,
       estado: "PENDIENTE",
       usuario: this.usuario.id_Usuario,
       tour: this.tourSeleccionado.idTour
