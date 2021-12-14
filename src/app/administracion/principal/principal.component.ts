@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzButtonSize } from 'ng-zorro-antd/button';
 import { NotificacionService } from 'src/app/services/notificacion.service';
@@ -22,6 +22,11 @@ export class PrincipalComponent implements OnInit {
   public roles: string[] = [];
   public nombreUser="";
   public totalSolicitudes = 0;
+
+  text:any;
+  wasInside:any;
+  clickNoti=true;
+
   log(): void {
     console.log('click dropdown button');
   }
@@ -71,6 +76,7 @@ export class PrincipalComponent implements OnInit {
   }
   dropd = false;
   drop(){
+    this.clickNoti=true;
     const out = document.getElementById('box');
     if(out){
       if(this.dropd){
@@ -78,7 +84,6 @@ export class PrincipalComponent implements OnInit {
         this.dropd=false;
       }else{
         out.setAttribute("style","width: 250px;height: auto;display:block;opacity: 1;position: absolute;top: 53px;right: 242px;border-radius: 5px 0px 5px 5px;background-color: #27293dfa!important;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)");
-        
         this.dropd=true;
       
       }
@@ -97,6 +102,31 @@ export class PrincipalComponent implements OnInit {
   volverInicio(){
     this.router.navigate(['/administracion']);
     
+  }
+
+  @HostListener('click',['$event.target'])
+  clickInside(target:any) {
+    console.log();
+    this.text = "clicked inside";
+    this.wasInside = true;
+    
+    if(this.dropd && target.id!="notificacion"){
+      const out = document.getElementById('box');
+      if(out){
+        out.setAttribute("style","width: 250px;height: 0px;display:none;opacity: 0;position: absolute;top: 53px;right: 242px;border-radius: 5px 0px 5px 5px;background-color: #27293dfa!important;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)");
+        this.dropd=false;
+      }
+    }
+    console.log(this.text);
+  }
+  
+  @HostListener('document:click')
+  clickout() {
+    if (!this.wasInside) {
+      this.text = "clicked outside";
+    console.log(this.text);
+
+    }
   }
 
   public cargarToken() {

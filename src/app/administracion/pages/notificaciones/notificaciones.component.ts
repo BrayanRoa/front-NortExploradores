@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzButtonSize } from 'ng-zorro-antd/button';
 import { Subject } from 'rxjs';
 import { NotificacionService } from 'src/app/services/notificacion.service';
 import { TokenService } from 'src/app/services/token.service';
-
+import { Component, ElementRef, HostListener, Input } from '@angular/core';
 @Component({
   selector: 'app-notificaciones',
   templateUrl: './notificaciones.component.html',
@@ -35,6 +35,9 @@ export class NotificacionesComponent implements OnInit {
       this.dtTrigger.next();
     })
   }
+
+
+  
 
   public cargarToken() {
     if (this.tokenS.getToken()) {
