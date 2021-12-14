@@ -38,6 +38,7 @@ import { DevolucionesComponent } from './pages/devoluciones/devoluciones.compone
 import { EditDevolucionesComponent } from './pages/devoluciones/edit-devoluciones/edit-devoluciones.component';
 import { ToursInactivosComponent } from './pages/tours/tours-inactivos/tours-inactivos.component';
 import { ReportesMesesComponent } from './pages/reportes/reportes-meses/reportes-meses.component';
+import { RespSugerenciaComponent } from './pages/resp-sugerencia/resp-sugerencia.component';
 
 const routes : Routes = [
   {path:"", 
@@ -85,6 +86,8 @@ const routes : Routes = [
 
       {path:"clientes", component:ClientesComponent},
       {path:"infCorporativa", component:InfCorporativaComponent},
+
+      {path:"sugerencia/:idSoli", component:RespSugerenciaComponent},
       
       {path:"paquetes", component:PaquetesComponent},
       {path:"nuevoPaquete", component:AddPaqueteComponent},
