@@ -1,4 +1,72 @@
 
+<div class="container">
+  <div class="row">
+    <div style="text-align: center;">
+     
+      
+
+    </div>
+    <div class="col-lg-3 col-sm-6">
+      <div class="card-box bg-blue">
+        <div class="inner">
+          <h3>₹185358</h3>
+          <p>Total Clientes</p>
+        </div>
+        <div class="icon">
+          <i class="fab fa-accusoft"></i>
+        </div>
+        <a (click)="reportesRegistros()"  class="card-box-footer"
+          >Reporte de Clientes <i class="fa fa-arrow-circle-right"></i
+        ></a>
+      </div>
+    </div>
+    
+    <div class="col-lg-3 col-sm-6">
+      <div class="card-box bg-green">
+        <div class="inner">
+          <h3>₹185358</h3>
+          <p>Total ventas</p>
+        </div>
+        <div class="icon">
+          <i class="far fa-money-bill-alt"></i>
+        </div>
+        <a (click)="reportesVentas()" class="card-box-footer"
+          >Reporte de ventas <i class="fa fa-arrow-circle-right"></i
+        ></a>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-sm-6">
+      <div class="card-box bg-orange">
+        <div class="inner">
+          <h3>5464</h3>
+          <p>Compras y Reservas</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-user-plus" aria-hidden="true"></i>
+        </div>
+        <a  routerLink="/administracion/reportesMes"   class="card-box-footer"
+          >Reporte Mes a Mes <i class="fa fa-arrow-circle-right"></i
+        ></a>
+      </div>
+    </div>
+    <div class="col-lg-3 col-sm-6">
+      <div class="card-box bg-red">
+        <div class="inner">
+          <h3>723</h3>
+          <p>Estadisticas</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-users"></i>
+        </div>
+        <a (click)="downloadPDF()" class="card-box-footer"
+          >Reporte Estadistico <i class="fa fa-arrow-circle-right"></i
+        ></a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class=" content" id="htmlData" style="padding: 40px;">
   <div class=" row">
     <div class=" col-12 p-4">
@@ -158,9 +226,3 @@
   
 </div>
 
-<div style="text-align: center;">
-  <button class="btn btn-danger" (click)="downloadPDF()" style="margin-right: 8px;">Download PDF</button>
-  <button class="btn btn-info" routerLink="/administracion/reportesMes"  style="margin-right: 8px;">Reportes Por Mes</button>
-  <button class="btn btn-primary" (click)="reportesVentas()" style="margin-right: 8px;">Reporte De Ventas</button>
-  <button class="btn btn-success" (click)="reportesRegistros()" style="margin-right: 8px;">Reportes De Registros</button>
-</div>
