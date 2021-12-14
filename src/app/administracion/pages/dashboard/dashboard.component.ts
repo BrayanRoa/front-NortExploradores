@@ -7,7 +7,10 @@ import { TokenService } from 'src/app/services/token.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import * as global from 'global'
 import { Columns, Img, ITable, PdfMakeWrapper, Table, Txt } from 'pdfmake-wrapper';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 
 // total meses (ventas)
@@ -21,12 +24,12 @@ type TableRow2 = [string, number];
 
 export interface totalMeses {
   cantidad: number;
-  mes:      string;
+  mes: string;
 }
 
 export interface totalPaquete {
   nombre: string;
-  total:  number;
+  total: number;
 }
 
 @Component({
@@ -47,15 +50,24 @@ export class DashboardComponent implements OnInit {
   date = new Date().getMonth();
   agno = new Date().getFullYear();
 
+  url = `${global.url}/usuario/`;
+
+  total: number=0;
 
   constructor(
     private tokenS: TokenService,
     private router: Router,
     private compraService: CompraService,
     private usuarioService: UsuarioService,
+    private http : HttpClient
   ) { }
 
   ngOnInit(): void {
+
+    this.obtenerTotalClientes().subscribe(data => {
+      this.total = data.totalClientes
+      console.log("el total es:", this.total)
+    })
     this.cargarToken();
     var gradientChartOptionsConfigurationWithTooltipRed: any = {
       maintainAspectRatio: false,
@@ -82,7 +94,7 @@ export class DashboardComponent implements OnInit {
             color: 'rgba(29,140,248,0.0)',
             zeroLineColor: "transparent",
           },
-          
+
           ticks: {
             suggestedMin: 5,
             suggestedMax: 125,
@@ -151,7 +163,7 @@ export class DashboardComponent implements OnInit {
           }
         }]
       }
-      
+
     };
 
     // GRAFICA VENTAS POR MESES -------------------------------------------------------------------------
@@ -203,7 +215,7 @@ export class DashboardComponent implements OnInit {
             data: comprasPorMes,
           }
           ]
-          
+
         },
 
         options: gradientChartOptionsConfigurationWithTooltipRed
@@ -229,10 +241,10 @@ export class DashboardComponent implements OnInit {
       var gradientStroke = this.ctx.createLinearGradient(0, 230, 0, 50);
       var gradientStroke1 = this.ctx.createLinearGradient(0, 230, 0, 50);
 
- 
+
       gradientStroke.addColorStop(0, 'rgba(28, 133, 160, 0.67)'); //red colors
       gradientStroke1.addColorStop(1, 'rgba(28, 160, 41, 0.67)'); //red colors
-      
+
       var data = {
         labels: [chart_labels[mes[0] - 1], chart_labels[mes[1] - 1]],
         datasets: [{
@@ -240,7 +252,7 @@ export class DashboardComponent implements OnInit {
           fill: true,
           backgroundColor: [gradientStroke, gradientStroke1],
           borderColor: '#FFFFFF',
-         
+
           borderWidth: 2,
           borderDash: [],
           borderDashOffset: 0.0,
@@ -253,7 +265,7 @@ export class DashboardComponent implements OnInit {
           pointRadius: 4,
           data: cant,
         }]
-        
+
       };
 
       var myChart = new Chart(this.ctx, {
@@ -287,7 +299,7 @@ export class DashboardComponent implements OnInit {
       var gradientStroke4 = this.ctx.createLinearGradient(0, 230, 0, 50);
       var gradientStroke5 = this.ctx.createLinearGradient(0, 230, 0, 50);
 
-      gradientStroke.addColorStop(1,  'rgba(25, 163, 34, 0.54)');
+      gradientStroke.addColorStop(1, 'rgba(25, 163, 34, 0.54)');
       gradientStroke1.addColorStop(1, 'rgba(25, 154, 163, 0.54)'); //green colors
       gradientStroke2.addColorStop(1, 'rgba(241, 236, 79, 0.52)');
       gradientStroke3.addColorStop(1, 'rgba(194, 147, 126, 0.52)'); //green colors
@@ -299,7 +311,7 @@ export class DashboardComponent implements OnInit {
         datasets: [{
           label: "Total en ventas:",
           fill: true,
-          backgroundColor: [gradientStroke, gradientStroke1,gradientStroke2, gradientStroke3,gradientStroke4, gradientStroke5 ],
+          backgroundColor: [gradientStroke, gradientStroke1, gradientStroke2, gradientStroke3, gradientStroke4, gradientStroke5],
           borderColor: 'rgba(98, 97, 85, 0.33)',
           borderWidth: 2,
           borderDash: [],
@@ -338,10 +350,10 @@ export class DashboardComponent implements OnInit {
 
       var gradientStroke = this.ctx.createLinearGradient(0, 230, 0, 50);
 
-      gradientStroke.addColorStop(1, 'rgba(25, 163, 34, 0.54)'); 
-       gradientStroke.addColorStop(0.4, '#FFFFFF'); //green colors
+      gradientStroke.addColorStop(1, 'rgba(25, 163, 34, 0.54)');
+      gradientStroke.addColorStop(0.4, '#FFFFFF'); //green colors
       gradientStroke.addColorStop(0.4, 'blue'); //green colors
-    
+
 
       var data = {
         labels: chart_labels,
@@ -437,37 +449,29 @@ export class DashboardComponent implements OnInit {
     const data2 = await this.datosPaquete();
     const data3 = await this.datosCantidadPaquetesTabla();
 
-    // const date = new Date().getMonth();
-    // const agno = new Date().getFullYear();
     const mes = this.obtenerMes(this.date.toString());
 
     pdf.pageSize("A4"); // TAMAÑO DE LA PÁGINA
     pdf.pageMargins([20, 20]); // MARGENES DE LA PÁGINA
     pdf.pageOrientation('portrait'); // 'portrait' --> POSICIÓN DE LA 
 
-    // pdf.header(new Txt(`Reporte De Ventas Del Mes De ${mes} - NORTXPLORADORES`).alignment("center").margin(10).color("green").bold().end) // ENCABEZADO DE LA PÁGINA
 
-    // pdf.add(
-    //   new Columns([await (await new Img("https://raw.githubusercontent.com/SantiagoAndresSerrano/img-soka/master/LOGO-01.png").width(80).height(80).noWrap().alignment('left').margin(14).build()),
-
-    //   new Txt('NorteXploradores brinda una asistencia profesional a todos aquellos que necesitan un servicio de viaje. Centrándose en brindar respuestas rápidas, precisas y eficientes con el fin de ofrecer un servicio personalizado de calidad y confiabilidad.').margin([22, 15, 2, 2]).alignment("justify").end]).end)
-    
     pdf.add(
-      
+
       new Table([
-        [ await new Img("https://raw.githubusercontent.com/SantiagoAndresSerrano/img-soka/master/LOGO-01.png").width(80).height(80).noWrap().alignment('center').margin(0).build(), 
-        new Txt("NORTEXPLORADORES").alignment("center").fontSize(20).margin([0,25]).bold().end, 
-        new Txt("NorteXploradores@gmail.com\n NIT: 1090463941 - 0\n TEL: 3209177920\n RNT: 84950").alignment("center").margin([0,10]).bold().end],
-        
-    ]).widths([140,220,165 ]).alignment("center").end
-      )
+        [await new Img("https://raw.githubusercontent.com/SantiagoAndresSerrano/img-soka/master/LOGO-01.png").width(80).height(80).noWrap().alignment('center').margin(0).build(),
+        new Txt("NORTEXPLORADORES").alignment("center").fontSize(20).margin([0, 25]).bold().end,
+        new Txt("NorteXploradores@gmail.com\n NIT: 1090463941 - 0\n TEL: 3209177920\n RNT: 84950").alignment("center").margin([0, 10]).bold().end],
+
+      ]).widths([140, 220, 165]).alignment("center").end
+    )
 
     // TABLA HISTORIAL DE VENTAS
-    pdf.add(new Txt(`TOTAL PAQUETES VENDIDOS EN EL AÑO ${this.agno}`).alignment("center").color("blue").bold().margin([0,30,0,0]).end);
+    pdf.add(new Txt(`TOTAL PAQUETES VENDIDOS EN EL AÑO ${this.agno}`).alignment("center").color("blue").bold().margin([0, 30, 0, 0]).end);
     pdf.add(this.createTableHistorial(data));
 
     // TABLA DE VENTAS DEL MES
-    pdf.add(new Txt(`PAQUETES VENDIDOS EN EL MES DE ${mes.toUpperCase()} DEL AÑO ${this.agno}`).alignment("center").color("blue").bold().margin([0,30,0,0]).end);
+    pdf.add(new Txt(`PAQUETES VENDIDOS EN EL MES DE ${mes.toUpperCase()} DEL AÑO ${this.agno}`).alignment("center").color("blue").bold().margin([0, 30, 0, 0]).end);
     pdf.add(this.createTablePaquete(data2));
 
     // TABLA DE PAQUETE POR MES
@@ -562,51 +566,52 @@ export class DashboardComponent implements OnInit {
 
   async reportesRegistros() {
     
+    // this.total=0;
     const pdf = new PdfMakeWrapper();
     const data = await this.datos();
+    
 
     pdf.pageSize("A4"); // TAMAÑO DE LA PÁGINA
     pdf.pageMargins([20, 20]); // MARGENES DE LA PÁGINA
     pdf.pageOrientation('portrait'); // 'portrait' --> POSICIÓN DE LA 
 
-    // pdf.header(new Txt(`REPORTE DE CLIENTES - NORTXPLORADORES`).alignment("center").margin(10).color("green").end) // ENCABEZADO DE LA PÁGINA
-
-       
+    
     pdf.add(
-      
+
       new Table([
-        [ await new Img("https://raw.githubusercontent.com/SantiagoAndresSerrano/img-soka/master/LOGO-01.png").width(80).height(80).noWrap().alignment('center').margin(0).build(), 
-        new Txt("NORTEXPLORADORES").alignment("center").fontSize(20).margin([0,25]).bold().end, 
-        new Txt("NorteXploradores@gmail.com\n NIT: 1090463941 - 0\n TEL: 3209177920\n RNT: 84950").alignment("center").margin([0,10]).bold().end],
-        
-    ]).widths([140,220,165 ]).alignment("center").end
-      )
+        [await new Img("https://raw.githubusercontent.com/SantiagoAndresSerrano/img-soka/master/LOGO-01.png").width(80).height(80).noWrap().alignment('center').margin(0).build(),
+        new Txt("NORTEXPLORADORES").alignment("center").fontSize(20).margin([0, 25]).bold().end,
+        new Txt("NorteXploradores@gmail.com\n NIT: 1090463941 - 0\n TEL: 3209177920\n RNT: 84950").alignment("center").margin([0, 10]).bold().end],
 
-    //TODO: ESTO FUNCIONA BIEN
-    // pdf.add(
-    //   new Columns([await (await new Img("https://raw.githubusercontent.com/SantiagoAndresSerrano/img-soka/master/LOGO-01.png").width(80).height(80).noWrap().alignment('left').margin(14).build()),
+      ]).widths([140, 220, 165]).alignment("center").end
+    )
 
-    //   new Txt('NorteXploradores brinda una asistencia profesional a todos aquellos que necesitan un servicio de viaje. Centrándose en brindar respuestas rápidas, precisas y eficientes con el fin de ofrecer un servicio personalizado de calidad y confiabilidad.').margin([22, 15, 2, 2]).alignment("justify").end]).end)
-
-
-      pdf.add(new Txt(`REPORTE DEL FLUJO DE CLIENTES AÑO ${this.agno}`).alignment("center").color("blue").bold().margin([0,30,0,0]).end);
+    
+    
+    pdf.add(new Txt(`REPORTE DEL FLUJO DE CLIENTES AÑO ${this.agno}`).alignment("center").color("blue").bold().margin([0, 30, 0, 0]).end);
     pdf.add(this.createTable(data));
     
+    pdf.add(
+      new Table([
+        [new Txt("Total/Clientes").bold().end, new Txt(`${this.total}`).bold().end],
+      ]).widths(['*', 268]).end
+    )
+    this.total=0;
     pdf.create().open();
   }
 
   createTable(data: totalMeses[]): ITable {
     return new Table([
-      ["MES","CANTIDAD"],
+      ["MES", "CANTIDAD"],
       ...this.extraer(data)
     ])
-    .widths('*')
-    .layout({
-      fillColor : (rowIndex: number|undefined, node: any|undefined, columnIndex:number|undefined)=>{
-        return rowIndex===0? '#D3E4CD' : '#FAEDF0'
-      }
-    }).bold().margin([2,12]).alignment('center').decorationColor("blue")
-    .end
+      .widths('*')
+      .layout({
+        fillColor: (rowIndex: number | undefined, node: any | undefined, columnIndex: number | undefined) => {
+          return rowIndex === 0 ? '#D3E4CD' : '#FAEDF0'
+        }
+      }).bold().margin([2, 12]).alignment('center').decorationColor("blue")
+      .end
   }
 
   extraer(data: totalMeses[]): TableRow2[] {
@@ -616,5 +621,10 @@ export class DashboardComponent implements OnInit {
   async datos(): Promise<totalMeses[]> {
     return fetch(`https://nortexploradores.herokuapp.com/usuario/usuariosMensualesTabla`)
       .then(resp => resp.json());
+  }
+
+  obtenerTotalClientes(): Observable<any> {
+    return this.http.get<any>(`${this.url}totalClientes`)
+
   }
 }

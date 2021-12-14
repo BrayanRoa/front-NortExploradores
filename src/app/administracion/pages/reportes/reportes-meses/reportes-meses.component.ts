@@ -100,6 +100,7 @@ export class ReportesMesesComponent implements OnInit {
     let menosVendido = "";
     this.obtenerTotal(this.id).subscribe(data => {
       this.total = data.ventaMes
+      console.log("el total es:", this.total)
     })
 
     this.obtenerResumen(this.id).subscribe(data=>{
@@ -185,7 +186,8 @@ export class ReportesMesesComponent implements OnInit {
 
   obtenerTotal(mes: number): Observable<any> {
     console.log(mes);
-    return this.http.get<any>(`${this.url}${mes}/totalVendidoMes`)
+    return this.http.get<any>(`${this.url}${mes}/${this.agno}/totalVendidoMes`)
+
   }
 
 
