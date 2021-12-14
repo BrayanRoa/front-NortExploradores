@@ -31,6 +31,18 @@
           </div>
         </div>
 
+        <div class="wrap-input100">
+          <span class="contact100-form-combo">Categoría</span>
+          <select formControlName="idCategoria" class="form-select"
+            [class.is-invalid]="form.controls.idCategoria.status=='INVALID'"
+            [class.is-valid]="form.controls.idCategoria.status=='VALID'" aria-label="Default select example"
+            class="form-control input100" placeholder="Categoría">
+            <option *ngFor="let cat of empresaCat" name="idCategoria" id="cate{{cat.idCategoria}}"
+              value={{cat.idCategoria}}>
+              {{cat.nombre}}</option>
+          </select>
+        </div>
+
         <div class="wrap-input100" [formGroup]="form">
           <span class="contact100-form-combo">Estado de la empresa</span>
           <select formControlName="estado" aria-label="Default select example"

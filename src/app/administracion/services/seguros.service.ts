@@ -8,7 +8,7 @@ import * as global from 'global'
 })
 export class SegurosService {
 
-  uri =`${global.url}/seguro/`;
+  uri =`${global.url}/empresa/seguroE/`;
   constructor(private http: HttpClient) { }
 
   public listarSeguro():Observable<any>{

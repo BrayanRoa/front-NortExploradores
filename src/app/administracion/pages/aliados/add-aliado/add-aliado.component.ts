@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { EmpresaCatService } from 'src/app/administracion/services/empresa-cat.service';
 // import { ToastrService } from 'ngx-toastr';
 import { EmpresaService } from 'src/app/services/empresa.service';
 import { TokenService } from 'src/app/services/token.service';
@@ -16,11 +17,13 @@ export class AddAliadoComponent implements OnInit {
   public form !: FormGroup;
   titulo = 'Agregar Aliado';
   boton = 'Agregar Aliado';
-  id: string | null;
+  id: string | null;  
+  public empresaCat: any = [];
   // router: any; TODO: puedo borrar este? lo estan usando?
 
   constructor(
     private empresaService: EmpresaService,
+    private catEmpresa: EmpresaCatService,
     private formBuilder: FormBuilder,
     private aRouter: ActivatedRoute,
     private toastr: ToastrService,
@@ -33,6 +36,7 @@ export class AddAliadoComponent implements OnInit {
   ngOnInit(): void {
     this.cargarToken();
     this.esEditar();
+    this.agregarCategoria()
     this.form = this.formBuilder.group({
       idEmpresa: ['', Validators.compose([
         Validators.required,
@@ -86,6 +90,9 @@ export class AddAliadoComponent implements OnInit {
         Validators.compose([
           Validators.required
         ])],
+        idCategoria:['', Validators.compose([
+          Validators.required,
+        ])],
     });
   }
 
@@ -131,6 +138,7 @@ export class AddAliadoComponent implements OnInit {
           idEmpresa: data.idEmpresa,
           fecha: data.fecha,
           estado: data.estado,
+          categoria: data.categoria
         });
         const output = document.getElementById('idEmp');
           if (output){
@@ -147,5 +155,11 @@ export class AddAliadoComponent implements OnInit {
     } else {
       this.router.navigateByUrl("/inicio");
     }
+  }
+
+  public agregarCategoria() {
+    this.catEmpresa.CatEmpresa().subscribe((CategoriaEmp) => {
+      this.empresaCat = CategoriaEmp;
+    });
   }
 }
