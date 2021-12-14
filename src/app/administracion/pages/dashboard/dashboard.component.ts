@@ -82,6 +82,7 @@ export class DashboardComponent implements OnInit {
             color: 'rgba(29,140,248,0.0)',
             zeroLineColor: "transparent",
           },
+          
           ticks: {
             suggestedMin: 5,
             suggestedMax: 125,
@@ -150,6 +151,7 @@ export class DashboardComponent implements OnInit {
           }
         }]
       }
+      
     };
 
     // GRAFICA VENTAS POR MESES -------------------------------------------------------------------------
@@ -162,7 +164,6 @@ export class DashboardComponent implements OnInit {
     this.compraService.comprasPorMes().subscribe(compras => {
       this.canvas = document.getElementById("chartBig1");
       this.ctx = this.canvas.getContext("2d");
-
 
       var gradientStroke = this.ctx.createLinearGradient(0, 230, 0, 50);
 
@@ -202,7 +203,9 @@ export class DashboardComponent implements OnInit {
             data: comprasPorMes,
           }
           ]
+          
         },
+
         options: gradientChartOptionsConfigurationWithTooltipRed
       };
       this.myChartData = new Chart(this.ctx, config);
@@ -224,30 +227,33 @@ export class DashboardComponent implements OnInit {
       }
 
       var gradientStroke = this.ctx.createLinearGradient(0, 230, 0, 50);
+      var gradientStroke1 = this.ctx.createLinearGradient(0, 230, 0, 50);
 
-      gradientStroke.addColorStop(1, 'rgba(233,32,16,0.2)');
-      gradientStroke.addColorStop(0.4, 'rgba(233,32,16,0.0)');
-      gradientStroke.addColorStop(0, 'rgba(233,32,16,0)'); //red colors
-
+ 
+      gradientStroke.addColorStop(0, 'rgba(28, 133, 160, 0.67)'); //red colors
+      gradientStroke1.addColorStop(1, 'rgba(28, 160, 41, 0.67)'); //red colors
+      
       var data = {
         labels: [chart_labels[mes[0] - 1], chart_labels[mes[1] - 1]],
         datasets: [{
           label: "Data",
           fill: true,
-          backgroundColor: gradientStroke,
-          borderColor: '#ec250d',
+          backgroundColor: [gradientStroke, gradientStroke1],
+          borderColor: '#FFFFFF',
+         
           borderWidth: 2,
           borderDash: [],
           borderDashOffset: 0.0,
-          pointBackgroundColor: '#ec250d',
+          pointBackgroundColor: '#FFFFFF',
           pointBorderColor: 'rgba(255,255,255,0)',
-          pointHoverBackgroundColor: '#ec250d',
+          pointHoverBackgroundColor: '#FFFFFF',
           pointBorderWidth: 20,
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
           pointRadius: 4,
           data: cant,
         }]
+        
       };
 
       var myChart = new Chart(this.ctx, {
@@ -275,24 +281,32 @@ export class DashboardComponent implements OnInit {
       }
 
       var gradientStroke = this.ctx.createLinearGradient(0, 230, 0, 50);
+      var gradientStroke1 = this.ctx.createLinearGradient(0, 230, 0, 50);
+      var gradientStroke2 = this.ctx.createLinearGradient(0, 230, 0, 50);
+      var gradientStroke3 = this.ctx.createLinearGradient(0, 230, 0, 50);
+      var gradientStroke4 = this.ctx.createLinearGradient(0, 230, 0, 50);
+      var gradientStroke5 = this.ctx.createLinearGradient(0, 230, 0, 50);
 
-      gradientStroke.addColorStop(1, 'rgba(255,255,255,0)');
-      gradientStroke.addColorStop(0.4, 'rgba(255,255,255,0)'); //green colors
-      gradientStroke.addColorStop(0, 'rgba(255,255,255,0)'); //green colors
+      gradientStroke.addColorStop(1,  'rgba(25, 163, 34, 0.54)');
+      gradientStroke1.addColorStop(1, 'rgba(25, 154, 163, 0.54)'); //green colors
+      gradientStroke2.addColorStop(1, 'rgba(241, 236, 79, 0.52)');
+      gradientStroke3.addColorStop(1, 'rgba(194, 147, 126, 0.52)'); //green colors
+      gradientStroke4.addColorStop(1, 'rgba(181, 126, 194, 0.52)');
+      gradientStroke5.addColorStop(1, 'rgba(126, 194, 194, 0.52)'); //green colors
 
       var data = {
         labels: paquetes,
         datasets: [{
           label: "Total en ventas:",
           fill: true,
-          backgroundColor: gradientStroke,
-          borderColor: '#00d6b4',
+          backgroundColor: [gradientStroke, gradientStroke1,gradientStroke2, gradientStroke3,gradientStroke4, gradientStroke5 ],
+          borderColor: 'rgba(98, 97, 85, 0.33)',
           borderWidth: 2,
           borderDash: [],
           borderDashOffset: 0.0,
-          pointBackgroundColor: '#00d6b4',
+          pointBackgroundColor: 'rgba(98, 97, 85, 0.33)',
           pointBorderColor: 'rgba(255,255,255,0)',
-          pointHoverBackgroundColor: '#00d6b4',
+          pointHoverBackgroundColor: 'rgba(98, 97, 85, 0.33)',
           pointBorderWidth: 20,
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
@@ -324,9 +338,10 @@ export class DashboardComponent implements OnInit {
 
       var gradientStroke = this.ctx.createLinearGradient(0, 230, 0, 50);
 
-      gradientStroke.addColorStop(1, 'rgba(255,255,255,0)');
-      gradientStroke.addColorStop(0.4, 'rgba(255,255,255,0)'); //green colors
-      gradientStroke.addColorStop(0, 'rgba(255,255,255,0)'); //green colors
+      gradientStroke.addColorStop(1, 'rgba(25, 163, 34, 0.54)'); 
+       gradientStroke.addColorStop(0.4, '#FFFFFF'); //green colors
+      gradientStroke.addColorStop(0.4, 'blue'); //green colors
+    
 
       var data = {
         labels: chart_labels,
