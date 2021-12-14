@@ -8,6 +8,22 @@
             <hr style="color: rgb(5, 168, 5);">
             <input formControlName="idPaq" hidden type="number" class="form-control" id="inputPaq">
 
+            <div class="wrap-input100" [formGroup]="form">
+                <span class="contact100-form-combo">Municipio</span>
+                <select formControlName="municipio" class="input100 form-control" type="text" id="inputMunicipio"
+                [class.is-invalid]="form.controls.municipio.status!='VALID'"
+                    [class.is-valid]="form.controls.municipio.status=='VALID'">
+                    <option value="">Seleccione Un Municipio</option>
+                    <option *ngFor="let municipio of municipios" name="municipio" id="muni{{municipio.idMuni}}"
+                        value={{municipio.idMuni}}>
+                        {{municipio.nombre}}</option>
+                </select>
+                <span class="focus-input100"></span>
+                <div class="invalid-feedback" style="text-align: center;">
+                    Elige Un Municipio
+                </div>
+            </div>
+
             <div class="wrap-input100" data-validate="Por favor ingrese el nombre completo">
                 <span class="contact100-form-combo">Nombre del paquete</span>
                 <input formControlName="nombre" class="input100 form-control" type="text"
@@ -92,21 +108,7 @@
                 
             </div>
 
-            <div class="wrap-input100" [formGroup]="form">
-                <span class="contact100-form-combo">Municipio</span>
-                <select formControlName="municipio" class="input100 form-control" type="text" id="inputMunicipio"
-                [class.is-invalid]="form.controls.municipio.status!='VALID'"
-                    [class.is-valid]="form.controls.municipio.status=='VALID'">
-                    <option value="">Seleccione Un Municipio</option>
-                    <option *ngFor="let municipio of municipios" name="municipio" id="muni{{municipio.idMuni}}"
-                        value={{municipio.idMuni}}>
-                        {{municipio.nombre}}</option>
-                </select>
-                <span class="focus-input100"></span>
-                <div class="invalid-feedback" style="text-align: center;">
-                    Elige Un Municipio
-                </div>
-            </div>
+            
 
             <div class="wrap-input100">
                 <input (input)="cargarActividades($event)" type="number" class="form-control" id="inputcantAtcs"
