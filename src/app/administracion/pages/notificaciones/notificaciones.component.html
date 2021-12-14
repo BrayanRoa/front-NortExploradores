@@ -19,13 +19,13 @@
               <th>USUARIO</th>
               <th>SUGERENCIA</th>
               <th>SOLICITUD</th>
+              <th>ACCION</th>
               
             </tr>
           </thead>
           <tbody>
            <tr *ngFor="let notificacion of notificaciones">
             <td>{{notificacion.fecha}}</td>
-
                 <td>{{notificacion.descripcion}}</td>
                 <td *ngIf="notificacion.usuario!=null">{{notificacion.usuario.username}}</td>
                 <td *ngIf="notificacion.usuario==null" class="text-center">----</td>
@@ -35,7 +35,12 @@
 
                 <td *ngIf="notificacion.solicitudTour!=null" >{{notificacion.solicitudTour.descripcion}}</td>
                 <td *ngIf="notificacion.solicitudTour==null" class="text-center">----</td>
-
+                <td *ngIf="notificacion.sugerencia!=null" class="text-center">
+                  <a style="margin-right: 10px;" [routerLink]="['/administracion/sugerencia/',notificacion.sugerencia.idSug]" data-bs-toggle="modal" data-bs-target="#staticBackdrop">      
+                    <i nz-icon nzType="check-circle" nzTheme="outline" style="font-size: 20px; color: rgb(9, 255, 0);"></i>
+                  </a>
+                </td>
+                <td *ngIf="notificacion.sugerencia==null" class="text-center">----</td>
            </tr>
           </tbody>
         </table>
