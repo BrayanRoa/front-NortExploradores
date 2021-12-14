@@ -69,7 +69,7 @@
                                 </div>
                 
                                 <div>
-                                  <a nz-popover [nzPopoverContent]="ver" style="color: red;" routerLink="/administracion/verProveedor/{{item.id_proveedor}}">
+                                  <a nz-popover [nzPopoverContent]="ver" style="color: red;" (click)="generar(item.idTour, item.paquete.nombre)">
                                     <i class="far fa-file-pdf" style="font-size: 20px"></i>
                                   </a>
                     
