@@ -45,6 +45,7 @@ import { UpdateEmpleadoComponent } from './pages/empleados/update-empleado/updat
 import { TransportesComponent } from './pages/aliados/transportes/transportes.component';
 import { SegurosComponent } from './pages/aliados/seguros/seguros.component';
 import { EditPaqueteComponent } from './pages/paquetes/edit-paquete/edit-paquete.component';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 
 // toas tr
 import { ToastrModule } from 'ngx-toastr';
@@ -122,6 +123,7 @@ import { RespSugerenciaComponent } from './pages/resp-sugerencia/resp-sugerencia
     ReactiveFormsModule,
     NzModalModule,
     ToastrModule.forRoot(),
+    NzPopoverModule
     // BrowserAnimationsModule,
   ],
   exports:[

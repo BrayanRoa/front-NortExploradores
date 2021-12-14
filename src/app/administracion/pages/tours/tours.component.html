@@ -37,9 +37,6 @@
                         <th>PRECIO</th>
                         <th>EMPLEADO</th>
                         <th>ESTADO</th>
-
-                        <!-- <th>RUTA</th>
-        <th>SEGURO</th> -->
                         <th>OPCIÓN</th>
                     </tr>
                 </thead>
@@ -59,10 +56,33 @@
                           {{ item.estado }}
                       </td>
                         <td *ngIf="item.estado=='ACTIVO' || item.estado=='INACTIVO'" nzAlign="center">
+
+                            <div style="display: flex; justify-content: space-evenly; align-items: center;">
+
+                                <div>
+                                  <a nz-popover [nzPopoverContent]="editar" [routerLink]="['/administracion/editarTour',item.idTour]" style="color: blue;">
+                                    <i class="fas fa-edit" style="font-size: 20px"></i></a>
+                    
+                                  <ng-template #editar>
+                                    Editar Tour: {{item.paquete.nombre}}
+                                  </ng-template>
+                                </div>
+                
+                                <div>
+                                  <a nz-popover [nzPopoverContent]="ver" style="color: red;" routerLink="/administracion/verProveedor/{{item.id_proveedor}}">
+                                    <i class="far fa-file-pdf" style="font-size: 20px"></i>
+                                  </a>
+                    
+                                  <ng-template #ver>
+                                    Ver Pasajetos Del Tour: {{item.nombre}}
+                                  </ng-template>
+                                </div>
+                
+                              </div>
   
 
-                            <a [routerLink]="['/administracion/editarTour',item.idTour]">
-                                <i nz-icon nzType="edit" nzTheme="outline" style="font-size: 20px"></i></a>
+                            <!-- <a [routerLink]="['/administracion/editarTour',item.idTour]">
+                                <i nz-icon nzType="edit" nzTheme="outline" style="font-size: 20px"></i></a> -->
                         </td>
                     </tr>
                 </tbody>
