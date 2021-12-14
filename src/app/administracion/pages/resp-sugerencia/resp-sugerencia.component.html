@@ -1,0 +1,38 @@
+<div class="container-contact100">
+    <div class="wrap-contact100">
+
+        <form [formGroup]="form" class="contact100-form validate-form">
+            <span class="contact100-form-title">
+                <h4 class="col-sm-10">Respuesta de sugerencia</h4>
+            </span>
+            <hr style="color: rgb(5, 168, 5);">
+            <input formControlName="idSugerencia" hidden type="number" class="form-control" id="inputPaq">
+            <input formControlName="correo" hidden type="number" class="form-control" id="inputPaq">
+            <div class="wrap-input100" style="background-color: rgba(181, 255, 255, 0.384) !important; padding: 20px;"  data-validate="">
+                <span class="contact100-form-combo">Descripcion del Cliente <span id="cliente"></span></span>
+                <textarea readonly class="input100"
+                    id="inputDescripcions"></textarea>
+                <span class="focus-input100"></span>
+              </div>
+
+            <div class="wrap-input100" data-validate="Por favor ingrese el nombre completo">
+                <span class="contact100-form-combo">Respuesta a la sugerencia</span>
+                <textarea formControlName="respsugerencia" class="input100 form-control" 
+                    placeholder="Nombre del paquete" id="inputNombre"
+                    [class.is-invalid]="form.controls.respsugerencia.status!='VALID'"
+                    [class.is-valid]="form.controls.respsugerencia.status=='VALID'"></textarea>
+                <span class="focus-input100"></span>
+                <div class="invalid-feedback" style="text-align: center;">
+                    Minimo 5 Caracteres
+                </div>
+            </div>
+
+            <div class="container-contact100-form-btn">
+                <button class="contact100-form-btn" (click)="enviarData()" type="submit">ENVIAR RESPUESTA</button>
+                <div class="col-sm-0"></div>
+              </div>
+
+            </form>
+
+            </div>
+        </div>

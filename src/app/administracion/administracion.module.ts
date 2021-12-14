@@ -60,6 +60,7 @@ import { DevolucionesComponent } from './pages/devoluciones/devoluciones.compone
 import { EditDevolucionesComponent } from './pages/devoluciones/edit-devoluciones/edit-devoluciones.component';
 import { ToursInactivosComponent } from './pages/tours/tours-inactivos/tours-inactivos.component';
 import { ReportesMesesComponent } from './pages/reportes/reportes-meses/reportes-meses.component';
+import { RespSugerenciaComponent } from './pages/resp-sugerencia/resp-sugerencia.component';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -100,7 +101,8 @@ import { ReportesMesesComponent } from './pages/reportes/reportes-meses/reportes
     DevolucionesComponent,
     EditDevolucionesComponent,
     ToursInactivosComponent,
-    ReportesMesesComponent
+    ReportesMesesComponent,
+    RespSugerenciaComponent
   ],
   imports: [
     CommonModule,
