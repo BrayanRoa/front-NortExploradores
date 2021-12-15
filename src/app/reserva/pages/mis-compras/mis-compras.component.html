@@ -1,0 +1,56 @@
+
+<div class="container-fluid">
+    <div class="cajon">
+      <div class="titulo">
+        <h4 class="gestiones">
+          Mis Compras
+        </h4>
+      </div>
+      <div class="table">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+          class="table table-striped table-bordered row-border hover">
+          <thead class="table-dark">
+            <tr>
+                <th scope="col">Num. Compra</th>
+                <th scope="col">Paquete</th>
+                <th scope="col">Fecha de Viaje</th>
+                <th scope="col">Cant. Pasajeros</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Opcion</th>
+                <th scope="col">Ver</th>
+
+  
+          </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let compra of compras">
+                <td>{{compra.idCompra}}</td>
+                <td>{{compra.tour.paquete.nombre}}</td>
+                <td>{{compra.tour.fechaSalida}}</td>
+                <td>{{compra.cantidadPasajeros}}</td>
+                <td>{{compra.totalCompra}}</td>
+                <td>{{compra.estado}}</td>
+                <td nzAlign="center">
+                    <a *ngIf="compra.estado!='CANCELADO'" (click)="cancelar(compra.idCompra)">
+                        <i class="far fa-window-close" style="font-size: 25px;"></i>
+                    </a>
+
+                </td>
+                <td nzAlign="center">
+                    <a  routerLink='/infopago/{{compra.idCompra}}'>
+                        <i class="fas fa-2x fa-file-pdf" ></i>
+                    </a>
+                </td>
+            </tr>
+          </tbody>
+        </table>
+  </div>    
+  
+    <div class="img-maleta">
+      <img src="../../../../assets/img/misMaletas.png" alt="">
+      </div>
+  
+    </div>
+  </div>
+  

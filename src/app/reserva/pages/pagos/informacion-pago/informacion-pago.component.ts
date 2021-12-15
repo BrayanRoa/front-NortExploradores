@@ -90,13 +90,31 @@ export class InformacionPagoComponent implements OnInit {
 
           })
         }else{
-          let id = this.aRouter.snapshot.paramMap.get('idCompra');
+          let id = this.aRouter.snapshot.paramMap.get('idTransaccion');
           if(id!=null){
-            this.transaccionService.encontrar(id).subscribe(compra=>{
+            this.transaccionService.encontrarTransacciones(id).subscribe(compra=>{
+              console.log(compra);
               this.compra=compra;
+              if(compra.responseMessagePol!="APPROVED"){
+                this.respuesta="¡Transacción cancelada!"
+                this.imgRespuesta="https://cdn-icons-png.flaticon.com/512/148/148766.png"
+                return;
+              }
+  
               if(compra.responseMessagePol=="APPROVED" && compra.referenceSale.estado=="PAGADO"){
                 this.respuesta="¡Transacción aprobada, disfruta tu viaje!"
                 this.imgRespuesta="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Check_green_icon.svg/2048px-Check_green_icon.svg.png"
+                return;
+              }
+              if(compra.responseMessagePol=="APPROVED" && compra.referenceSale.estado=="PAGO_PARCIAL"){
+                this.respuesta="¡Transacción aprobada, recuerda pagar el 50% restante!"
+                this.imgRespuesta="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Check_green_icon.svg/2048px-Check_green_icon.svg.png"
+                return;
+              }
+
+              if(compra.responseMessagePol=="APPROVED" && compra.referenceSale.estado=="CANCELADO"){
+                this.respuesta="¡Transacción aprobada!, compra cancelada"
+                this.imgRespuesta="https://cdn-icons-png.flaticon.com/512/194/194330.png"
                 return;
               }
             },error=>{

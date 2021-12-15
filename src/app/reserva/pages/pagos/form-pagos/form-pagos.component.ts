@@ -431,8 +431,6 @@ export class FormPagosComponent implements OnInit {
   }
 
   elegirDescuento(){
-    console.log(this.viajesRealizados);
-    console.log(this.isCumpleaniero);
 
     if(this.isCumpleaniero){
       this.descuentoElegido = 0
@@ -721,6 +719,7 @@ export class FormPagosComponent implements OnInit {
       
       this.compraService.post(compra, this.tourSeleccionado.idTour).subscribe(compra => {
         let pasajeros = this.pagosInfo.get('pasajeros') as FormArray;
+        console.log(pasajeros);
         let detalleCompras = [];
         let personas = this.pagosInfo.value.pasajeros;
   

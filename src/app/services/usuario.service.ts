@@ -36,6 +36,10 @@ export class UsuarioService {
   public comprasReservadasUsuario(idUsuario:number):Observable<any>{
     return this.http.get<any>(`${this.url}/${idUsuario}/comprasReservadas`)
   }
+  public comprasTotalesUsuario(idUsuario:number):Observable<any>{
+    return this.http.get<any>(`${this.url}/${idUsuario}/comprasTotales`)
+  }
+
 
   /* public paquetesCompradosUsuario(idUsuario:number):Observable<any>{
     return this.http.get<any>(`${this.url}/${idUsuario}/paquetesComprados`)

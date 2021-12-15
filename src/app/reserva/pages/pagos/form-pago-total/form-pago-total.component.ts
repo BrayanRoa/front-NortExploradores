@@ -428,8 +428,8 @@ export class FormPagoTotalComponent implements OnInit {
   }
 
   elegirDescuento(){
-    console.log(this.viajesRealizados);
-    console.log(this.isCumpleaniero);
+
+    if(this.descuentoElegido!=undefined) this.descuentoElegido=undefined
 
     if(this.isCumpleaniero){
       this.descuentoElegido = 0
@@ -698,15 +698,24 @@ export class FormPagoTotalComponent implements OnInit {
   }
 
   guardarCompra(form: HTMLFormElement) {
+    console.log("aaaaa");
+    let descuento = this.descuentoElegido;
+    if(descuento!=undefined){
+      descuento = descuento+1;
+    }else{
+      descuento=null;
+    }
 
     var compra = {
       idCompra: this.idCompra,
       cantidadPasajeros: this.total,
-      totalCompra: this.totalDescuento*this.total,
+      totalCompra: this.totalDescuento,
       estado: "PENDIENTE",
       usuario: this.usuario.id_Usuario,
-      tour: this.tourSeleccionado.idTour
+      tour: this.tourSeleccionado.idTour,
+      descuento:this.descuentos[this.descuentoElegido]
     }
+    console.log(compra);
     this.toastr.warning("Cargando compra....", 'Espere', {
       timeOut: 3000, positionClass: 'toast-top-center'
     });
@@ -716,7 +725,7 @@ export class FormPagoTotalComponent implements OnInit {
         timeOut: 3000, positionClass: 'toast-top-center'
       });
       
-      this.compraService.post(compra, this.tourSeleccionado.idTour).subscribe(compra => {
+      this.compraService.postTotal(compra, this.tourSeleccionado.idTour).subscribe(compra => {
         let pasajeros = this.pagosInfo.get('pasajeros') as FormArray;
         let detalleCompras = [];
         let personas = this.pagosInfo.value.pasajeros;
@@ -753,10 +762,7 @@ export class FormPagoTotalComponent implements OnInit {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
       })
-
-
     });
-
 
 
   }

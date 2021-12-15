@@ -21,7 +21,8 @@
           <th>FECHA</th>          
           <th>USUARIO</th>   
           <th>VALOR COMPRA</th>   
-          <th>PAQUETE</th>   
+          <th>PAQUETE</th>
+          <th>ESTADO</th>   
           <th>OPCIÓN</th>     
         </tr>
       </thead>
@@ -35,10 +36,11 @@
             <td>{{ devoluciones.compra.usuario.email }}</td>  
             <td> $ {{ devoluciones.compra.totalCompra }}</td>
             <td>{{ devoluciones.compra.tour.paquete.nombre }}</td>
-          
-            <td nzAlign="center">
+            <td *ngIf="devoluciones.estado">PENDIENTE</td>
+            <td *ngIf="!devoluciones.estado">COMPLETADA</td>
+            <td  nzAlign="center">
              
-            <a [routerLink]="['/administracion/editDevoluciones',devoluciones.idDevolucion]">
+            <a *ngIf="devoluciones.estado" [routerLink]="['/administracion/editDevoluciones',devoluciones.idDevolucion]">
               <i
                 nz-icon
                 nzType="edit"

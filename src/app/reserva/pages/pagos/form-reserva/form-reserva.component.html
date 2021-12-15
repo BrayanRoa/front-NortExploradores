@@ -50,7 +50,7 @@
       <!-- PAYU -->
       <div class="row">
         <div class="col-6">
-          <form #form method="post" action="https://gateway.payulatam.com/ppp-web-gateway/">
+          <!-- <form #form method="post" action="https://gateway.payulatam.com/ppp-web-gateway/">
             <input name="merchantId"    type="hidden"  value={{idMercado}}   >
             <input name="accountId"     type="hidden"  value={{idCuenta}} >
             <input name="description"   type="hidden"  value={{descripcion}}>
@@ -69,14 +69,14 @@
             <button id="pagoprod" type="submit" class="" target="_blank" (click)="form.submit()" style="width: 140px;height: 40px;border-radius: 200px;border: 0px; background-color: white;" value="Pagar con PayU">
               <img  style="width: 140px;height: 40px;" src="https://universidadreformadademiami.org/wp-content/uploads/2020/10/boton.png" />
             </button>
-          </form>
+          </form> -->
   
           <form #formPrueb method="post" action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/">
             <input name="merchantId"    type="hidden"  value="508029"   >
             <input name="accountId"     type="hidden"  value={{idCuentaTest}} >
             <input name="description"   type="hidden"  value="[TEST] {{descripcion}}"  >
             <input name="referenceCode" type="hidden"  value={{referenciaUnic}} >
-            <input name="amount"        type="hidden"  value="{{totalCompra/2}}"  >
+            <input name="amount"        type="hidden"  value="{{totalCompra}}"  >
             <input name="currency"      type="hidden"  value={{moneda}} >
             <input name="signature"     type="hidden"  value={{firmaElectronicaMD5Test}}   >
             <input name="test"          type="hidden"  value="1" >
@@ -85,8 +85,9 @@
             <input name="responseUrl"    type="hidden"  value="https://front-nort-exploradores-2.vercel.app/infopago">
             <input name="confirmationUrl" type="hidden"  value="https://nortexploradores.herokuapp.com/pagos/confirmacion" >
       
-            <button id="btnpru" type="submit" class="" formtarget="_blank" (click)="formPrueb.submit()" style="width: 140px;height: 40px;border-radius: 200px;border: 0px; background-color: white;" value="Pagar con PayU">
-              <img  style="width: 140px;height: 40px;" src="https://universidadreformadademiami.org/wp-content/uploads/2020/10/boton.png" />
+   
+
+            <button type="submit" class="button-35" formtarget="_blank" (click)="formPrueb.submit()"  value="">Pagar con PayU
             </button>
           </form>
         </div>

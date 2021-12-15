@@ -40,6 +40,7 @@ import { AddCalificacionComponent } from './pages/mis-viajes/add-calificacion/ad
 import { FormReservaComponent } from './pages/pagos/form-reserva/form-reserva.component';
 import { InformacionPagoComponent } from './pages/pagos/informacion-pago/informacion-pago.component';
 import { FormPagoTotalComponent } from './pages/pagos/form-pago-total/form-pago-total.component';
+import { MisComprasComponent } from './pages/mis-compras/mis-compras.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { FormPagoTotalComponent } from './pages/pagos/form-pago-total/form-pago-
     FormReservaComponent,
     InformacionPagoComponent,
     FormPagoTotalComponent,
+    MisComprasComponent,
   ],
   imports: [
     CommonModule,

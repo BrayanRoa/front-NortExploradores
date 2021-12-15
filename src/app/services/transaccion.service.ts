@@ -21,6 +21,9 @@ export class TransaccionService {
   public encontrar(id:any):Observable<any>{
     return this.http.get<any>(this.uri+id);
   }
+  public encontrarTransacciones(id:any):Observable<any>{
+    return this.http.get<any>(`${global.url}/compra/`+id+"/transaccionesApp");
+  }
   public guardarTransaccion(body:URLSearchParams):Observable<any>{
     return this.http.post<any>(this.uripagos,body);
   }

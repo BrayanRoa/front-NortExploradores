@@ -26,6 +26,7 @@ import { EditarPerfilComponent } from './pages/editar-perfil/editar-perfil.compo
 import { AddCalificacionComponent } from './pages/mis-viajes/add-calificacion/add-calificacion.component';
 import { FormReservaComponent } from './pages/pagos/form-reserva/form-reserva.component';
 import { InformacionPagoComponent } from './pages/pagos/informacion-pago/informacion-pago.component';
+import { MisComprasComponent } from './pages/mis-compras/mis-compras.component';
 
 const routes : Routes = [
   {path:"",
@@ -50,6 +51,8 @@ const routes : Routes = [
     {path:"registro", component:AuthRegisterComponent},
     {path:"editarPerfil", component:EditarPerfilComponent},
     {path:"misReservas", component:MisReservasComponent},
+    {path:"misCompras", component:MisComprasComponent},
+
     {path:"pagoreserva/:idCompra", component:FormReservaComponent},
     {path:"infopago/:idTransaccion", component:InformacionPagoComponent},
     {path:"infopago", component:InformacionPagoComponent},

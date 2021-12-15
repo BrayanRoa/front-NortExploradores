@@ -1,28 +1,285 @@
 
-<div *ngIf="isLogged">
-    <div id="content" *ngIf="isPagoParcial" >
-        <div class="notify successbox">
-            <h1>Transaccion Exitosa, recuerda pagar el otro 50%</h1><br />
-            <span ><img class="alerticon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Check_green_icon.svg/2048px-Check_green_icon.svg.png" alt="checkmark" /></span><br />
-        </div>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" style="margin-top: 20px;" rel="stylesheet">
+<div class="container" style="margin-top: 40px;margin-bottom: 40px;">
+   <div *ngIf="compra!=undefined && empresa!=undefined" class="col-md-12" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" >
+      <div class="invoice">
+         <!-- begin invoice-company -->
+         <div class="invoice-company text-inverse f-w-600">
+            <span class="pull-right hidden-print">
+            <a href="javascript:;" onclick="window.print()" class="btn btn-sm btn-white m-b-10 p-l-5"><i class="fa fa-print t-plus-1 fa-fw fa-lg"></i> Imprimir</a>
+            </span>
+            <div class="row">
+               <div class="col-3">
+                  <img style="height:200px;width: auto;" src="../../../../../../assets/img/LOGO-01.png" alt="">
+
+               </div>
+               <div class="col-2"></div>
+
+               <h2 class="col-4" style="font-weight:bold;">{{respuesta}}</h2>
+               <img class="alerticon col-4" style="height: 90px;width: auto;" src="{{imgRespuesta}}" alt="checkmark" />
+            </div>
+         </div>
+         <!-- end invoice-company -->
+         <!-- begin invoice-header -->
+         <div class="invoice-header">
+            <div class="invoice-from">
+               <small>Cliente</small>
+               <address class="m-t-5 m-b-5">
+                  <strong class="text-inverse">{{persona.nombre}}</strong><br>
+                  Correo: {{persona.correo}}<br>
+                  Celular: {{persona.cel}}<br>
+                  Cédula:  {{persona.idPersona}}
+               </address>
+            </div>
+            <div class="invoice-to">
+               <small>to</small>
+               <address class="m-t-5 m-b-5">
+                  <strong class="text-inverse">{{empresa.nombre}}</strong><br>
+                  Direccion: {{empresa.direccion}}<br>
+                  Ciudad: Cúcuta,Norte de Santander<br>
+                  Celular: {{empresa.telefono}}<br>
+               </address>
+            </div>
+            <div class="invoice-date">
+               <small>Factura</small>
+               <div class="date text-inverse m-t-5">{{compra.date}}</div>
+               <div class="invoice-detail">
+                  #{{compra.transactionId}}<br>
+                  Pago de paquetes turísticos
+               </div>
+            </div>
+         </div>
+         <!-- end invoice-header -->
+         <!-- begin invoice-content -->
+         <div class="invoice-content">
+            <!-- begin table-responsive -->
+            <div class="table-responsive">
+               <table class="table table-invoice">
+                  <thead>
+                     <tr>
+                        <th>Información de la compra</th>
+                        <th class="text-right" width="20%"></th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td>
+                           <span style="font-weight: bold;color: rgb(0, 0, 0);" class="text-inverse">ID</span><br>
+                           <small>Referencia única de la transacción</small>
+                        </td>
+                        <td class="text-center">#{{compra.transactionId}}</td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <span style="font-weight: bold;color: rgb(0, 0, 0);"class="text-inverse">FECHA</span><br>
+                           <small>Fecha en la que se realizó la transacción</small>
+                        </td>
+                        <td class="text-center">{{compra.date}}</td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <span style="font-weight: bold;color: rgb(0, 0, 0);"class="text-inverse">#Compra</span><br>
+                           <small>Referencia de la compra</small>
+                        </td>
+                        <td class="text-center">{{compra.referenceSale.idCompra}}</td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <span style="font-weight: bold;color: rgb(0, 0, 0);"class="text-inverse">Descripción</span><br>
+                        </td>
+                        <td class="text-center">{{compra.description}}</td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <span style="font-weight: bold;color: rgb(0, 0, 0);"class="text-inverse">Total</span><br>
+                           <small>Total de la compra realizada</small>
+
+                        </td>
+                        <td class="text-center">{{compra.value}}</td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <span style="font-weight: bold;color: rgb(0, 0, 0);"class="text-inverse">Estado</span><br>
+                           <small>Estado final de la transacción</small>
+
+                        </td>
+                        <td class="text-center">{{compra.responseMessagePol}}</td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <span style="font-weight: bold;color: rgb(0, 0, 0);"class="text-inverse">Destino</span><br>
+                           <small>{{compra.referenceSale.tour.paquete.municipio.nombre}}</small>
+
+                        </td>
+                        <td class="text-center"><img style="height: 100px;width: auto;" src="{{compra.referenceSale.tour.paquete.municipio.urlImagen}}" alt="" srcset=""></td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <!-- end table-responsive -->
+            <!-- begin invoice-price -->
+            <div class="invoice-price">
+               <div class="invoice-price-right">
+                  <small>TOTAL A PAGAR</small> <span class="f-w-600">${{compra.referenceSale.totalCompra}}</span>
+               </div>
+            </div>
+            <button class="btn button-34" style="margin: 10px;" routerLink="/misReservas">Volver</button>
+            <!-- end invoice-price -->
+         </div>
+
+         <div class="invoice-footer">
+            <p class="text-center m-b-5 f-w-600">
+               Gracias por comprar con NorteXploradores
+            </p>
+            <p class="text-center">
+               <span class="m-r-10"><i class="fa fa-fw fa-lg fa-globe"></i>{{empresa.direccion}}</span>
+               <span class="m-r-10"><i class="fa fa-fw fa-lg fa-phone-volume"></i> T:{{empresa.telefono}}</span>
+               <span class="m-r-10"><i class="fa fa-fw fa-lg fa-envelope"></i>  {{empresa.correo}}</span>
+            </p>
+         </div>
+         <!-- end invoice-footer -->
+      </div>
+   </div>
+   <div *ngIf="compra==undefined || empresa==undefined" class="col-md-12" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" >
+    <div class="invoice">
+       <!-- begin invoice-company -->
+       <div class="invoice-company text-inverse f-w-600">
+          <span class="pull-right hidden-print">
+          <a href="javascript:;" onclick="window.print()" class="btn btn-sm btn-white m-b-10 p-l-5"><i class="fa fa-print t-plus-1 fa-fw fa-lg"></i> Imprimir</a>
+          </span>
+          <div class="row">
+             <div class="col-3">
+                <img style="height:200px;width: auto;" src="../../../../../../assets/img/LOGO-01.png" alt="">
+
+             </div>
+             <div class="col-2"></div>
+
+             <h2 class="col-4" style="font-weight:bold;"></h2>
+             <img class="alerticon col-4" style="height: 90px;width: auto;" src="" alt="checkmark" />
+          </div>
+       </div>
+       <!-- end invoice-company -->
+       <!-- begin invoice-header -->
+       <div class="invoice-header">
+          <div class="invoice-from">
+             <small>Cliente</small>
+             <address class="m-t-5 m-b-5">
+                <strong class="text-inverse">----</strong><br>
+                Correo: ----<br>
+                Celular: ----<br>
+                Cédula:  ----
+             </address>
+          </div>
+          <div class="invoice-to">
+             <small>to</small>
+             <address class="m-t-5 m-b-5">
+                <strong class="text-inverse">----</strong><br>
+                Direccion: ----<br>
+                Ciudad: Cúcuta,Norte de Santander<br>
+                Celular: ----<br>
+             </address>
+          </div>
+          <div class="invoice-date">
+             <small>Factura</small>
+             <div class="date text-inverse m-t-5">----</div>
+             <div class="invoice-detail">
+                #----<br>
+                ----
+             </div>
+          </div>
+       </div>
+       <!-- end invoice-header -->
+       <!-- begin invoice-content -->
+       <div class="invoice-content">
+          <!-- begin table-responsive -->
+          <div class="table-responsive">
+             <table class="table table-invoice">
+                <thead>
+                   <tr>
+                      <th>Información de la compra</th>
+                      <th class="text-right" width="20%"></th>
+                   </tr>
+                </thead>
+                <tbody>
+                   <tr>
+                      <td>
+                         <span style="font-weight: bold;color: rgb(0, 0, 0);" class="text-inverse">ID</span><br>
+                         <small>Referencia única de la transacción</small>
+                      </td>
+                      <td class="text-center">#----</td>
+                   </tr>
+                   <tr>
+                      <td>
+                         <span style="font-weight: bold;color: rgb(0, 0, 0);"class="text-inverse">FECHA</span><br>
+                         <small>Fecha en la que se realizó la transacción</small>
+                      </td>
+                      <td class="text-center">----</td>
+                   </tr>
+                   <tr>
+                      <td>
+                         <span style="font-weight: bold;color: rgb(0, 0, 0);"class="text-inverse">#Compra</span><br>
+                         <small>Referencia de la compra</small>
+                      </td>
+                      <td class="text-center">----</td>
+                   </tr>
+                   <tr>
+                      <td>
+                         <span style="font-weight: bold;color: rgb(0, 0, 0);"class="text-inverse">Descripción</span><br>
+                      </td>
+                      <td class="text-center">----</td>
+                   </tr>
+                   <tr>
+                      <td>
+                         <span style="font-weight: bold;color: rgb(0, 0, 0);"class="text-inverse">Total</span><br>
+                         <small>Total de la compra realizada</small>
+
+                      </td>
+                      <td class="text-center">----</td>
+                   </tr>
+                   <tr>
+                      <td>
+                         <span style="font-weight: bold;color: rgb(0, 0, 0);"class="text-inverse">Estado</span><br>
+                         <small>Estado final de la transacción</small>
+
+                      </td>
+                      <td class="text-center">----</td>
+                   </tr>
+                   <tr>
+                      <td>
+                         <span style="font-weight: bold;color: rgb(0, 0, 0);"class="text-inverse">Destino</span><br>
+                         <small>----</small>
+
+                      </td>
+                      <td class="text-center"><img style="height: 100px;width: auto;" src="" alt="" srcset=""></td>
+                   </tr>
+                </tbody>
+             </table>
+          </div>
+          <!-- end table-responsive -->
+          <!-- begin invoice-price -->
+          <div class="invoice-price">
+             <div class="invoice-price-right">
+                <small>TOTAL A PAGAR</small> <span class="f-w-600">$----</span>
+             </div>
+          </div>
+          <!-- end invoice-price -->
+       </div>
+       
+       <div class="invoice-footer">
+          <p class="text-center m-b-5 f-w-600">
+             Gracias por comprar con NorteXploradores
+          </p>
+          <p class="text-center">
+             <span class="m-r-10"><i class="fa fa-fw fa-lg fa-globe"></i>----</span>
+             <span class="m-r-10"><i class="fa fa-fw fa-lg fa-phone-volume"></i> T:----}</span>
+             <span class="m-r-10"><i class="fa fa-fw fa-lg fa-envelope"></i>  ----</span>
+          </p>
+       </div>
+       <!-- end invoice-footer -->
     </div>
 
-    <div id="content" *ngIf="isPagoTotal">
-        <div class="notify successbox">
-            <h1>Transaccion Exitosa disfruta tu viaje</h1><br />
-            <span ><img class="alerticon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Check_green_icon.svg/2048px-Check_green_icon.svg.png" alt="checkmark" /></span><br />
-        </div>
-    </div>
-
-    <div id="content" >
-        <div class="notify successbox" *ngIf="isPagoCancelado">
-            <h1>Transaccion Cancelada</h1><br />
-            <span ><img class="alerticon" src="https://cdn2.iconfinder.com/data/icons/web-and-apps-interface/32/Cancel-512.png" alt="checkmark" /></span><br />
-        </div>
-    </div>
-    <div id="content" >
-        <button class="btn button-34" style="margin: 80px;" routerLink="/misReservas">Volver</button>
-
-    </div>
-    
+ </div>
 </div>
+
+
+
