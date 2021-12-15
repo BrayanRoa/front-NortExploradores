@@ -5,6 +5,22 @@
           Administración De Clientes
         </h4>
       </div>
+
+      <div>
+        <form [formGroup]="form">
+  
+          <label for="" style="margin-right: 5px;">Año</label>
+          <select name="" id="selector" formControlName="seleccion" (change)="cambiar()">
+            <!-- <option value="null">Elegir</option> -->
+            <option value="2020">2020</option>
+            <option value="2021" selected>2021</option>
+          </select>
+        </form>
+      </div>
+
+      <div>
+        <h1>REPORTES DEL AÑO {{agno}}</h1>
+      </div>
   
       <div class="table ">
         <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"

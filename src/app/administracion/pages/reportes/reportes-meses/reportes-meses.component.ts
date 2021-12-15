@@ -6,18 +6,13 @@ import * as global from 'global'
 import { AUTO_STYLE } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { CompraService } from '../../../../services/compra.service';
-import { RouterLinkWithHref } from '@angular/router';
-
-
-
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 
 type TableRow = [string, string, number, number, number]
-
 export interface total {
   total: number;
 }
-
 export interface TotalPaquete {
   nombreTour: string;
   totalPasajeros: number;
@@ -43,26 +38,33 @@ export interface reporteReservas {
 })
 export class ReportesMesesComponent implements OnInit {
 
-  size: NzButtonSize = 'large';
+  // DATA TABLE
+  size     : NzButtonSize = 'large';
   dtOptions: DataTables.Settings = {};
   dtTrigger = new Subject<any>();
 
-  id: any;
+  id       : any;
+  total    : number = 0;
+
   url = `${global.url}/compra/`;
-
-  total: string = "";
-
   date = new Date().getMonth();
   agno = new Date().getFullYear();
+
+  form! : FormGroup;
 
   meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
     "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
 
-
-  constructor(private http: HttpClient, private compra: CompraService) { }
+  constructor(
+    private http: HttpClient, 
+    private compra: CompraService,
+    private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.form=this.fb.group({
+      seleccion : ['', Validators.required]
+    });
 
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -75,20 +77,41 @@ export class ReportesMesesComponent implements OnInit {
   }
 
 
-  // reporteMes(mes: any) {
-  //   console.log(mes);
-  //   console.log(this.meses.indexOf(mes) + 1);
-  // }
 
   ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
 
 
+  cambiar(){
+    const selec = this.form.value.seleccion;
+    this.agno=selec;
+    console.log(selec);
+  }
 
   async generar(mes: string) {
     this.id = this.meses.indexOf(mes) + 1
+    this.total=0;
+    let totalTours  = "";
+    let totalVentas:number = 0;
+    let devoluciones = "";
+    let masVendido = "";
+    let porcentaje:number = 0;
+    let menosVendido = "";
+    this.obtenerTotal(this.id).subscribe(data => {
+      this.total = data.ventaMes
+      console.log("el total es:", this.total)
+    })
+
+    this.obtenerResumen(this.id).subscribe(data=>{
+      totalTours=data.totalTours;
+      totalVentas=data.totalVentas;
+      devoluciones=data.totalDevoluciones;
+      masVendido=data.paqueteMasVendido;
+      porcentaje=data.porcentajeMasVendido;
+      menosVendido=data.paqueteMenosVendido;
+      
+    })
 
     const pdf = new PdfMakeWrapper();
     const data = await this.datos();
@@ -107,22 +130,22 @@ export class ReportesMesesComponent implements OnInit {
     )
 
 
+
     pdf.add(new Txt(`TOTAL VENTAS POR PAQUETES MES DE ${mes.toUpperCase()} DEL AÑO ${this.agno}`).alignment("center").color("blue").bold().margin([0, 30, 0, 0]).end);
 
     pdf.add(this.createTable(data));
 
-    this.obtenerTotal(this.id).subscribe(data => {
-
-      this.total = data.ventaMes
-      console.log(this.total)
-
-    })
 
     pdf.add(
       new Table([
-        ['Total', new Txt(this.total.toString()).end],
-      ]).widths(['*', 100]).end
+        [new Txt("Total").bold().end, new Txt(`$${this.total.toString()}`).bold().end],
+      ]).widths(['*', 151]).end
     )
+
+    pdf.add(
+      new Txt(`En el mes de ${mes} se realizaron ${totalTours} viajes con un total de ventas de $${totalVentas} donde el ${masVendido} fue el de mayor venta, con un ${porcentaje.toPrecision(4)}% de las ventas del mes y el paquete con menor venta fue el ${menosVendido}. `).margin([0,10]).bold().end
+    )
+    
 
     pdf.create().open();
   }
@@ -131,7 +154,7 @@ export class ReportesMesesComponent implements OnInit {
 
   createTable(data: TotalPaquete[]): ITable {
     return new Table([
-      ["Nombre/Tour", "Tipo/Tour", "N° Pasajeros", "Total/Venta", "% DeVenta"],
+      ["Nombre/Tour", "Tipo/Tour", "N° Pasajeros", "% DeVenta", "Total/Venta ($)"],
       ...this.extraer(data)
     ])
       .widths('*')
@@ -143,10 +166,9 @@ export class ReportesMesesComponent implements OnInit {
       .end
   }
 
-  extraer(data: TotalPaquete[]): TableRow[] {
-    // return data.map(row => [row.nombreTour, row.tipoTour, row.totalPasajeros, row.total, row.porcentajeVentas])
 
-    const dat: TableRow[] = data.map(row => [row.nombreTour, row.tipoTour, row.totalPasajeros, row.total, row.porcentajeVentas])
+  extraer(data: TotalPaquete[]): TableRow[] {
+    const dat: TableRow[] = data.map(row => [row.nombreTour, row.tipoTour, row.totalPasajeros, parseFloat(row.porcentajeVentas.toPrecision(4)), row.total])
 
     if (dat.length == 0) {
       let aux: TableRow[] = [];
@@ -158,13 +180,14 @@ export class ReportesMesesComponent implements OnInit {
   }
 
   async datos(): Promise<TotalPaquete[]> {
-    return fetch(`${this.url}${this.id}/totalPaquetesMesTabla`)
+    return fetch(`${this.url}${this.id}/${this.agno}/totalPaquetesMesTabla`)
       .then(resp => resp.json());
   }
 
   obtenerTotal(mes: number): Observable<any> {
     console.log(mes);
-    return this.http.get<any>(`${this.url}${mes}/totalVendidoMes`)
+    return this.http.get<any>(`${this.url}${mes}/${this.agno}/totalVendidoMes`)
+
   }
 
 
@@ -226,7 +249,14 @@ export class ReportesMesesComponent implements OnInit {
   }
 
   async datosReservas(): Promise<reporteReservas[]> {
-    return fetch(`${this.url}${this.id}/totalReservasMesTabla`)
+    return fetch(`${this.url}${this.id}/${this.agno}/totalReservasMesTabla`)
       .then(resp => resp.json());
+  }
+
+
+  // TODO: RESUMEN DEL MES
+
+  obtenerResumen(id:any):Observable<any>{
+    return this.http.get<any>(`${this.url}${id}/${this.agno}/resumenTotal`);
   }
 }
