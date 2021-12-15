@@ -8,7 +8,7 @@ import * as global from 'global'
 })
 export class TransportesService {
 
-  uri =`${global.url}/empresa/transporteE`;
+  uri =`${global.url}/transporte`;
   constructor(private http: HttpClient) { }
 
   public listarTransporte():Observable<any>{

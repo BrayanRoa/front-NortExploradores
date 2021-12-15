@@ -15,6 +15,14 @@ export class EmpresaService {
     return this.http.get<any>(this.uri);
   }
 
+  public listarEmpresaT():Observable<any>{
+    return this.http.get<any>(this.uri+'transporteE');
+  }
+
+  public listarEmpresaS():Observable<any>{
+    return this.http.get<any>(this.uri+'seguroE');
+  }
+
   public post(empresa:any):Observable<any>{
     return this.http.post<any>(this.uri, empresa)
   }

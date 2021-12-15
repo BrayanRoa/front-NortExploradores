@@ -79,7 +79,7 @@ export class AddTransportesComponent implements OnInit {
     });
   }
   public agregarEmpresa(){
-    this.empresaService.listarEmpresa().subscribe(empresas=>{
+    this.empresaService.listarEmpresaT().subscribe(empresas=>{
       this.empresas = empresas; 
     })
   }

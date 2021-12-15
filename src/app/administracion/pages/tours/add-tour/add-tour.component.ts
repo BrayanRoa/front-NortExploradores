@@ -57,8 +57,8 @@ export class AddTourComponent implements OnInit {
     this.esEditartour();
     this.agregarPaquetes();
     this.agregarSeguros();
-    this.agregarEmpleados();
     this.agregarTransporte();
+    this.agregarEmpleados();
       this.form = this.formBuilder.group({
         idTour: ['', Validators.compose([
          

@@ -63,7 +63,7 @@ export class AddSegurosComponent implements OnInit {
     });
   }
   public agregarEmpresa(){
-    this.empresaService.listarEmpresa().subscribe(empresas=>{
+    this.empresaService.listarEmpresaS().subscribe(empresas=>{
       this.empresas = empresas; 
       console.log('empresas', this.empresas);
       
