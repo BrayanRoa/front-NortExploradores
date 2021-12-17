@@ -79,6 +79,7 @@
         <tr>
           <th>ID</th>
           <th>NOMBRE</th> 
+          <th>MUNICIPIO</th> 
           <th>ESTADO</th>
           <th>DIRECCIÓN</th>
           <th>DESCRIPCIÓN</th>
@@ -90,6 +91,7 @@
         <tr *ngFor="let aloja of data">
             <td>{{ aloja.idAlojamiento }}</td>
             <td>{{ aloja.nombre }}</td>
+            <td>{{ aloja.municipio.nombre }}</td>
             <td>{{ aloja.estado }}</td>
             <td>{{ aloja.dir }}</td>
             <td>{{ aloja.descripcion }}</td>

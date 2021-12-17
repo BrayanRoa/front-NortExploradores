@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule} f
 import { ActivatedRoute, Router} from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AlojamientosService } from 'src/app/administracion/services/alojamientos.service';
+import { MunicipioService } from 'src/app/administracion/services/municipio.service';
 import { TokenService } from 'src/app/services/token.service';
 
 
@@ -15,12 +16,14 @@ import { TokenService } from 'src/app/services/token.service';
 export class AddAlojamientoComponent implements OnInit {
   public form !: FormGroup;
   public alojamientos: any = [];
+  public municipios: any  = [];
   titulo = 'Agregar Alojamiento';
   boton = 'Agregar Alojamiento';
   id: string | null;
   
   constructor(
     private alojamientosservice: AlojamientosService,
+    private municipioService: MunicipioService,
     private formBuilder: FormBuilder,
     private aRouter: ActivatedRoute,
     private router : Router,
@@ -32,9 +35,11 @@ export class AddAlojamientoComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarToken();
+    this.agregarMunicipio();
     this.esEditarAloja();
       this.form = this.formBuilder.group({
       idAlojamiento:['', ],
+      municipio:['', Validators.required],
       nombre:['', 
         Validators.compose([
           Validators.required, 
@@ -58,8 +63,17 @@ export class AddAlojamientoComponent implements OnInit {
           Validators.max(1000000)
         ])]
     });
+    
   }
-
+  public agregarMunicipio() {
+    this.municipioService.listarMunicipio().subscribe((municipios :any)=> {
+      for (const municipio of municipios) {
+        if(municipio.estado==true){
+          this.municipios.push(municipio);
+        }
+      }
+    })
+  }
   public enviarData() {
          
     if (!this.form.valid) {
@@ -68,6 +82,8 @@ export class AddAlojamientoComponent implements OnInit {
       });
       return;
     }
+
+    
 
     if (this.id !== null) {
 
@@ -95,6 +111,7 @@ export class AddAlojamientoComponent implements OnInit {
       this.alojamientosservice.obtenerAlojamiento(this.id).subscribe((data) => {
         this.form.setValue({
           idAlojamiento: data.idAlojamiento,
+          municipio: data.municipio,
           nombre: data.nombre,
           estado: data.estado,
           dir: data.dir,

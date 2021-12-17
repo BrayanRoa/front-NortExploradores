@@ -23,6 +23,10 @@ export class CompraService {
     return this.http.get<any>(this.url+idCompra)
   }
 
+  public totalVentasAnuales():Observable<any>{
+    return this.http.get<any>(this.url+'totalVentasAnuales')
+  }
+
   public compras():Observable<any>{
     return this.http.get<any>(this.url)
   }

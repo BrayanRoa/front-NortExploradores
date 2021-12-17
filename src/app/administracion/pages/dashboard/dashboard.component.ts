@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
   url = `${global.url}/usuario/`;
 
   total: number=0;
-
+  totalVentasA: number=0;
   constructor(
     private tokenS: TokenService,
     private router: Router,
@@ -63,7 +63,7 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+    this.ventasTotalesCard();
     this.obtenerTotalClientes().subscribe(data => {
       this.total = data.totalClientes
       console.log("el total es:", this.total)
@@ -394,7 +394,11 @@ export class DashboardComponent implements OnInit {
       this.router.navigateByUrl("/inicio");
     }
   }
-
+  public ventasTotalesCard(){
+    this.compraService.totalVentasAnuales().subscribe(data=>{
+      this.totalVentasA = data;
+    });
+  }
 
 
 
@@ -596,7 +600,6 @@ export class DashboardComponent implements OnInit {
         [new Txt("Total/Clientes").bold().end, new Txt(`${this.total}`).bold().end],
       ]).widths(['*', 268]).end
     )
-    this.total=0;
     pdf.create().open();
   }
 

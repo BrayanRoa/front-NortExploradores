@@ -10,11 +10,11 @@
 
             <div class="wrap-input100" [formGroup]="form">
                 <span class="contact100-form-combo">Municipio</span>
-                <select formControlName="municipio" class="input100 form-control" type="text" id="inputMunicipio"
+                <select formControlName="municipio" class="input100 form-control" type="text" id="inputMunicipio" (click)="agregarAlojamiento()"
                 [class.is-invalid]="form.controls.municipio.status!='VALID'"
                     [class.is-valid]="form.controls.municipio.status=='VALID'">
                     <option value="">Seleccione Un Municipio</option>
-                    <option *ngFor="let municipio of municipios" name="municipio" id="muni{{municipio.idMuni}}"
+                    <option *ngFor="let municipio of municipios" name="municipio" id="muni{{municipio.idMuni}}" 
                         value={{municipio.idMuni}}>
                         {{municipio.nombre}}</option>
                 </select>
@@ -98,15 +98,31 @@
 
             <div class="wrap-input100" [formGroup]="form">
                 <span class="contact100-form-combo">Alojamiento</span>
-                <select formControlName="alojamiento" class="input100 form-control" type="text" id="inputAlojamiento" 
-                >
+                <select formControlName="alojamiento" class="input100 form-control" type="text" id="inputAlojamiento" value="alog"
+                [class.is-invalid]="form.controls.municipio.status!='VALID'"
+                    [class.is-valid]="form.controls.municipio.status=='VALID'">
+                    <option value="">Seleccione Un Alojamiento</option>
+                    <option *ngFor="let alojamiento of alojamientos" name="alojamiento"
+                        id="aloj{{alojamiento.idAlojamiento}}" value={{alojamiento.idAlojamiento}}>
+                        {{alojamiento.nombre}}</option>
+                </select>
+                <span class="focus-input100"></span>
+                <div class="invalid-feedback" style="text-align: center;">
+                    Elige Un Alojamiento
+                </div>
+            </div>
+
+            <!-- <div class="wrap-input100" [formGroup]="form">
+                <span class="contact100-form-combo">Alojamiento</span>
+                <select formControlName="alojamiento" class="input100 form-control" type="text" id="inputAlojamiento">
+                <option value="">Seleccione Un Alojamiento</option>
                     <option *ngFor="let alojamiento of alojamientos" name="alojamiento"
                         id="aloj{{alojamiento.idAlojamiento}}" value={{alojamiento.idAlojamiento}}>
                         {{alojamiento.nombre}}</option>
                 </select>
                 <span class="focus-input100"></span>
                 
-            </div>
+            </div> -->
 
             
 

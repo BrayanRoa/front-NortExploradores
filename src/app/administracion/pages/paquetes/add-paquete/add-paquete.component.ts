@@ -40,7 +40,6 @@ export class AddPaqueteComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarToken();
-    this.agregarAlojamiento();
     this.agregarMunicipio();
     this.form=this.formBuilder.group({
       idPaq:['', Validators.required],
@@ -71,26 +70,34 @@ export class AddPaqueteComponent implements OnInit {
           Validators.required, 
           Validators.minLength(3),
           Validators.maxLength(25)])],
-      alojamiento:[null],
+      alojamiento:['', Validators.required],
       municipio:['', Validators.required],
       acts: this.formBuilder.array([])
     });
-  
+    
 }
 
   public agregarAlojamiento() {
     this.alojamientoservice.listarAlojamiento().subscribe(alojamientos => {
-      this.alojamientos = alojamientos;
+      let idMuni: number
+      idMuni = this.form.controls.municipio.value
+      let alojamientoss: any  = [];
+      for (const alojamiento of alojamientos) {
+        if(alojamiento.municipio.idMuni==idMuni){
+          alojamientoss.push(alojamiento);
+        }
+      }
+      this.alojamientos = alojamientoss
     })
   }
 
   public agregarMunicipio() {
     this.municipioService.listarMunicipio().subscribe((municipios :any)=> {
       // this.municipios = municipios;
-      for (const iterator of municipios) {
-        if(iterator.estado==true){
+      for (const municipio of municipios) {
+        if(municipio.estado==true){
           // console.log("true", iterator);
-          this.municipios.push(iterator);
+          this.municipios.push(municipio);
         }
       }
       // console.log(this.municipios);
