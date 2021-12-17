@@ -129,15 +129,19 @@ export class AddPaqueteComponent implements OnInit {
   
   public enviarData() {
     this.paqueteService.post(this.form.value).subscribe(paquete=>{
-      this.paqueteService.postAct(this.getActividades.value, paquete.idPaq).subscribe(data=>{    this.toastr.success("Paquete Agregado Con Exito!", "Paquete Registrado", {
+      this.paqueteService.postAct(this.getActividades.value, paquete.idPaq).subscribe(data=>{    
+        this.toastr.success("Paquete Agregado Con Exito!", "Paquete Registrado", {
         positionClass: 'toast-bottom-right'
       })
       console.log("id mun:", this.form.value.municipio);
         this.municipioService.deshabilitar(this.form.value.municipio).subscribe(data=>{});
         this.router.navigate(["/administracion/paquetes"]);})
+      }, error=>{
+        this.toastr.error(error.error, "Error", {
+          positionClass: 'toast-bottom-right'
+        })
       })
-   
-   }
+  }
 
    public cargarToken() {
     if (this.tokenS.getToken()) {
