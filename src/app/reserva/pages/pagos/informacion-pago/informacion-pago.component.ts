@@ -89,8 +89,8 @@ export class InformacionPagoComponent implements OnInit {
 
 
           },error=>{
-            this.respuesta="¡Transacción no encontrada!"
-            this.imgRespuesta="https://cdn-icons-png.flaticon.com/512/194/194330.png"
+            
+            this.router.navigateByUrl("/inicio");
           })
         }else{
           let id = this.aRouter.snapshot.paramMap.get('idTransaccion');
@@ -121,10 +121,7 @@ export class InformacionPagoComponent implements OnInit {
                 return;
               }
             },error=>{
-              console.log(error);
-              console.log("holaaa");
-              this.respuesta="¡Transacción no encontrada!"
-              this.imgRespuesta="https://cdn-icons-png.flaticon.com/512/194/194330.png"
+              this.router.navigateByUrl("/inicio");
             })
           }else{
             // this.router.navigateByUrl("/inicio");
