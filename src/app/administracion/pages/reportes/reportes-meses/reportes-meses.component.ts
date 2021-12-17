@@ -21,14 +21,14 @@ export interface TotalPaquete {
   tipoTour: string;
 }
 
-type TableRow2 = [number, number, string, string, number];
+type TableRow2 = [number, number, string, string, number, string];
 export interface reporteReservas {
   idReserva: number;
   totalCompra: number;
   fecha: string;
   email: string;
   cantidadPasajeros: number;
-  estado: null;
+  estado: string;
 }
 
 @Component({
@@ -224,10 +224,10 @@ export class ReportesMesesComponent implements OnInit {
 
   createTableReservas(data: reporteReservas[]): ITable {
     return new Table([
-      ["ID RESERVA", "TOTAL COMPRA", "FECHA RESERVA", "CLIENTE", "CANT. PASAJEROS"],
+      ["ID RESERVA", "TOTAL COMPRA", "FECHA RESERVA", "CLIENTE", "CANT. PASAJEROS", "ESTADO"],
       ...this.extraerReservas(data)
     ])
-      .widths([100, 100, 100, AUTO_STYLE, AUTO_STYLE])
+      .widths([80, 100, 100, AUTO_STYLE, 80, 100])
       .layout({
         fillColor: (rowIndex: number | undefined, node: any | undefined, columnIndex: number | undefined) => {
           return rowIndex === 0 ? '#D3E4CD' : '#FAEDF0'
@@ -237,11 +237,11 @@ export class ReportesMesesComponent implements OnInit {
   }
 
   extraerReservas(data: reporteReservas[]): TableRow2[] {
-    const dat: TableRow2[] = data.map(row => [row.idReserva, row.totalCompra, row.fecha, row.email, row.cantidadPasajeros])
+    const dat: TableRow2[] = data.map(row => [row.idReserva, row.totalCompra, row.fecha, row.email, row.cantidadPasajeros, row.estado])
 
     if (dat.length == 0) {
       let aux: TableRow2[] = [];
-      aux[0] = [0, 0, "---", "---", 0]
+      aux[0] = [0, 0, "---", "---", 0, ""]
       return aux
     } else {
       return dat
