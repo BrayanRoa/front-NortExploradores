@@ -99,8 +99,8 @@
             <div class="wrap-input100" [formGroup]="form">
                 <span class="contact100-form-combo">Alojamiento</span>
                 <select formControlName="alojamiento" class="input100 form-control" type="text" id="inputAlojamiento" value="alog"
-                [class.is-invalid]="form.controls.municipio.status!='VALID'"
-                    [class.is-valid]="form.controls.municipio.status=='VALID'">
+                [class.is-invalid]="form.controls.alojamiento.status!='VALID'"
+                    [class.is-valid]="form.controls.alojamiento.status=='VALID'">
                     <option value="">Seleccione Un Alojamiento</option>
                     <option *ngFor="let alojamiento of alojamientos" name="alojamiento"
                         id="aloj{{alojamiento.idAlojamiento}}" value={{alojamiento.idAlojamiento}}>
