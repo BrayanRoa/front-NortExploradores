@@ -10,19 +10,22 @@
 
       <a routerLink="/inicio">
         <span class="off">Inicio </span>
-        <i class="fas fa-home"></i>
-        </a>
+        <img src="https://cdn.iconscout.com/icon/premium/png-128-thumb/house-791-356331.png" alt="" width="25px" />
+      </a>
 
       <a routerLink="/destinos">
         <span class="off">Destinos </span>
-        <i class="fas fa-road"></i>
+        <img src=" https://cdn3d.iconscout.com/3d/premium/thumb/highway-5142771-4310277.png" alt="" width="33px" />
         </a>
 
-      
       <a nz-dropdown [nzDropdownMenu]="tours">
         <span>Tours </span>
-        <i class="fas fa-globe-americas"></i>
+        <img src=" https://cdn.iconscout.com/icon/free/png-128/world-3472318-2904296.png" alt="" width="25px" />
       </a>
+
+
+
+
       <nz-dropdown-menu #tours="nzDropdownMenu">
         <ul nz-menu nzSelectable>
           <li nz-menu-item><a routerLink="/pasadia">Pasadia</a></li>
@@ -32,13 +35,17 @@
 
       <a routerLink="/contacto">
         <span class="off">Contacto </span>
-        <i class="fas fa-phone"></i>
+        <img src="https://cdn3d.iconscout.com/3d/premium/thumb/phone-ringing-4738918-3937620.png" alt="" width="27px" />
       </a>
-
+    
       <a nz-dropdown [nzDropdownMenu]="menu">
         Ver mas
-        <i class="fas fa-chevron-circle-down"></i>
+        <img src=" https://cdn3d.iconscout.com/3d/premium/thumb/down-arrow-2871138-2384397.png
+        " alt="" width="27px" />
       </a>
+    
+
+
       <nz-dropdown-menu #menu="nzDropdownMenu">
         <ul nz-menu nzSelectable>
           <li nz-menu-item>
@@ -71,10 +78,14 @@
     </div>
     <div class="social text-right">
       <a href="" *ngIf="!isLogged" routerLink="/login"
-        ><i class="fas fa-sign-in-alt" style="margin-right: 5px;"></i><span class="off">Inicio Sesión</span></a
+        >   <img src="   https://cdn3d.iconscout.com/3d/premium/thumb/right-arrow-2871140-2384398.png
+        " alt="" width="27px" /><span class="off"> Inicio Sesión</span></a
       >
+     
+
       <a href="" *ngIf="!isLogged" routerLink="/registro"
-        ><i class="fas fa-cash-register" style="margin-right: 5px;"></i><span class="off">Registarse</span></a
+        ><img src="   https://cdn3d.iconscout.com/3d/premium/thumb/form-5079664-4292942.png
+        " alt="" width="32px" /><span class="off">Registarse</span></a
       >
       <a style="display: none;" id="bienvenido" href="" 
         ><i class="fab fa-weixin"></i><span class="off" id="nombreUser">Bienvenido</span></a
