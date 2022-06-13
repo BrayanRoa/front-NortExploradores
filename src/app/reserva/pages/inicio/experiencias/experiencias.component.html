@@ -1,56 +1,34 @@
 <div style="display: flex; justify-content: center; margin-bottom: 25px;">
 
-  <div class="container" style="background-color: white; border-radius: 10px;" >
+  <div class="container" style="background-color: rgb(255, 255, 255); border-radius: 10px;" >
     <h2 style="text-align: center; margin-top: 15px; font-weight: bold;">Experiencias Vividas</h2>
+    
     <div class="contenedor container" style="background-color: white;">
-
+     
       <div class="contenedor_tarjeta" *ngFor="let experiencia of data">
         <a href="#">
           <figure id="tarjeta">
             <img src="{{experiencia.tour.paquete.urlImagen}}" class="frontal" alt="">
             <figcaption class="trasera">
-              
-              <h2 class="tit" style="text-align: center;">{{experiencia.tour.paquete.municipio.nombre}} - {{experiencia.tour.paquete.municipio.idDepto.nombre}} <br></h2>    
-              <hr>
-                     
-              <h5 style="text-align: center;"><b>Puntuación </b> <h5 style="color: yellow; font-size: 50px; text-align: center;">{{ puntuacion(experiencia.puntuacion) }}</h5> </h5>
+                
+              <h2 class="tit" style="text-align: center;">  <font face="Didot ">  {{experiencia.tour.paquete.municipio.nombre}} - {{experiencia.tour.paquete.municipio.idDepto.nombre}}</font><br></h2>    
+              <br><p>══════════════════════════</p><br>
+             
+
+              <font face="Courier ">  
+
+              <h5 style="text-align: center;"><h4><b>Puntuación</b> </h4> <h5 style="color: rgb(235, 235, 79); font-size: 50px; text-align: center;">{{ puntuacion(experiencia.puntuacion) }}</h5> </h5>
               <h5 style="text-align: center;"><b> {{experiencia.usuario.username}}</b></h5><br>
               <hr>
-              <!-- <p>{{experiencia.comentario}}</p> -->
-              <p style="text-align: center
-              ; color:white">{{experiencia.comentario}}</p>
+              <h4 style="text-align: center; color:white">{{experiencia.comentario}}</h4>
+              
+              </font>
+              
             </figcaption>
           </figure>
         </a>
       </div>
 
-      <!-- <div class="contenedor_tarjeta">
-        <a href="http://www.falconmasters.com">
-          <figure id="tarjeta">
-            <img src="../../../../../assets/img/deporte-extremo-4.jpg" class="frontal" alt="">
-            <figcaption class="trasera">
-              <h2 class="tit">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, vero!</h2>
-              <hr>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis cupiditate voluptates ipsum suscipit,
-                aspernatur eum, amet nemo architecto nihil corrupti.</p>
-            </figcaption>
-          </figure>
-        </a>
-      </div>
-
-      <div class="contenedor_tarjeta">
-        <a href="http://www.falconmasters.com">
-          <figure id="tarjeta">
-            <img src="../../../../../assets/img/deporte-extremo-4.jpg" class="frontal" alt="">
-            <figcaption class="trasera">
-              <h2 class="tit">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, vero!</h2>
-              <hr>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis cupiditate voluptates ipsum suscipit,
-                aspernatur eum, amet nemo architecto nihil corrupt.</p>
-            </figcaption>
-          </figure>
-        </a>
-      </div> -->
     </div>
   </div>
 </div>

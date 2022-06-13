@@ -51,11 +51,14 @@ figure {
 	position: relative;
 	transition: all ease .5s;
 	transform-style: preserve-3d;
+
 	/* Nota:
 		Establecemos que la imagen tendra una rotacion de 0grados al inicio porque si no
 		ponemos esta propiedad nos da un poco de problemas en algunos navegadores al pasar el cursor.
 	*/
 	transform: perspective(600px) rotateY(0deg);
+	border-radius: 15px;
+	
 }
 
 figure .frontal,
@@ -64,6 +67,8 @@ figure .trasera {
 	height: 100%;
 	border-radius: 5px;
 	transition: all ease .5s;
+    border-radius: 15px;
+	
 }
 
 figure .frontal {
