@@ -17,7 +17,7 @@ export class AddAliadoComponent implements OnInit {
   public form !: FormGroup;
   titulo = 'Agregar Aliado';
   boton = 'Agregar Aliado';
-  id: string | null;  
+  id: string | null;
   public empresaCat: any = [];
   // router: any; TODO: puedo borrar este? lo estan usando?
 
@@ -126,6 +126,7 @@ export class AddAliadoComponent implements OnInit {
       this.titulo = 'Editar Aliado';
       this.boton = 'Editar Aliado';
       this.empresaService.obtenerEmpresa(this.id).subscribe((data) => {
+        console.log(data + "empres2a editada")
         this.form.setValue({
           nombre: data.nombre,
           direccion: data.direccion,

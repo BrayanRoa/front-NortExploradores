@@ -1,107 +1,89 @@
 <div class="container-contact100">
-  <div class="wrap-contact100 ">
+    <div class="wrap-contact100 ">
 
-    <form [formGroup]="form" (submit)="enviarData()" class="contact100-form validate-form">
-      <span class="contact100-form-title">
+        <form [formGroup]="form" (submit)="enviarData()" class="contact100-form validate-form">
+            <span class="contact100-form-title">
         <h4 class="col-sm-10">Editar Empresa</h4>
       </span>
-      <hr style="color: rgb(5, 168, 5);">
-      <input formControlName="idActividad" hidden type="text" class="form-control" id="inputidAct">
+            <hr style="color: rgb(5, 168, 5);">
+            <input formControlName="idActividad" hidden type="text" class="form-control" id="inputidAct">
 
-      <div class="wrap-input100">
-        <span class="contact100-form-combo">NIT</span>
-        <input readonly formControlName="idEmpresa" type="text" class="input100 form-control" id="inputNombre"
-          style="background-color: white;">
-        <span class="focus-input100"></span>
-      </div>
-
+            <div class="wrap-input100">
+                <span class="contact100-form-combo">NIT</span>
+                <input readonly formControlName="idEmpresa" type="text" class="input100 form-control" id="inputNombre" style="background-color: white;">
+                <span class="focus-input100"></span>
+            </div>
 
 
-      <div class="wrap-input100 validate-input" data-validate="Por favor ingrese el nombre completo">
-        <span class="contact100-form-combo">Nombre</span>
-        <input formControlName="nombre" type="text" class="input100 form-control"
-          [class.is-invalid]="form.controls.nombre.status!='VALID'"
-          [class.is-valid]="form.controls.nombre.status=='VALID'" id="inputNombre">
-        <span class="focus-input100"></span>
-        <div class="invalid-feedback" style="text-align: center;">
-          Ingresa nombre entre 4 y 25 caracteres
-        </div>
-      </div>
 
-      <div class="wrap-input100 validate-input">
-        <span class="contact100-form-combo">Mision</span>
-        <textarea style="resize: none" formControlName="mision" class="input100 form-control"
-          [class.is-invalid]="form.controls.mision.status!='VALID'"
-          [class.is-valid]="form.controls.mision.status=='VALID'" id="inputMision" rows="3"></textarea>
-      </div>
+            <div class="wrap-input100 validate-input" data-validate="Por favor ingrese el nombre completo">
+                <span class="contact100-form-combo">Nombre</span>
+                <input formControlName="nombre" type="text" class="input100 form-control" [class.is-invalid]="form.controls.nombre.status!='VALID'" [class.is-valid]="form.controls.nombre.status=='VALID'" id="inputNombre">
+                <span class="focus-input100"></span>
+                <div class="invalid-feedback" style="text-align: center;">
+                    Ingresa nombre entre 4 y 25 caracteres
+                </div>
+            </div>
 
-      <div class="wrap-input100 validate-input">
-        <span class="contact100-form-combo">Vision</span>
-        <textarea style="resize: none" formControlName="vision" class="input100 form-control"
-          [class.is-invalid]="form.controls.vision.status!='VALID'"
-          [class.is-valid]="form.controls.vision.status=='VALID'" id="inputVision" rows="3"></textarea>
-      </div>
+            <div class="wrap-input100 validate-input">
+                <span class="contact100-form-combo">Mision</span>
+                <textarea style="resize: none" formControlName="mision" class="input100 form-control" [class.is-invalid]="form.controls.mision.status!='VALID'" [class.is-valid]="form.controls.mision.status=='VALID'" id="inputMision" rows="3"></textarea>
+            </div>
 
-      <div class="wrap-input100 validate-input">
-        <span class="contact100-form-combo">Descripcion</span>
-          <textarea style="resize: none" formControlName="descripcion" class="input100 form-control" id="inputDescripcion"
-            [class.is-invalid]="form.controls.descripcion.status!='VALID'"
-            [class.is-valid]="form.controls.descripcion.status=='VALID'" rows="3"></textarea>
-      </div>
+            <div class="wrap-input100 validate-input">
+                <span class="contact100-form-combo">Vision</span>
+                <textarea style="resize: none" formControlName="vision" class="input100 form-control" [class.is-invalid]="form.controls.vision.status!='VALID'" [class.is-valid]="form.controls.vision.status=='VALID'" id="inputVision" rows="3"></textarea>
+            </div>
+
+            <div class="wrap-input100 validate-input">
+                <span class="contact100-form-combo">Descripcion</span>
+                <textarea style="resize: none" formControlName="descripcion" class="input100 form-control" id="inputDescripcion" [class.is-invalid]="form.controls.descripcion.status!='VALID'" [class.is-valid]="form.controls.descripcion.status=='VALID'" rows="3"></textarea>
+            </div>
 
 
-      <div class="wrap-input100 validate-input">
-        <span class="contact100-form-combo">Direccion</span>
-          <input formControlName="direccion" type="text" class="input100 form-control"
-            [class.is-invalid]="form.controls.direccion.status!='VALID'"
-            [class.is-valid]="form.controls.direccion.status=='VALID'" id="inputDireccion">
-      </div>
+            <div class="wrap-input100 validate-input">
+                <span class="contact100-form-combo">Direccion</span>
+                <input formControlName="direccion" type="text" class="input100 form-control" [class.is-invalid]="form.controls.direccion.status!='VALID'" [class.is-valid]="form.controls.direccion.status=='VALID'" id="inputDireccion">
+            </div>
 
-      <div class="wrap-input100 validate-input">
-        <span class="contact100-form-combo">Imagen de la empresa(URL)</span>
-          <input formControlName="urlImagen" type="text" class="input100 form-control"
-            [class.is-invalid]="form.controls.urlImagen.status!='VALID'"
-            [class.is-valid]="form.controls.urlImagen.status=='VALID'" id="inputImagen">
-      </div>
+            <div class="wrap-input100 validate-input">
+                <span class="contact100-form-combo">Imagen de la empresa(URL)</span>
+                <input formControlName="urlImagen" type="text" class="input100 form-control" [class.is-invalid]="form.controls.urlImagen.status!='VALID'" [class.is-valid]="form.controls.urlImagen.status=='VALID'" id="inputImagen">
+            </div>
 
-      <div class="wrap-input100 validate-input">
-        <span class="contact100-form-combo">Correo</span>
-          <input formControlName="correo" type="email" class="input100 form-control"
-            [class.is-invalid]="form.controls.correo.status!='VALID'"
-            [class.is-valid]="form.controls.correo.status=='VALID'" id="inputCorreo">
-      </div>
+            <div class="wrap-input100 validate-input">
+                <span class="contact100-form-combo">Correo</span>
+                <input formControlName="correo" type="email" class="input100 form-control" [class.is-invalid]="form.controls.correo.status!='VALID'" [class.is-valid]="form.controls.correo.status=='VALID'" id="inputCorreo">
+            </div>
 
-      <div class="wrap-input100 validate-input">
-        <span class="contact100-form-combo">Estado</span>
-        <select formControlName="estado" aria-label="Default select example"
-        [class.is-invalid]="form.controls.estado.status=='INVALID'"
-        [class.is-valid]="form.controls.estado.status=='VALID'" class="form-control input100"
-        placeholder="estado">
+            <div class="wrap-input100 validate-input">
+                <span class="contact100-form-combo">Estado</span>
+                <select formControlName="estado" aria-label="Default select example" [class.is-invalid]="form.controls.estado.status=='INVALID'" [class.is-valid]="form.controls.estado.status=='VALID'" class="form-control input100" placeholder="estado">
         <option value="false">INACTVO</option>
         <option value="true">ACTIVO</option>
       </select>
-      </div>
+            </div>
 
-      <div class="wrap-input100 validate-input">
-        <span class="contact100-form-combo">Telefono</span>
-          <input formControlName="telefono" type="text" class="input100 form-control" id="inputTelefono"
-            [class.is-invalid]="form.controls.telefono.status!='VALID'"
-            [class.is-valid]="form.controls.telefono.status=='VALID'">
-      </div>
+            <div class="wrap-input100 validate-input">
+                <span class="contact100-form-combo">Telefono</span>
+                <input formControlName="telefono" type="text" class="input100 form-control" id="inputTelefono" [class.is-invalid]="form.controls.telefono.status!='VALID'" [class.is-valid]="form.controls.telefono.status=='VALID'">
+            </div>
 
-      <div class="wrap-input100 validate-input">
-        <span class="contact100-form-combo">Fecha de fundacion</span>
-          <input formControlName="fecha" type="DATE" class="input100 form-control" id="inputFechaFun"
-            [class.is-invalid]="form.controls.fecha.status!='VALID'"
-            [class.is-valid]="form.controls.fecha.status=='VALID'">
-      </div>
+            <div class="wrap-input100 validate-input">
+                <span class="contact100-form-combo">Fecha de fundacion</span>
+                <input formControlName="fecha" type="DATE" class="input100 form-control" id="inputFechaFun" [class.is-invalid]="form.controls.fecha.status!='VALID'" [class.is-valid]="form.controls.fecha.status=='VALID'">
+            </div>
+
+            <div class="wrap-input100 validate-input" hidden>
+                <span class="contact100-form-combo">Cat</span>
+                <input formControlName="categoria" type="number" class="input100 form-control" id="idCategoria" [class.is-invalid]="form.controls.fecha.status!='VALID'" [class.is-valid]="form.controls.fecha.status=='VALID'">
+            </div>
 
 
-
-      <hr style="color: rgb(5, 168, 5);">
-      <div class="container-contact100-form-btn">
-        <button class="contact100-form-btn" type="submit">Editar</button>
-      </div>
-    </form>
-  </div>
+            <hr style="color: rgb(5, 168, 5);">
+            <div class="container-contact100-form-btn">
+                <button class="contact100-form-btn" type="submit">Editar</button>
+            </div>
+        </form>
+    </div>
 </div>

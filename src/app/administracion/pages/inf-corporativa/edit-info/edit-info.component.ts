@@ -66,7 +66,8 @@ export class EditInfoComponent implements OnInit {
         Validators.minLength(7),
 
       ])],
-      fecha: ["", Validators.required]
+      fecha: ["", Validators.required],
+      categoria: []
     })
   }
 
@@ -96,7 +97,8 @@ export class EditInfoComponent implements OnInit {
         correo: data.correo,
         estado: data.estado,
         telefono: data.telefono,
-        fecha: data.fecha
+        fecha: data.fecha,
+        categoria: data.categoria.idCategoria
       })
     })
 
