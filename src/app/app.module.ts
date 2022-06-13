@@ -23,6 +23,7 @@ import { ClientesModule } from './reserva/clientes.module';
 import { DataTablesModule } from "angular-datatables";
 import { AuthLoginComponent } from './security/auth-login/auth-login.component';
 import { AuthRegisterComponent } from './security/auth-register/auth-register.component';
+import { PasswordResetComponent } from './security/password-reset/password-reset.component';
 
 import { PaqueteService } from './services/paquete.service';
 import { UsuarioService } from './services/usuario.service';
@@ -48,8 +49,8 @@ registerLocaleData(es);
     AppComponent,
     ErrorPagesComponent,
     AuthLoginComponent,
-    AuthRegisterComponent
-    
+    AuthRegisterComponent,
+    PasswordResetComponent
 
   ],
   imports: [
