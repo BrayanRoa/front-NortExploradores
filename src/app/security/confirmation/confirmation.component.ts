@@ -43,14 +43,13 @@ export class ConfirmationComponent implements OnInit {
         timeOut: 3000
        })
         
-      this.route.navigateByUrl("")
+       window.location.replace("https://front-nort-exploradores-2.vercel.app/login")
     },error=>{
         this.toastr.error("Token expirado o erroneo", "ERROR", {
           positionClass: 'toast-top-center',
           timeOut: 3000
          })
-        this.route.navigateByUrl("")
-
+         window.location.replace("https://front-nort-exploradores-2.vercel.app/login")
     })
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-password-reset',
   templateUrl: './password-reset.component.html',
@@ -14,7 +14,8 @@ export class PasswordResetComponent implements OnInit {
   constructor(
     public formulario:FormBuilder,
     private authS: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private route: Router
   ) { 
     this.reset = this.formulario.group({
       email:[''],
@@ -39,7 +40,10 @@ export class PasswordResetComponent implements OnInit {
       this.toastr.success("Correo enviado, porfavor revisa tu bandeja de entrada", "OK", {
         positionClass: 'toast-top-center',
         timeOut: 3000
+
        }) 
+       window.location.replace("https://front-nort-exploradores-2.vercel.app/login")
+     
     },error=>{
         this.toastr.error(error.error.mensaje, "ERROR", {
           positionClass: 'toast-top-center',
