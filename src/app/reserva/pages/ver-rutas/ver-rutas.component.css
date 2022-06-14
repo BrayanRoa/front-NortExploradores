@@ -1,5 +1,5 @@
 .body-rutas{
-    margin: 100px;
+    margin: 180px;
     margin-top: 25px;
     margin-bottom: 50px;
     background-color: white;
@@ -45,107 +45,54 @@ a {
 
 /* Card Styles */
 
-.card-sl {
-    border-radius: 6px;
-
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.card-image img {
-    max-height: 100%;
-    max-width: 100%;
-    border-radius: 6px 6px 0px 0;
-}
-
-.card-action {
-    position: relative;
-    float: right;
-    margin-top: -25px;
-    margin-right: 20px;
-    z-index: 2;
-    color: #E26D5C;
+.a-box-rutas {
+    display: inline-block;
+    width: 260px;
+    text-align: center;
+  }
+  
+  .img-container-rutas {
+      height: 230px;
+      width: 200px;
+      overflow: hidden;
+      border-radius: 0px 0px 20px 20px;
+      display: inline-block;
+  }
+  
+  .img-container-rutas img {
+      transform: skew(0deg, -13deg);
+      height: 250px;
+      margin: -35px 0px 0px -60px;
+  }
+  
+  .inner-skew-rutas {
+      display: inline-block;
+      border-radius: 20px;
+      overflow: hidden;
+      padding: 0px;
+      transform: skew(0deg, 13deg);
+      font-size: 0px;
+      margin: 30px 0px 0px 0px;
+      background: #c8c2c2;
+      height: 250px;
+      width: 200px;
+  }
+  
+  .text-container-rutas {
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+    padding: 120px 20px 20px 20px;
+    border-radius: 20px;
     background: #fff;
-    border-radius: 100%;
-    padding: 15px;
-    font-size: 15px;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.19);
-}
-
-.card-action:hover {
-    color: #fff;
-    background: #E26D5C;
-    -webkit-animation: pulse 1.5s infinite;
-}
-
-.card-heading {
-    font-size: 18px;
-    font-weight: bold;
-    background: #fff;
-    padding: 10px 15px;
-}
-
-.card-text {
-    padding: 10px 15px;
-    background: #fff;
+    margin: -120px 0px 0px 0px;
+    line-height: 19px;
     font-size: 14px;
-    color: #636262;
-}
-
-.card-button {
-    display: flex;
-    justify-content: center;
-    padding: 10px 0;
-    width: 100%;
-    background-color: rgb(91, 150, 91);
-    color: #fff;
-    border-radius: 0 0 6px 6px;
-}
-.card-button2 {
-    display: flex;
-    justify-content: center;
-    padding: 10px 0;
-    width: 100%;
-    background-color: rgb(150, 231, 154);
-    color: rgb(0, 0, 0);
-    border-radius: 0px 0px 0 0;
-}
-
-.icon-1{
-    padding-left: 30px;
-}
-
-.card-button:hover {
-    text-decoration: none;
-    background-color: #1d441a;
-    color: #fff;
-
-}
-
-
-@-webkit-keyframes pulse {
-    0% {
-        -moz-transform: scale(0.9);
-        -ms-transform: scale(0.9);
-        -webkit-transform: scale(0.9);
-        transform: scale(0.9);
-    }
-
-    70% {
-        -moz-transform: scale(1);
-        -ms-transform: scale(1);
-        -webkit-transform: scale(1);
-        transform: scale(1);
-        box-shadow: 0 0 0 50px rgba(90, 153, 212, 0);
-    }
-
-    100% {
-        -moz-transform: scale(0.9);
-        -ms-transform: scale(0.9);
-        -webkit-transform: scale(0.9);
-        transform: scale(0.9);
-        box-shadow: 0 0 0 0 rgba(90, 153, 212, 0);
-    }
-}
+  }
+  
+  .text-container-rutas h3 {
+    margin: 20px 0px 10px 0px;
+    color: #28a745;
+    font-size: 18px;
+  }
 
 .contenedor{
     display: flex;

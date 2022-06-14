@@ -7,7 +7,7 @@
     <div class="contenedor">
 
         <div class="col-md-3" *ngFor="let car of activos" style="margin: 20px; padding: 0;">
-            <div class="card-sl" >
+            <!-- <div class="card-sl" >
                 <div class="card-image">
                     <img style="height:175px; width: 100%; height: 250px;" src="{{car.urlImagen}}" />
                 </div>
@@ -18,7 +18,23 @@
                 </div>
                 
                 <a routerLink="/verRuta/{{ car.idPaq }}"  class="card-button"> Ver más </a>
-            </div>
+            </div> -->
+
+            <div class="a-box-rutas">
+                <div class="img-container-rutas">
+                  <div class="img-inner">
+                    <div class="inner-skew-rutas">
+                      <img src="{{car.urlImagen}}">
+                    </div>
+                  </div>
+                </div>
+                <div class="text-container-rutas">
+                  <h3>{{car.municipio.nombre}}</h3>
+                  <div>
+                    <a routerLink="/verRuta/{{ car.idPaq }}"  class="card-button"> Ver más </a>
+                </div>
+              </div>
+
         </div>
     </div>
 </div>
