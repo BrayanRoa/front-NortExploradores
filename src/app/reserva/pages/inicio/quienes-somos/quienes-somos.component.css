@@ -66,7 +66,7 @@
         color: #2ecc77; }
 .container{
   width: 100%;
-  min-height: 100vh;  
+  min-height: 90vh;  
   display: -webkit-box;  
   display: -ms-flexbox;  
   display: flex;
@@ -88,7 +88,7 @@
 
 .card{
   background-color: rgba(206, 205, 205, 0.144);
-  width: 45%;
+  width: 85%;
   min-height: 250px * 1.618;
   
   display: -webkit-box;
