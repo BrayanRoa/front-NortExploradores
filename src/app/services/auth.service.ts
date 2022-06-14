@@ -20,6 +20,10 @@ export class AuthService {
     return this.httpClient.post<any>(this.authURL + 'nuevo', nuevoUsuario);
   }
 
+  public confirmacionCuenta(token:string): Observable<any>{
+    return this.httpClient.get<any>(this.authURL+"confirmacion/"+token)
+  }
+  
   public cambiarPassword(LoginUsuario: LoginUsuario, token:string): Observable<JwtDto> {
     return this.httpClient.post<JwtDto>(this.authURL + 'recuperar/'+token, LoginUsuario);
   }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormPagoTotalComponent } from './reserva/pages/pagos/form-pago-total/form-pago-total.component';
 import { FormPagosComponent } from './reserva/pages/pagos/form-pagos/form-pagos.component';
+import { ConfirmationComponent } from './security/confirmation/confirmation.component';
 import { PasswordResetComponent } from './security/password-reset/password-reset.component';
 import { ErrorPagesComponent } from './shared/error-pages/error-pages.component';
 
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path:"404", component:ErrorPagesComponent},
   {path:"**", redirectTo:""},
   // {path:"reset-password", loadChildren: ()=> import("./security/password-reset/password-reset.component").then(m => m.PasswordResetComponent)},
+ 
   
 ];
 

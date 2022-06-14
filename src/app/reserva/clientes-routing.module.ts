@@ -29,6 +29,8 @@ import { InformacionPagoComponent } from './pages/pagos/informacion-pago/informa
 import { MisComprasComponent } from './pages/mis-compras/mis-compras.component';
 import { PasswordResetComponent } from '../security/password-reset/password-reset.component';
 import { PasswordComponent } from '../security/password/password.component';
+import { ConfirmationComponent } from '../security/confirmation/confirmation.component';
+
 
 const routes : Routes = [
   {path:"",
@@ -63,8 +65,9 @@ const routes : Routes = [
   {path:"calificar", component:AddCalificacionComponent},
   {path:"calificar/:idCompra", component:AddCalificacionComponent},
   {path: 'reset-password', component:PasswordResetComponent},
+  {path: 'login/confirmation/:idConfirmation', component:ConfirmationComponent},
   {path: 'password-reset/confirmation/:idConfirmation', component:PasswordComponent},
-    {path:"**", redirectTo:"inicio"},
+  {path:"**", redirectTo:"inicio"},
   ]}
 ]
 
