@@ -64,7 +64,7 @@
         <span class="off">Admin</span></a>
 
         <a nz-dropdown [nzDropdownMenu]="menuser" *ngIf="isLogged">
-          <img src="https://raw.githubusercontent.com/SantiagoAndresSerrano/img-soka/master/Group%20(1).png" style="width: 40px; height: auto;" alt="">
+          <img src="https://raw.githubusercontent.com/SantiagoAndresSerrano/img-soka/master/Group%20(1).png" style="width: 40px; height: auto;" alt="" width="37px" margin-left="40px">
         </a>
         <nz-dropdown-menu #menuser="nzDropdownMenu">
           <ul nz-menu nzSelectable>
@@ -82,19 +82,22 @@
         " alt="" width="27px" /><span class="off"> Inicio Sesión</span></a
       >
      
-
       <a href="" *ngIf="!isLogged" routerLink="/registro"
-        ><img src="   https://cdn3d.iconscout.com/3d/premium/thumb/form-5079664-4292942.png
+        ><img src="https://cdn3d.iconscout.com/3d/premium/thumb/form-5079664-4292942.png
         " alt="" width="32px" /><span class="off">Registarse</span></a
       >
       <a style="display: none;" id="bienvenido" href="" 
-        ><i class="fab fa-weixin"></i><span class="off" id="nombreUser">Bienvenido</span></a
+        ><img src="  https://cdn.iconscout.com/icon/premium/png-128-thumb/chat-1450-478215.png
+        " alt="" width="37px" /><span class="off" id="nombreUser">Bienvenido</span></a
       >
       <a href="" (click)="onLogOut()" *ngIf="isLogged" 
-        ><i class="fab fa-weixin"></i><span class="off">Cerrar Sesión</span></a>
-    </div>
+        ><span class="off"> <img src="https://cdn.iconscout.com/icon/free/png-128/exit-2879028-2393856.png
+   
+          " alt="" width="40px" /></span></a>
 
+    </div> 
   
+   
   </div>
   
 </header>
