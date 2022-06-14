@@ -7,14 +7,17 @@
 
     <div class="container-fluid login" style="height: 100%; margin: 0px; display: flex; justify-content: center; align-items: center;">
         <div id="login" class="signin-card ">
+         
             <div class="logo-image" style="margin-bottom:15px;">
                 <img src="../../../assets/img/LOGO-01.png" alt="Logo" title="Logo" width="138">
             </div>
             <form [formGroup]="loginInfo" novalidate role="form">
                 <div id="form-login-username" class="form-group">
 
-
-
+   <div class="text-center">
+            <b><a class="text-indigo-800 hover:underline" >INICIAR SESIÓN</a></b>
+          </div>
+<br>
                     <input type="text" name="nombreUsuario" id="nombreUsuario" class="form-control" [class.is-valid]="loginInfo.controls.email.status=='VALID'" [class.is-invalid]="loginInfo.controls.email.status!='VALID'" formControlName="email" required
                         type="text" size="18" alt="login" required />
                     <span class="form-highlight"></span>
@@ -28,15 +31,16 @@
                     <span class="form-bar"></span>
                     <label for="password" class="float-label">Contraseña</label>
                 </div>
-            
-              <a class="text-indigo-800 hover:underline" routerLink="/reset-password">¿Olvidó
+            <div class="text-center">
+                  <a class="text-indigo-800 hover:underline" routerLink="/reset-password">¿Olvidó
                 su contraseña?</a>
-                
+            </div>
+            
+                <br>
                 <div>
                     <button class="btn btn-block btn-info ripple-effect" type="submit" name="Submit" (click)="guardarData()" alt="sign in">Ingresar
                     </button>
                 </div>
-
 
             </form>
         </div>
