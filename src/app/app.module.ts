@@ -23,7 +23,8 @@ import { ClientesModule } from './reserva/clientes.module';
 import { DataTablesModule } from "angular-datatables";
 import { AuthLoginComponent } from './security/auth-login/auth-login.component';
 import { AuthRegisterComponent } from './security/auth-register/auth-register.component';
-import { PasswordResetComponent } from './security/password-reset/password-reset.component';
+import { PasswordResetComponent } from './security/password-reset/password-reset.component';[]
+import { PasswordComponent } from './security/password/password.component';
 
 import { PaqueteService } from './services/paquete.service';
 import { UsuarioService } from './services/usuario.service';
@@ -31,6 +32,7 @@ import { PersonaService } from './services/persona.service';
 import { TransaccionService } from './services/transaccion.service';
 import { interceptorProvider } from './security/interceptors/paq-interceptor.service';
 import { FooterComponent } from './shared/footer/footer.component';
+
 
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -50,7 +52,8 @@ registerLocaleData(es);
     ErrorPagesComponent,
     AuthLoginComponent,
     AuthRegisterComponent,
-    PasswordResetComponent
+    PasswordResetComponent,
+    PasswordComponent
 
   ],
   imports: [

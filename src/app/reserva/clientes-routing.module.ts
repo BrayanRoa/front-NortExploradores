@@ -28,6 +28,7 @@ import { FormReservaComponent } from './pages/pagos/form-reserva/form-reserva.co
 import { InformacionPagoComponent } from './pages/pagos/informacion-pago/informacion-pago.component';
 import { MisComprasComponent } from './pages/mis-compras/mis-compras.component';
 import { PasswordResetComponent } from '../security/password-reset/password-reset.component';
+import { PasswordComponent } from '../security/password/password.component';
 
 const routes : Routes = [
   {path:"",
@@ -62,6 +63,7 @@ const routes : Routes = [
   {path:"calificar", component:AddCalificacionComponent},
   {path:"calificar/:idCompra", component:AddCalificacionComponent},
   {path: 'reset-password', component:PasswordResetComponent},
+  {path: 'password-reset/confirmation/:idConfirmation', component:PasswordComponent},
     {path:"**", redirectTo:"inicio"},
   ]}
 ]
